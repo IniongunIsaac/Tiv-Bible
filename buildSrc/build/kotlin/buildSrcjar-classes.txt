@@ -1,0 +1,1 @@
+/Users/isaaciniongun/AndroidStudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Dependencies.class:/Users/isaaciniongun/AndroidStudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Versions.class

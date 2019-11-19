@@ -1,0 +1,2 @@
+include ':app', ':localdb', ':entities'
+rootProject.name='Tiv Bible'
