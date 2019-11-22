@@ -18,7 +18,7 @@ import java.util.*
 )
 data class Chapter(
     @ColumnInfo(name = "book_id") val bookId: String,
-    val chapter: Int,
+    @ColumnInfo(name = "chapter_number") val chapterNumber: Int,
     @ColumnInfo(name = "number_of_verses") val numberOfVerses: Int,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )

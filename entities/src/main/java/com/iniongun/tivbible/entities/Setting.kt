@@ -15,13 +15,9 @@ import java.util.*
 data class Setting(
     @ColumnInfo(name = "font_size") val fontSize: Int,
     @ColumnInfo(name = "line_spacing")val lineSpacing: Int,
-    @Embedded
-    @ColumnInfo(name = "font_style")
-    val fontStyle: FontStyle,
-    val theme: Theme,
+    @Embedded(prefix = "font_style_") val fontStyle: FontStyle,
+    @Embedded(prefix = "theme_") val theme: Theme,
     @ColumnInfo(name = "stay_awake")val stayAwake: Boolean,
-    @Embedded
-    @ColumnInfo(name = "audio_speed")
-    val audioSpeed: AudioSpeed,
+    @Embedded(prefix = "audio_speed_") val audioSpeed: AudioSpeed,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )
