@@ -15,7 +15,7 @@ object Versions {
     const val versionCode = 1
     const val versionName = "1.0"
 
-    const val kotlin = "1.3.50"
+    const val kotlin = "1.3.60"
     const val gradle = "3.5.2"
     const val navLifecycle = "2.1.0"
     const val appCompat = "1.1.0"
@@ -109,6 +109,11 @@ object Dependencies {
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomTesting = "android.arch.persistence.room:testing"
+
+    //Java Annotations
+    const val javax = "javax.inject:javax.inject:${Versions.javaxInject}"
+    const val javaxAnnotation = "javax.annotation:jsr250-api:${Versions.javaxAnnotation}"
 
     //ThreeTen Android Backport for DateTime
     const val threeTenAndroidBackport = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenAndroidBackport}"

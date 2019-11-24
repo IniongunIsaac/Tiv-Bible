@@ -60,8 +60,9 @@ dependencies {
             Dependencies.dagger,
             Dependencies.daggerAndroidSupport,
 
-            project(":localdb"),
-            project(":entities")
+            project(':roomdb'),
+            project(":entities"),
+            project(":repository")
     )
 
     kapt(

@@ -1,2 +1,2 @@
-include ':app', ':localdb', ':entities'
+include ':app', ':roomdb', ':entities', ':repository'
 rootProject.name='Tiv Bible'
