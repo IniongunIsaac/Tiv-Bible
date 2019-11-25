@@ -12,6 +12,7 @@ import java.util.*
 
 @Entity
 data class History(
-    @Embedded val verse: Verse,
+    @Embedded(prefix = "verse_")
+    val verse: Verse,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )

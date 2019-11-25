@@ -1,6 +1,5 @@
 package com.iniongun.tivbible.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,8 +11,7 @@ import java.util.*
  */
 @Entity
 data class Other(
-    @Embedded
-    @ColumnInfo(name = "other_type")
+    @Embedded(prefix = "other_type_")
     val otherType: OtherType,
     val text: String,
     @PrimaryKey val id: String = UUID.randomUUID().toString()

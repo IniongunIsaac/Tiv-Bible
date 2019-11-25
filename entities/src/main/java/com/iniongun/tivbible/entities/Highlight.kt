@@ -15,7 +15,9 @@ import java.util.*
 @Entity
 data class Highlight(
     @ColumnInfo(name = "highlighted_on") val highlightedOn: OffsetDateTime,
-    @Embedded val color: HighlightColor,
-    @Embedded val verse: Verse,
+    @Embedded(prefix = "highlight_color_")
+    val color: HighlightColor,
+    @Embedded(prefix = "verse_")
+    val verse: Verse,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )

@@ -1,10 +1,8 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
-    id("de.mannodermaus.android-junit5")
 }
 
 android {
@@ -14,21 +12,15 @@ android {
     buildToolsVersion Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId Versions.applicationId
+
         minSdkVersion Versions.minSdkVersion
         targetSdkVersion Versions.targetSdkVersion
         versionCode Versions.versionCode
         versionName Versions.versionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
 
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-
-    }
-
-    dataBinding {
-        enabled = true
     }
 
     buildTypes {
@@ -42,35 +34,24 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
 }
 
 dependencies {
-
     implementation(
             fileTree(dir: 'libs', include: ['*.jar']),
             Dependencies.kotlinStdLib,
-            Dependencies.appCompat,
             Dependencies.androidXCoreKts,
-            Dependencies.constraintLayout,
-
-            Dependencies.materialDesign,
-
-            Dependencies.threeTenAndroidBackport,
 
             Dependencies.gson,
 
-            Dependencies.dagger,
-            Dependencies.daggerAndroidSupport,
+            Dependencies.threeTenAndroidBackport,
 
-            project(':roomdb'),
+            Dependencies.javax,
+            Dependencies.javaxAnnotation,
+
             project(":entities"),
-            project(":repository"),
-            project(":preferences")
-    )
-
-    kapt(
-            Dependencies.daggerAndroidProcessor,
-            Dependencies.daggerCompiler
+            project(":repository")
     )
 
     testImplementation(
@@ -83,10 +64,4 @@ dependencies {
     testRuntimeOnly(
             Dependencies.junit5JupiterEngine
     )
-
-    androidTestImplementation(
-            Dependencies.testRunner,
-            Dependencies.espresso
-    )
-
 }
