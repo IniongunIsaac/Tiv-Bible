@@ -3,9 +3,7 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Book
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.Single
 
 /**
  * Created by Isaac Iniongun on 2019-11-18
@@ -28,12 +26,12 @@ interface BookDao {
     fun getBooksByTestamentAndVersion(testamentId: String, versionId: String): Observable<List<Book>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBooks(books: List<Book>): Maybe<Int>
+    fun insertBooks(books: List<Book>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBooks(vararg books: Book): Completable
 
     @Delete
-    fun deleteBooks(books: List<Book>): Single<Int>
+    fun deleteBooks(books: List<Book>): Completable
 
 }

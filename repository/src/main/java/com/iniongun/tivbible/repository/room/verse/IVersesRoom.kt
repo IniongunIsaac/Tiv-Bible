@@ -22,6 +22,6 @@ interface IVersesRoom {
 
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>
 
-    fun deleteVerses(verses: List<Verse>): Single<Int>
+    fun deleteVerses(verses: List<Verse>): Completable
 
 }

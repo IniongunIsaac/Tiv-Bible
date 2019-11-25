@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Other
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface OtherDao {
     fun insertOthers(vararg others: Other): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOthers(others: List<Other>): Maybe<Int>
+    fun insertOthers(others: List<Other>): Completable
 
     @Delete
-    fun deleteHistory(others: List<Other>): Single<Int>
+    fun deleteOthers(others: List<Other>): Completable
 
 }

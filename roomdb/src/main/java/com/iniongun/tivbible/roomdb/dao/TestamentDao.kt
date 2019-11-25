@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Testament
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -22,12 +21,12 @@ interface TestamentDao {
     fun getTestamentById(testamentId: String): Single<Testament>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTestaments(testaments: List<Testament>): Maybe<Int>
+    fun insertTestaments(testaments: List<Testament>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestaments(vararg testaments: Testament): Completable
 
     @Delete
-    fun deleteTestaments(testaments: List<Testament>): Single<Int>
+    fun deleteTestaments(testaments: List<Testament>): Completable
 
 }

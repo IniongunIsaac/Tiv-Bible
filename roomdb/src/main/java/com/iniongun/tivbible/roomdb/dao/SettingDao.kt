@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Setting
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface SettingDao {
     fun insertSettings(vararg settings: Setting): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSettings(settings: List<Setting>): Maybe<Int>
+    fun insertSettings(settings: List<Setting>): Completable
 
     @Delete
-    fun deleteSettings(settings: List<Setting>): Single<Int>
+    fun deleteSettings(settings: List<Setting>): Completable
 
 }

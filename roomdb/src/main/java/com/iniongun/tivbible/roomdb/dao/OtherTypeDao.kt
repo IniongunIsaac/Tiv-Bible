@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.OtherType
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface OtherTypeDao {
     fun insertOtherTypes(vararg otherTypes: OtherType): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOtherTypes(otherTypes: List<OtherType>): Maybe<Int>
+    fun insertOtherTypes(otherTypes: List<OtherType>): Completable
 
     @Delete
-    fun deleteOtherTypes(otherTypes: List<OtherType>): Single<Int>
+    fun deleteOtherTypes(otherTypes: List<OtherType>): Completable
 
 }

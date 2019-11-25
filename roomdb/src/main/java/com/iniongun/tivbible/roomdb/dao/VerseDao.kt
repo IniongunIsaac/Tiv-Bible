@@ -33,6 +33,6 @@ interface VerseDao {
     fun insertVerses(verses: List<Verse>): Completable
 
     @Delete
-    fun deleteVerses(verses: List<Verse>): Single<Int>
+    fun deleteVerses(verses: List<Verse>): Completable
 
 }

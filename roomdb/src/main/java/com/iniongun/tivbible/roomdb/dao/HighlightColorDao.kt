@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.HighlightColor
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface HighlightColorDao {
     fun insertHighlightColors(vararg highlightColors: HighlightColor): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHighlightColors(highlightColors: List<HighlightColor>): Maybe<Int>
+    fun insertHighlightColors(highlightColors: List<HighlightColor>): Completable
 
     @Delete
-    fun deleteHighlightColors(highlightColors: List<HighlightColor>): Single<Int>
+    fun deleteHighlightColors(highlightColors: List<HighlightColor>): Completable
 
 }

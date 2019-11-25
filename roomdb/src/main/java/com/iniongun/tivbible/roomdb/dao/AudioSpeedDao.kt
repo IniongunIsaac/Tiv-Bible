@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.AudioSpeed
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -22,12 +21,12 @@ interface AudioSpeedDao {
     fun getAudioSpeedById(audioSpeedId: String): Single<AudioSpeed>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAudioSpeeds(audioSpeeds: List<AudioSpeed>): Maybe<Int>
+    fun insertAudioSpeeds(audioSpeeds: List<AudioSpeed>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAudioSpeeds(vararg audioSpeeds: AudioSpeed): Completable
 
     @Delete
-    fun deleteAudioSpeeds(audioSpeeds: List<AudioSpeed>): Single<Int>
+    fun deleteAudioSpeeds(audioSpeeds: List<AudioSpeed>): Completable
 
 }

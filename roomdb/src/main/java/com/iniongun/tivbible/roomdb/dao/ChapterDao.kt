@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Chapter
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -28,9 +27,9 @@ interface ChapterDao {
     fun insertChapters(vararg chapters: Chapter): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertChapters(chapters: List<Chapter>): Maybe<Int>
+    fun insertChapters(chapters: List<Chapter>): Completable
 
     @Delete
-    fun deleteChapters(chapters: List<Chapter>): Single<Int>
+    fun deleteChapters(chapters: List<Chapter>): Completable
 
 }

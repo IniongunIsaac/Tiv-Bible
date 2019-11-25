@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Version
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface VersionDao {
     fun insertVersions(vararg versions: Version): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertVersions(versions: List<Version>): Maybe<Int>
+    fun insertVersions(versions: List<Version>): Completable
 
     @Delete
-    fun deleteVersions(versions: List<Version>): Single<Int>
+    fun deleteVersions(versions: List<Version>): Completable
 
 }

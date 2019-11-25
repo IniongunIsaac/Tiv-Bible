@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.FontStyle
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -28,9 +27,9 @@ interface FontStyleDao {
     fun insertFontStyles(vararg fontStyles: FontStyle): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFontStyles(fontStyles: List<FontStyle>): Maybe<Int>
+    fun insertFontStyles(fontStyles: List<FontStyle>): Completable
 
     @Delete
-    fun deleteFontStyles(fontStyles: List<FontStyle>): Single<Int>
+    fun deleteFontStyles(fontStyles: List<FontStyle>): Completable
 
 }

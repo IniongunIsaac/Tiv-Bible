@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.Theme
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface ThemeDao {
     fun insertThemes(vararg themes: Theme): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertThemes(themes: List<Theme>): Maybe<Int>
+    fun insertThemes(themes: List<Theme>): Completable
 
     @Delete
-    fun deleteThemes(themes: List<Theme>): Single<Int>
+    fun deleteThemes(themes: List<Theme>): Completable
 
 }

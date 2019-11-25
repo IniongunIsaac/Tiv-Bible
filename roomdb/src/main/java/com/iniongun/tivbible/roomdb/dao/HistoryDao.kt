@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.History
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface HistoryDao {
     fun insertHistory(vararg history: History): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHistory(history: List<History>): Maybe<Int>
+    fun insertHistory(history: List<History>): Completable
 
     @Delete
-    fun deleteHistory(history: List<History>): Single<Int>
+    fun deleteHistory(history: List<History>): Completable
 
 }

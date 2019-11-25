@@ -3,7 +3,6 @@ package com.iniongun.tivbible.roomdb.dao
 import androidx.room.*
 import com.iniongun.tivbible.entities.RecentSearch
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -25,9 +24,9 @@ interface RecentSearchDao {
     fun insertRecentSearches(vararg recentSearches: RecentSearch): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecentSearches(recentSearches: List<RecentSearch>): Maybe<Int>
+    fun insertRecentSearches(recentSearches: List<RecentSearch>): Completable
 
     @Delete
-    fun deleteRecentSearches(recentSearches: List<RecentSearch>): Single<Int>
+    fun deleteRecentSearches(recentSearches: List<RecentSearch>): Completable
 
 }
