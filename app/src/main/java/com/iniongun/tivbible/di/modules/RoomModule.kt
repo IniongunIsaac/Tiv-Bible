@@ -18,6 +18,13 @@ class RoomModule {
     @Provides
     fun provideTivBibleRoomDatabase(context: Context) = TivBibleDatabase(context)
 
+//    @AppScope
+//    @Provides
+//    fun provideTivBibleRoomDatabase(context: Context) = Room.databaseBuilder(
+//        context,
+//        TivBibleDatabase::class.java, DB_NAME
+//    ).build()
+
     @AppScope
     @Provides
     fun provideAudioSpeedDao(db: TivBibleDatabase) = db.audioSpeedDao()

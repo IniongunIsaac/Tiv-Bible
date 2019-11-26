@@ -1,9 +1,7 @@
 package com.iniongun.tivbible.di.component
 
 import com.iniongun.tivbible.TivBibleApplication
-import com.iniongun.tivbible.di.modules.AppModule
-import com.iniongun.tivbible.di.modules.RepositoryModule
-import com.iniongun.tivbible.di.modules.RoomModule
+import com.iniongun.tivbible.di.modules.*
 import com.iniongun.tivbible.di.scopes.AppScope
 import dagger.BindsInstance
 import dagger.Component
@@ -21,7 +19,9 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidSupportInjectionModule::class,
         AppModule::class,
         RoomModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        ViewModelsModule::class,
+        AppActivityBindingModule::class
     ]
 )
 @AppScope

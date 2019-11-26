@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/martel_sans</item>
+        <item>@font/martel_sans_bold</item>
+        <item>@font/martel_sans_extrabold</item>
+    </array>
+</resources>

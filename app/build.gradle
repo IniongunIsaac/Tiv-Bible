@@ -57,6 +57,8 @@ dependencies {
 
             Dependencies.threeTenAndroidBackport,
 
+            Dependencies.room,
+
             Dependencies.gson,
 
             Dependencies.dagger,
@@ -65,7 +67,8 @@ dependencies {
             project(':roomdb'),
             project(":entities"),
             project(":repository"),
-            project(":preferences")
+            project(":preferences"),
+            project(":common")
     )
 
     kapt(

@@ -50,8 +50,8 @@ dependencies {
             Dependencies.kotlinStdLib,
             Dependencies.androidXCoreKts,
 
-            Dependencies.room,
-            Dependencies.roomRx,
+//            Dependencies.room,
+//            Dependencies.roomRx,
             Dependencies.gson,
 
             Dependencies.threeTenAndroidBackport,
@@ -61,6 +61,11 @@ dependencies {
 
             project(":entities"),
             project(":repository")
+    )
+
+    api(
+            Dependencies.room,
+            Dependencies.roomRx,
     )
 
     kapt(

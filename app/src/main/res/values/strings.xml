@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tiv Bible</string>
+    <string name="holy_bible_in_tiv_text">The Holy Bible\n\nin\n\nTiv Language</string>
+    <string name="setup_in_progress_please_wait_text">Setup in progress, please wait…</string>
+    <string name="copyright_text">v2.0</string>
 </resources>
