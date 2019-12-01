@@ -53,6 +53,9 @@ dependencies {
             Dependencies.navFragmentKts,
             Dependencies.navUIKts,
 
+            Dependencies.coroutines,
+            Dependencies.coroutinesAndroid,
+
             Dependencies.rxJava,
             Dependencies.rxAndroid,
 

@@ -14,9 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.iniongun.tivbible.common.R
+import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
+import com.iniongun.tivbible.common.utils.state.AppState
 import dagger.android.support.DaggerAppCompatActivity
 
 /**
@@ -24,7 +25,7 @@ import dagger.android.support.DaggerAppCompatActivity
  * For Tiv Bible project
  */
 
-abstract class BaseActivity<in D : ViewDataBinding, out V : ViewModel> :
+abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
     DaggerAppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
@@ -42,6 +43,8 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : ViewModel> :
         super.onCreate(savedInstanceState)
 
         initializeDataBinding()
+        
+        setNotificationObserver()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
@@ -69,6 +72,43 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : ViewModel> :
 
         getBinding(binding)
     }
+    
+    open fun setNotificationObserver() {
+        getViewModel().notificationLiveData.observe(this, LiveDataEventObserver {
+            
+            when (it.state) {
+
+                AppState.FAILED -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(currentFocus!!, message, isError = true)
+                    }
+                }
+
+                AppState.WARNING -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(currentFocus!!, message, isWarning = true)
+                    }
+
+                }
+
+                AppState.LOADING -> {
+                    showLoadingDialog()
+                }
+
+                AppState.SUCCESS -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(currentFocus!!, message)
+                    }
+
+                }
+                
+            }
+            
+        })
+    }
 
     private fun createDialog() {
         val builder = AlertDialog.Builder(this)
@@ -91,7 +131,7 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : ViewModel> :
         imm!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun showSnackBar(
+    fun showMessage(
         rootView: View,
         text: String,
         isError: Boolean = false,
@@ -118,12 +158,12 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : ViewModel> :
         snackBar.show()
     }
 
-    fun showLoadingDialog() {
+    open fun showLoadingDialog() {
         hideKeyboard(this)
         dialog.show()
     }
 
-    fun dismissLoadingDialog() {
+    open fun dismissLoadingDialog() {
         if (dialog.isShowing) dialog.dismiss()
     }
 }

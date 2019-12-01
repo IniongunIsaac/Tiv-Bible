@@ -20,4 +20,6 @@ interface IVersionRepo {
 
     fun deleteVersions(versions: List<Version>): Completable
 
+    fun getVersionIdByName(versionName: String): Single<String>
+
 }

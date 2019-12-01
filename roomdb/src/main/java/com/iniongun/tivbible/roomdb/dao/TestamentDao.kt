@@ -20,6 +20,9 @@ interface TestamentDao {
     @Query("select * from Testament where id = :testamentId limit 1")
     fun getTestamentById(testamentId: String): Single<Testament>
 
+    @Query("select id from Testament where name = :testamentName limit 1")
+    fun getTestamentIdByName(testamentName: String): Single<String>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestaments(testaments: List<Testament>): Completable
 

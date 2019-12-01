@@ -8,4 +8,4 @@ import java.util.*
  * For Tiv Bible project
  */
 
-open class Base(@PrimaryKey var id: String = UUID.randomUUID().toString(), var name: String = "")
+open class Base(@PrimaryKey val id: String = UUID.randomUUID().toString())

@@ -16,6 +16,8 @@ interface ITestamentRepo {
 
     fun getTestamentById(testamentId: String): Single<Testament>
 
+    fun getTestamentIdByName(testamentName: String): Single<String>
+
     fun insertTestaments(testaments: List<Testament>): Completable
 
     fun deleteTestaments(testaments: List<Testament>): Completable

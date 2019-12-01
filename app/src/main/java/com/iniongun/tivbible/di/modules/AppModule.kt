@@ -18,7 +18,7 @@ class AppModule {
 
     @Provides
     @AppScope
-    fun provideContext(tivBibleApp: TivBibleApplication) = tivBibleApp
+    fun provideContext(tivBibleApp: TivBibleApplication): Context = tivBibleApp
 
     @Provides
     @AppScope

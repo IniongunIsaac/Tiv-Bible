@@ -1,7 +1,7 @@
 package com.iniongun.tivbible.di.modules
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.di.keys.AppViewModelKey
 import com.iniongun.tivbible.presentation.splash.SplashActivityViewModel
 import com.iniongun.tivbible.viewModelFactory.ViewModelFactory
@@ -27,6 +27,6 @@ abstract class ViewModelsModule {
     @AppViewModelKey(SplashActivityViewModel::class)
     abstract fun bindSplashActivityViewModel(
         viewModel: SplashActivityViewModel
-    ): ViewModel
+    ): BaseViewModel
 
 }

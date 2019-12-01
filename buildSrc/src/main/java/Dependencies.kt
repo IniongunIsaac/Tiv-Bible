@@ -26,7 +26,7 @@ object Versions {
     const val retrofit = "2.4.0"
     const val retrofitCoroutinesAdapter = "0.9.2"
     const val dagger = "2.24"
-    const val coroutines = "1.2.0"
+    const val coroutines = "1.3.0-RC"
     const val gson = "2.8.5"
     const val legacySupport = "1.0.0"
 
@@ -117,6 +117,9 @@ object Dependencies {
 
     //ThreeTen Android Backport for DateTime
     const val threeTenAndroidBackport = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenAndroidBackport}"
+
+    //Apache string utilities
+    const val wordUtilities = "org.apache.commons:commons-lang3:3.4"
 
     //Testing
     const val junit = "junit:junit:${Versions.juint}"

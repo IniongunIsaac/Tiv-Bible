@@ -21,4 +21,6 @@ class TestamentRepoImpl @Inject constructor(
     override fun insertTestaments(testaments: List<Testament>) = testamentDao.insertTestaments(testaments)
 
     override fun deleteTestaments(testaments: List<Testament>) = testamentDao.deleteTestaments(testaments)
+
+    override fun getTestamentIdByName(testamentName: String) = testamentDao.getTestamentIdByName(testamentName)
 }

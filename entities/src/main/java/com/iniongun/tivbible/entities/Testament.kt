@@ -1,6 +1,8 @@
 package com.iniongun.tivbible.entities
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  * Created by Isaac Iniongun on 2019-07-21.
@@ -8,4 +10,4 @@ import androidx.room.Entity
  */
 
 @Entity
-class Testament: Base()
+class Testament(@PrimaryKey val id: String = UUID.randomUUID().toString(), val name: String)

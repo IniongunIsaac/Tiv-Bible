@@ -1,6 +1,6 @@
 package com.iniongun.tivbible.di.keys
 
-import androidx.lifecycle.ViewModel
+import com.iniongun.tivbible.common.base.BaseViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass
 
@@ -12,4 +12,4 @@ import kotlin.reflect.KClass
 @MapKey
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-annotation class AppViewModelKey (val value: KClass<out ViewModel>)
+annotation class AppViewModelKey (val value: KClass<out BaseViewModel>)

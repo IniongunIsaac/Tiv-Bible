@@ -22,4 +22,6 @@ class VersionRepoImpl @Inject constructor(
 
     override fun deleteVersions(versions: List<Version>) = versionDao.deleteVersions(versions)
 
+    override fun getVersionIdByName(versionName: String) = versionDao.getVersionIdByName(versionName)
+
 }

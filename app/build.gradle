@@ -53,13 +53,20 @@ dependencies {
             Dependencies.androidXCoreKts,
             Dependencies.constraintLayout,
 
+            Dependencies.coroutines,
+            Dependencies.coroutinesAndroid,
+
             Dependencies.materialDesign,
 
             Dependencies.threeTenAndroidBackport,
 
             Dependencies.room,
 
+            Dependencies.rxAndroid,
+
             Dependencies.gson,
+
+            Dependencies.wordUtilities,
 
             Dependencies.dagger,
             Dependencies.daggerAndroidSupport,

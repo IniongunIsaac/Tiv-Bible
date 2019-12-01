@@ -3,6 +3,8 @@ package com.iniongun.tivbible.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  * Created by Isaac Iniongun on 2019-07-19.
@@ -20,5 +22,7 @@ data class Book(
     @ColumnInfo(name = "version_id") val versionId: String,
     @ColumnInfo(name = "order_no") val orderNo: Int,
     @ColumnInfo(name = "number_of_chapters") val numberOfChapters: Int,
-    @ColumnInfo(name = "number_of_verses") val numberOfVerses: Int
-) : Base()
+    @ColumnInfo(name = "number_of_verses") val numberOfVerses: Int,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val name: String
+)

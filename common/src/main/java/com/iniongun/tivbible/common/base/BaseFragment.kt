@@ -84,7 +84,7 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
         isError: Boolean = false,
         duration: Int = Snackbar.LENGTH_SHORT,
         isWarning: Boolean = false
-    ) = (activity as BaseActivity<*, *>).showSnackBar(view, message, isError, duration, isWarning)
+    ) = (activity as BaseActivity<*, *>).showMessage(view, message, isError, duration, isWarning)
 
     fun showLoadingDialog() = (activity as BaseActivity<*, *>).showLoadingDialog()
 

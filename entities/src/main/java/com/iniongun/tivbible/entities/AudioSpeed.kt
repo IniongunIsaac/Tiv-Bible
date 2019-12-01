@@ -11,4 +11,4 @@ import java.util.*
  */
 
 @Entity
-class AudioSpeed: Base()
+class AudioSpeed(@PrimaryKey val id: String = UUID.randomUUID().toString(), val name: String)
