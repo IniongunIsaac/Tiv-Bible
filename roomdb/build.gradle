@@ -41,6 +41,20 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+
 }
 
 dependencies {
@@ -50,8 +64,6 @@ dependencies {
             Dependencies.kotlinStdLib,
             Dependencies.androidXCoreKts,
 
-//            Dependencies.room,
-//            Dependencies.roomRx,
             Dependencies.gson,
 
             Dependencies.threeTenAndroidBackport,
@@ -72,15 +84,31 @@ dependencies {
             Dependencies.roomCompiler
     )
 
+    androidTestImplementation(
+            Dependencies.androidTestCore,
+            Dependencies.androidTestRunner,
+            Dependencies.androidTestRules,
+            Dependencies.roomTesting,
+            Dependencies.architectureCoreTesting,
+            Dependencies.androidXJunitExtension,
+            Dependencies.junit5JupiterApi,
+            Dependencies.junit5JupiterParams
+    )
+
     testImplementation(
             Dependencies.junit,
             Dependencies.mockK,
             Dependencies.junit5JupiterApi,
             Dependencies.junit5JupiterParams,
-            Dependencies.roomTesting
+            Dependencies.hamcrest,
+            Dependencies.roboelectric
     )
 
     testRuntimeOnly(
+            Dependencies.junit5JupiterEngine
+    )
+
+    androidTestRuntimeOnly(
             Dependencies.junit5JupiterEngine
     )
 

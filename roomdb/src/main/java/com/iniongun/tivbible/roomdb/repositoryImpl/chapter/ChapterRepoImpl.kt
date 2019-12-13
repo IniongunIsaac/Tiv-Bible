@@ -20,7 +20,7 @@ class ChapterRepoImpl @Inject constructor(
 
     override fun getChaptersByBookAndChapterNumber(
         bookId: String,
-        chapterNumber: String
+        chapterNumber: Int
     ) = chapterDao.getChaptersByBookAndChapterNumber(bookId, chapterNumber)
 
     override fun insertChapters(chapters: List<Chapter>) = chapterDao.insertChapters(chapters)

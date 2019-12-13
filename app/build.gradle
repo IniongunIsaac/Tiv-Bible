@@ -95,7 +95,7 @@ dependencies {
     )
 
     androidTestImplementation(
-            Dependencies.testRunner,
+            Dependencies.androidTestRunner,
             Dependencies.espresso
     )
 

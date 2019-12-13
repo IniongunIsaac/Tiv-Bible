@@ -5,7 +5,7 @@ package com.iniongun.tivbible.common.utils.state
  * For Tiv Bible project.
  */
 
-class AppResource <out D> constructor(
+class AppResult <out D> constructor(
     val state: AppState,
     val message: String? = null,
     val data: D? = null
@@ -16,7 +16,7 @@ class AppResource <out D> constructor(
         fun <D> success(
             data: D? = null,
             message: String? = null
-        ): AppResource<D> = AppResource(
+        ): AppResult<D> = AppResult(
             state = AppState.SUCCESS,
             data = data,
             message = message
@@ -25,7 +25,7 @@ class AppResource <out D> constructor(
         @JvmStatic
         fun <D> warning(
             message: String? = null
-        ): AppResource<D> = AppResource(
+        ): AppResult<D> = AppResult(
             state = AppState.WARNING,
             message = message
         )
@@ -33,21 +33,21 @@ class AppResource <out D> constructor(
         @JvmStatic
         fun <D> failed(
             message: String?
-        ): AppResource<D> = AppResource(
+        ): AppResult<D> = AppResult(
             state = AppState.FAILED,
             data = null,
             message = message
         )
 
         @JvmStatic
-        fun <D> loading(): AppResource<D> = AppResource(
+        fun <D> loading(): AppResult<D> = AppResult(
             state = AppState.LOADING,
             data = null,
             message = null
         )
 
         @JvmStatic
-        fun <D> loadingMore(): AppResource<D> = AppResource(
+        fun <D> loadingMore(): AppResult<D> = AppResult(
             state = AppState.LOADING_MORE,
             data = null,
             message = null

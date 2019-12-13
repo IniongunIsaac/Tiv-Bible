@@ -16,7 +16,7 @@ interface IChapterRepo {
 
     fun getChaptersByBook(bookId: String): Observable<List<Chapter>>
 
-    fun getChaptersByBookAndChapterNumber(bookId: String, chapterNumber: String): Single<Chapter>
+    fun getChaptersByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
 
     fun insertChapters(chapters: List<Chapter>): Completable
 

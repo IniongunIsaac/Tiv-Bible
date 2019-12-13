@@ -1,11 +1,12 @@
 package com.iniongun.tivbible.presentation.splash
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
-import com.iniongun.tivbible.common.utils.state.AppResource
+import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
@@ -60,7 +61,17 @@ class SplashActivityViewModel @Inject constructor(
     private fun setUpDB() {
 
         if (preferencesRepo.isDBInitialized) {
-
+            _notificationLiveData.postValue(LiveDataEvent(AppResult.success(message = null)))
+            compositeDisposable.add(
+                bookRepo.getAllBooks().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Log.i("Books Size", it.size.toString())
+                        Log.i("Books", it.toString())
+                    }, {
+                        print("cdbiha asixhiuha csaua cbsiuihxajbi axius aidw")
+                    })
+            )
         } else {
             initializeDB()
         }
@@ -69,7 +80,7 @@ class SplashActivityViewModel @Inject constructor(
 
     private fun initializeDB() {
 
-        _notificationLiveData.postValue(LiveDataEvent(AppResource.loading()))
+        _notificationLiveData.postValue(LiveDataEvent(AppResult.loading()))
 
         saveVersionsAndTestaments()
 
@@ -90,7 +101,7 @@ class SplashActivityViewModel @Inject constructor(
                 .subscribe({
                     getVersionAndTestamentId("Old", "Old", "New")
                 }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResource.failed("An error occurred while trying to populate versions and testaments.")))
+                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate versions and testaments.")))
                 })
         )
 
@@ -99,7 +110,8 @@ class SplashActivityViewModel @Inject constructor(
     private fun getVersionAndTestamentId(versionName: String, vararg testamentIds: String) {
 
         compositeDisposable.add(
-            Single.zip(versionRepo.getVersionIdByName(versionName),
+            Single.zip(
+                versionRepo.getVersionIdByName(versionName),
                 testamentRepo.getTestamentIdByName(testamentIds[0]),
                 testamentRepo.getTestamentIdByName(testamentIds[1]),
                 Function3<String, String, String, Triple<String, String, String>> { versionId, oldTestamentId, newTestamentId ->
@@ -117,7 +129,7 @@ class SplashActivityViewModel @Inject constructor(
                     saveBooksAndChaptersAndVerses()
 
                 }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResource.failed("An error occurred while trying to retrieve versions and testaments Ids.")))
+                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to retrieve versions and testaments Ids.")))
                 })
         )
 
@@ -217,7 +229,7 @@ class SplashActivityViewModel @Inject constructor(
                                 }, {
                                     _notificationLiveData.postValue(
                                         LiveDataEvent(
-                                            AppResource.failed(
+                                            AppResult.failed(
                                                 "An error occurred while trying to add book, chapters and verses sequence..."
                                             )
                                         )
@@ -230,16 +242,16 @@ class SplashActivityViewModel @Inject constructor(
                     //save boolean indicating that db has been setup
                     preferencesRepo.isDBInitialized = true
 
-                    _notificationLiveData.postValue(LiveDataEvent(AppResource.success(message = null)))
+                    _notificationLiveData.postValue(LiveDataEvent(AppResult.success(message = null)))
 
                 }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResource.failed("An error occurred while trying to populate books, chapters and verses.")))
+                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate books, chapters and verses.")))
                 })
         )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {
-        _notificationLiveData.postValue(LiveDataEvent(AppResource.failed(throwable.message)))
+        _notificationLiveData.postValue(LiveDataEvent(AppResult.failed(throwable.message)))
     }
 
 }

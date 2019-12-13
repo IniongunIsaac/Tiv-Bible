@@ -1,5 +1,6 @@
 package com.iniongun.tivbible.presentation.splash
 
+import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.iniongun.tivbible.R
@@ -25,6 +26,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
 
     override fun getBinding(binding: ActivitySplashBinding) {
         this.binding = binding
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        hideStatusAndNavigationBar()
     }
 
     override fun setNotificationObserver() {

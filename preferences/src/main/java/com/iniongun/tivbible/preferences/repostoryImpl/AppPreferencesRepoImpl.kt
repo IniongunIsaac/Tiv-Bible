@@ -2,9 +2,9 @@ package com.iniongun.tivbible.preferences.repostoryImpl
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.preferences.utils.PreferenceConstants
+import com.iniongun.tivbible.preferences.utils.getTypeToken
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import javax.inject.Inject
 
@@ -22,10 +22,10 @@ class AppPreferencesRepoImpl @Inject constructor(
         get() = getPreference(PreferenceConstants.DB_INITIALIZED_KEY, false)
         set(value) = setPreference(PreferenceConstants.DB_INITIALIZED_KEY, value)
 
-    private val verseType = object : TypeToken<Verse>() {}.type
+    //private val verseType = object : TypeToken<Verse>() {}.type
 
     override var testPreferenceVerse: Verse
-        get() = gson.fromJson<Verse>(getPreference(PreferenceConstants.TEST_PREFERENCE_VERSE_KEY, ""), verseType)
+        get() = gson.fromJson<Verse>(getPreference(PreferenceConstants.TEST_PREFERENCE_VERSE_KEY, ""), getTypeToken<Verse>())
         set(value) = setPreference(PreferenceConstants.TEST_PREFERENCE_VERSE_KEY, gson.toJson(value))
 
     @Suppress("UNCHECKED_CAST")

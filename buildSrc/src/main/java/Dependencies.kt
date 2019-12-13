@@ -29,21 +29,25 @@ object Versions {
     const val coroutines = "1.3.0-RC"
     const val gson = "2.8.5"
     const val legacySupport = "1.0.0"
+    const val architectureCore = "2.0.1"
 
     const val javaxInject = "1"
     const val javaxAnnotation = "1.0"
-    const val room = "2.2.1"
+    const val room = "2.2.2"
     const val rxJava = "2.2.10"
     const val rxAndroid = "2.1.1"
 
     const val threeTenAndroidBackport = "1.2.1"
 
     const val juint = "4.12"
+    const val junitExtension = "1.1.1"
     const val junit5DeMannodermausGradlePlugin = "1.5.1.0"
     const val junit5 = "5.5.1"
     const val mockK = "1.9.3"
-    const val testRunner = "1.2.0"
+    const val androidTesting = "1.2.0"
     const val espresso = "3.2.0"
+    const val hamcrest = "1.3"
+    const val robolectric = "4.3.1"
 }
 
 object Dependencies {
@@ -109,7 +113,7 @@ object Dependencies {
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
-    const val roomTesting = "android.arch.persistence.room:testing"
+    const val roomTesting = "android.arch.persistence.room:testing:${Versions.room}"
 
     //Java Annotations
     const val javax = "javax.inject:javax.inject:${Versions.javaxInject}"
@@ -123,10 +127,17 @@ object Dependencies {
 
     //Testing
     const val junit = "junit:junit:${Versions.juint}"
+    const val androidXJunitExtension = "androidx.test.ext:junit:${Versions.junitExtension}"
+    const val architectureCoreRuntime = "androidx.arch.core:core-runtime:${Versions.architectureCore}"
+    const val architectureCoreTesting = "androidx.arch.core:core-testing:${Versions.architectureCore}"
     const val junit5JupiterApi = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
     const val junit5JupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
     const val junit5JupiterParams = "org.junit.jupiter:junit-jupiter-params:${Versions.junit5}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
-    const val testRunner = "androidx.test:runner:${Versions.testRunner}"
+    const val androidTestCore = "androidx.test:core:${Versions.androidTesting}"
+    const val androidTestRunner = "androidx.test:runner:${Versions.androidTesting}"
+    const val androidTestRules = "androidx.test:rules:${Versions.androidTesting}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val hamcrest = "org.hamcrest:hamcrest-all:${Versions.hamcrest}"
+    const val roboelectric = "org.robolectric:robolectric:${Versions.robolectric}"
 }

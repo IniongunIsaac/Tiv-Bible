@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
-import com.iniongun.tivbible.common.utils.state.AppResource
+import com.iniongun.tivbible.common.utils.state.AppResult
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -19,8 +19,8 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel: ViewModel(), CoroutineScope {
 
-    val _notificationLiveData = MutableLiveData<LiveDataEvent<AppResource<Unit>>>()
-    val notificationLiveData = _notificationLiveData as LiveData<LiveDataEvent<AppResource<Unit>>>
+    val _notificationLiveData = MutableLiveData<LiveDataEvent<AppResult<Unit>>>()
+    val notificationLiveData = _notificationLiveData as LiveData<LiveDataEvent<AppResult<Unit>>>
 
     val compositeDisposable = CompositeDisposable()
 

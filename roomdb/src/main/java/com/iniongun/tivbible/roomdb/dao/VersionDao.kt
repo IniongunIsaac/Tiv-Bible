@@ -20,7 +20,7 @@ interface VersionDao {
     @Query("select * from Version where id = :versionId limit 1")
     fun getVersionById(versionId: String): Single<Version>
 
-    @Query("select id from Version where name = :versionName limit 1")
+    @Query("select id from Version where name like '%' || :versionName || '%' limit 1")
     fun getVersionIdByName(versionName: String): Single<String>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,5 +31,11 @@ interface VersionDao {
 
     @Delete
     fun deleteVersions(versions: List<Version>): Completable
+
+    @Query("DELETE FROM Version WHERE id = :versionId")
+    fun deleteVersionById(versionId: String): Completable
+
+    @Query("DELETE FROM Version")
+    fun deleteVersions(): Completable
 
 }

@@ -26,6 +26,9 @@ interface VerseDao {
     @Query("select * from Verse where chapter_id = :chapterId order by number asc")
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>
 
+    @Query("Select * from Verse inner join Chapter on Chapter.id = Verse.chapter_id inner join Book on Book.id = Chapter.book_id where Book.id = :bookId")
+    fun getVersesByBook(bookId: String): Observable<List<Verse>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVerses(vararg verses: Verse): Completable
 
@@ -34,5 +37,8 @@ interface VerseDao {
 
     @Delete
     fun deleteVerses(verses: List<Verse>): Completable
+
+    @Query("delete from Verse")
+    fun deleteAllVerses(): Completable
 
 }
