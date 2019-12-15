@@ -20,7 +20,7 @@ interface TestamentDao {
     @Query("select * from Testament where id = :testamentId limit 1")
     fun getTestamentById(testamentId: String): Single<Testament>
 
-    @Query("select id from Testament where name = :testamentName limit 1")
+    @Query("select id from Testament where name like '%' || :testamentName || '%' limit 1")
     fun getTestamentIdByName(testamentName: String): Single<String>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,7 +29,13 @@ interface TestamentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestaments(vararg testaments: Testament): Completable
 
+    @Query("DELETE FROM Testament WHERE id = :testamentId")
+    fun deleteTestamentById(testamentId: String): Completable
+
     @Delete
     fun deleteTestaments(testaments: List<Testament>): Completable
+
+    @Query("delete from Testament")
+    fun deleteTestaments(): Completable
 
 }

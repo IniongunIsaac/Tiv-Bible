@@ -29,4 +29,7 @@ interface SettingDao {
     @Delete
     fun deleteSettings(settings: List<Setting>): Completable
 
+    @Query("delete from Setting")
+    fun deleteSettings(): Completable
+
 }

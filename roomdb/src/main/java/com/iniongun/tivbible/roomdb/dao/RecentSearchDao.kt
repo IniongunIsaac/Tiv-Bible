@@ -29,4 +29,7 @@ interface RecentSearchDao {
     @Delete
     fun deleteRecentSearches(recentSearches: List<RecentSearch>): Completable
 
+    @Query("delete from RecentSearch")
+    fun deleteRecentSearches(): Completable
+
 }

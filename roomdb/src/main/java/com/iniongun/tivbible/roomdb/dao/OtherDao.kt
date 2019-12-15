@@ -29,4 +29,7 @@ interface OtherDao {
     @Delete
     fun deleteOthers(others: List<Other>): Completable
 
+    @Query("delete from Other")
+    fun deleteOthers(): Completable
+
 }

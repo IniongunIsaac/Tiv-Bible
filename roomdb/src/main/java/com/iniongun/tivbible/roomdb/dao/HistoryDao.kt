@@ -29,4 +29,7 @@ interface HistoryDao {
     @Delete
     fun deleteHistory(history: List<History>): Completable
 
+    @Query("delete from History")
+    fun deleteHistories(): Completable
+
 }

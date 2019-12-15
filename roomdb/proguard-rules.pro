@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn java.util.spi.LocaleServiceProvider
+-dontwarn sun.util.calendar.*
+-keep class org.threeten.bp.zone.*

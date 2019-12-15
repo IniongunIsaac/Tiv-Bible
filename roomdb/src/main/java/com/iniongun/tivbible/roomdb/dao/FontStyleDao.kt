@@ -17,10 +17,10 @@ interface FontStyleDao {
     @Query("select * from FontStyle")
     fun getAllFontStyles(): Observable<List<FontStyle>>
 
-    @Query("select * from FontStyle where name = :fontStyleName limit 1")
+    @Query("select * from FontStyle where name like '%' || :fontStyleName || '%' limit 1")
     fun getFontStyleByName(fontStyleName: String): Single<FontStyle>
 
-    @Query("select * from FontStyle where name = :fontStyleId")
+    @Query("select * from FontStyle where id = :fontStyleId")
     fun getFontStyleById(fontStyleId: String): Single<FontStyle>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,5 +31,8 @@ interface FontStyleDao {
 
     @Delete
     fun deleteFontStyles(fontStyles: List<FontStyle>): Completable
+
+    @Query("delete from FontStyle")
+    fun deleteAllFontStyles(): Completable
 
 }

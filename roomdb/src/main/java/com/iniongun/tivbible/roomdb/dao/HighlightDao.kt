@@ -33,4 +33,7 @@ interface HighlightDao {
     @Delete
     fun deleteHighlights(highlights: List<Highlight>): Completable
 
+    @Query("delete from Highlight")
+    fun deleteAllHighlights(): Completable
+
 }

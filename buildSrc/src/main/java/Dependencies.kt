@@ -48,6 +48,7 @@ object Versions {
     const val espresso = "3.2.0"
     const val hamcrest = "1.3"
     const val robolectric = "4.3.1"
+    const val threeTenBackport = "1.3.2"
 }
 
 object Dependencies {
@@ -140,4 +141,5 @@ object Dependencies {
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val hamcrest = "org.hamcrest:hamcrest-all:${Versions.hamcrest}"
     const val roboelectric = "org.robolectric:robolectric:${Versions.robolectric}"
+    const val threeTenBackport = "org.threeten:threetenbp:${Versions.threeTenBackport}"
 }

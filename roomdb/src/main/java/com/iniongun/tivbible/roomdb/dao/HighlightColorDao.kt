@@ -29,4 +29,7 @@ interface HighlightColorDao {
     @Delete
     fun deleteHighlightColors(highlightColors: List<HighlightColor>): Completable
 
+    @Query("delete from HighlightColor")
+    fun deleteAllHighlightColors(): Completable
+
 }

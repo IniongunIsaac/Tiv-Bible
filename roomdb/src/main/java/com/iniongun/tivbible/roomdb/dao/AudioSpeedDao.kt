@@ -29,4 +29,7 @@ interface AudioSpeedDao {
     @Delete
     fun deleteAudioSpeeds(audioSpeeds: List<AudioSpeed>): Completable
 
+    @Query("delete from AudioSpeed")
+    fun deleteAudioSpeeds(): Completable
+
 }

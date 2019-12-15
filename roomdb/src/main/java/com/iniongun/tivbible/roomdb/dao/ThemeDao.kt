@@ -29,4 +29,7 @@ interface ThemeDao {
     @Delete
     fun deleteThemes(themes: List<Theme>): Completable
 
+    @Query("delete from Theme")
+    fun deleteThemes(): Completable
+
 }
