@@ -9,25 +9,39 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: set up JDK 1.8
+    - name: Setup JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build --stacktrace
-#  lint:
-#    name: Lint
-#    runs-on: [macos-latest]
-#    needs: [build]
-#
-#    steps:
-#      - name: Android Lint
-#        run: ./gradlew lint
+
+  lint:
+    name: Lint
+    runs-on: [macos-latest]
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Android Lint
+        run: ./gradlew lint
+
   test:
     name: Run Unit Tests
     runs-on: [macos-latest]
-    needs: [build]
+    needs: [build, lint]
     
-    steps: 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
       - name: Run Tests
         run: ./gradlew test --stacktrace
