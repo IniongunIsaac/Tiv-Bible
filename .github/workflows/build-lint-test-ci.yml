@@ -14,15 +14,15 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew build
-  lint:
-    name: Lint
-    runs-on: [macos-latest]
-    needs: [build]
-    
-    steps:
-      - name: Android Lint
-        run: ./gradlew lint
+      run: ./gradlew build --stacktrace
+#  lint:
+#    name: Lint
+#    runs-on: [macos-latest]
+#    needs: [build]
+#
+#    steps:
+#      - name: Android Lint
+#        run: ./gradlew lint
   test:
     name: Run Unit Tests
     runs-on: [macos-latest]
@@ -30,4 +30,4 @@ jobs:
     
     steps: 
       - name: Run Tests
-        run: ./gradlew test
+        run: ./gradlew test --stacktrace
