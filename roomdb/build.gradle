@@ -89,11 +89,11 @@ dependencies {
     )
 
     androidTestImplementation(
-            Dependencies.androidTestCore,
-            Dependencies.androidTestRunner,
-            Dependencies.androidTestRules,
+            Dependencies.androidXTestCore,
+            Dependencies.androidXTestRunner,
+            Dependencies.androidXTestRules,
             Dependencies.roomTesting,
-            Dependencies.architectureCoreTesting,
+            Dependencies.androidXArchCoreTesting,
             Dependencies.androidXJunitExtension,
             Dependencies.junit5JupiterApi,
             Dependencies.junit5JupiterParams

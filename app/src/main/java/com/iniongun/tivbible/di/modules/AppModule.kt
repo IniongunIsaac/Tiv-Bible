@@ -3,6 +3,8 @@ package com.iniongun.tivbible.di.modules
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.iniongun.tivbible.TivBibleApplication
+import com.iniongun.tivbible.common.utils.rxScheduler.AppSchedulerProvider
+import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.di.scopes.AppScope
 import com.iniongun.tivbible.utils.AppConstants
 import dagger.Module
@@ -28,5 +30,9 @@ class AppModule {
     @AppScope
     fun providesSharedPreference(context: Context) = context.getSharedPreferences(
         AppConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+    @Provides
+    @AppScope
+    fun providesSchedulerProvider(): SchedulerProvider = AppSchedulerProvider()
 
 }

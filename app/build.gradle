@@ -87,7 +87,12 @@ dependencies {
             Dependencies.junit,
             Dependencies.mockK,
             Dependencies.junit5JupiterApi,
-            Dependencies.junit5JupiterParams
+            Dependencies.junit5JupiterParams,
+            Dependencies.roboelectric,
+            Dependencies.androidXTestCore,
+            Dependencies.androidXTestCoreKtx,
+            Dependencies.androidXArchCoreTesting,
+            Dependencies.androidXJunitExtension
     )
 
     testRuntimeOnly(
@@ -95,8 +100,10 @@ dependencies {
     )
 
     androidTestImplementation(
-            Dependencies.androidTestRunner,
-            Dependencies.espresso
+            Dependencies.espresso,
+            Dependencies.espressoContrib,
+            Dependencies.androidXTestRunner,
+            Dependencies.androidXTestRules,
     )
 
 }

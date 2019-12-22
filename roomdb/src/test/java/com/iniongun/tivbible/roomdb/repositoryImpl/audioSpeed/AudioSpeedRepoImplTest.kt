@@ -20,7 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith
  */
 
 @ExtendWith(MockKExtension::class)
-internal class AudioSpeedRepoImplTest {
+class AudioSpeedRepoImplTest {
 
     //class under test
     private lateinit var audioSpeedRepoImpl: AudioSpeedRepoImpl

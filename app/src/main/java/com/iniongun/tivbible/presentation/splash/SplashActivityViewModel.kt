@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
+import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
@@ -17,9 +18,7 @@ import com.iniongun.tivbible.repository.room.version.IVersionRepo
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function3
-import io.reactivex.schedulers.Schedulers
 import org.apache.commons.lang3.text.WordUtils
 import java.io.BufferedReader
 import javax.inject.Inject
@@ -31,6 +30,7 @@ import javax.inject.Inject
 
 class SplashActivityViewModel @Inject constructor(
     private val context: Context,
+    private val schedulerProvider: SchedulerProvider,
     private val preferencesRepo: IAppPreferencesRepo,
     private val versionRepo: IVersionRepo,
     private val testamentRepo: ITestamentRepo,
@@ -39,9 +39,9 @@ class SplashActivityViewModel @Inject constructor(
     private val versesRepo: IVersesRepo
 ) : BaseViewModel() {
 
-    var oldTestamentId = ""
-    var newTestamentId = ""
-    var versionId = ""
+    private var oldTestamentId = ""
+    private var newTestamentId = ""
+    private var versionId = ""
 
     init {
         setUpDB()
@@ -63,8 +63,8 @@ class SplashActivityViewModel @Inject constructor(
         if (preferencesRepo.isDBInitialized) {
             _notificationLiveData.postValue(LiveDataEvent(AppResult.success(message = null)))
             compositeDisposable.add(
-                bookRepo.getAllBooks().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                bookRepo.getAllBooks().subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
                     .subscribe({
                         Log.i("Books Size", it.size.toString())
                         Log.i("Books", it.toString())
@@ -96,8 +96,8 @@ class SplashActivityViewModel @Inject constructor(
                 versionRepo.insertVersions(versions),
                 testamentRepo.insertTestaments(testaments)
             )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({
                     getVersionAndTestamentId("Old", "Old", "New")
                 }, {
@@ -118,8 +118,8 @@ class SplashActivityViewModel @Inject constructor(
 
                     return@Function3 Triple(versionId, oldTestamentId, newTestamentId)
 
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                }).subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({
 
                     versionId = it.first
@@ -138,8 +138,8 @@ class SplashActivityViewModel @Inject constructor(
     private fun saveBooksAndChaptersAndVerses() {
         compositeDisposable.add(
             Observable.just(getTivBibleJsonData())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({ tivBibleDataList ->
 
                     val bibleBooks = tivBibleDataList.distinctBy { it.book }.sortedBy { it.orderNo }
@@ -222,8 +222,8 @@ class SplashActivityViewModel @Inject constructor(
                                 chapterRepo.insertChapters(chapters),
                                 versesRepo.addVerses(verses)
                             )
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(schedulerProvider.io())
+                                .observeOn(schedulerProvider.ui())
                                 .subscribe({
                                     print("Added book, chapters and verses sequence...")
                                 }, {
