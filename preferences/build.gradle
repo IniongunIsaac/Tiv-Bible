@@ -5,6 +5,10 @@ plugins {
     id("kotlin-kapt")
 }
 
+apply from: rootProject.file('enable-jacoco.gradle')
+
+enableJacoco(project, 'debug')
+
 android {
 
     compileSdkVersion Versions.compileSdkVersion
@@ -27,6 +31,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            testCoverageEnabled true
         }
     }
 
@@ -63,5 +71,14 @@ dependencies {
 
     testRuntimeOnly(
             Dependencies.junit5JupiterEngine
+    )
+
+    androidTestImplementation(
+            Dependencies.androidXTestCore,
+            Dependencies.androidXJunitExtension,
+            Dependencies.espresso,
+            Dependencies.espressoContrib,
+            Dependencies.androidXTestRunner,
+            Dependencies.androidXTestRules,
     )
 }

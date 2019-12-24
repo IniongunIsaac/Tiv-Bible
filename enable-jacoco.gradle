@@ -1,0 +1,86 @@
+ext.enableJacoco = { Project project, String variant ->
+
+    project.plugins.apply('jacoco')
+
+    final capVariant = variant.capitalize()
+
+    StringBuilder folderSb = new StringBuilder(variant.length() + 1)
+
+    for (int i = 0; i < variant.length(); i++) {
+
+        char c = variant.charAt(i)
+
+        if (Character.isUpperCase(c)) {
+            folderSb.append('/')
+            folderSb.append(Character.toLowerCase(c))
+        } else {
+            folderSb.append(c)
+        }
+    }
+
+    final folder = folderSb.toString()
+
+    project.android.testOptions {
+
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+
+    }
+
+    project.jacoco {
+        toolVersion = Versions.jacoco
+    }
+
+    project.tasks.create(
+            name: 'jacocoTestReport',
+            type: JacocoReport,
+            dependsOn: "test${capVariant}UnitTest"
+    ) {
+        def buildDir = project.buildDir
+
+        def coverageSourceDirs = [
+                "src/main/java",
+                "src/main/kotlin"
+        ]
+        def fileFilter = [
+                '**/R.class',
+                '**/R$*.class',
+                '**/*$ViewInjector*.*',
+                '**/*$ViewBinder*.*',
+                '**/BuildConfig.*',
+                '**/Manifest*.*'
+        ]
+
+        def javaClasses = fileTree(
+                dir: "$buildDir/intermediates/classes/$folder",
+                excludes: fileFilter
+        )
+
+        def kotlinClasses = fileTree(
+                dir: "$buildDir/tmp/kotlin-classes/$variant",
+                excludes: fileFilter
+        )
+
+        group = "Reporting"
+
+        description = "Generate Jacoco coverage reports for the ${project.name} with the " +
+                "$variant variant."
+
+        classDirectories = files([javaClasses], [kotlinClasses])
+
+        additionalSourceDirs = files(coverageSourceDirs)
+
+        sourceDirectories = files(coverageSourceDirs)
+
+        executionData = files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+
+    }
+}

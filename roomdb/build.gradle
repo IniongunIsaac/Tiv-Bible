@@ -1,26 +1,32 @@
-plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlin-kapt")
-}
+//plugins {
+//    id("com.android.library")
+//    id("kotlin-android")
+//    id("kotlin-android-extensions")
+//    id("kotlin-kapt")
+//    id("de.mannodermaus.android-junit5")
+//}
+
+apply from: rootProject.file('android-modules.gradle')
+//apply from: rootProject.file('enable-jacoco.gradle')
+//
+//enableJacoco(project, 'debug')
 
 android {
 
-    compileSdkVersion Versions.compileSdkVersion
-
-    buildToolsVersion Versions.buildToolsVersion
+//    compileSdkVersion Versions.compileSdkVersion
+//
+//    buildToolsVersion Versions.buildToolsVersion
 
 
     defaultConfig {
 
-        minSdkVersion Versions.minSdkVersion
-        targetSdkVersion Versions.targetSdkVersion
-        versionCode Versions.versionCode
-        versionName Versions.versionName
+//        minSdkVersion Versions.minSdkVersion
+//        targetSdkVersion Versions.targetSdkVersion
+//        versionCode Versions.versionCode
+//        versionName Versions.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        consumerProguardFiles 'consumer-rules.pro'
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -34,17 +40,22 @@ android {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
+//    buildTypes {
+//
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//
+//        debug {
+//            testCoverageEnabled true
+//        }
+//    }
+//
+//    compileOptions {
+//        sourceCompatibility = 1.8
+//        targetCompatibility = 1.8
+//    }
 
     kotlinOptions {
         jvmTarget = "1.8"
@@ -55,27 +66,30 @@ android {
         exclude 'META-INF/LICENSE-notice.md'
     }
 
-    testOptions.unitTests {
-        includeAndroidResources = true
-    }
+//    testOptions {
+////        execution 'ANDROID_TEST_ORCHESTRATOR'
+//        animationsDisabled true
+//        unitTests {
+//            includeAndroidResources = true
+//        }
+//    }
 
 }
 
 dependencies {
 
     implementation(
-            fileTree(dir: 'libs', include: ['*.jar']),
-            Dependencies.kotlinStdLib,
-            Dependencies.androidXCoreKts,
+//            fileTree(dir: 'libs', include: ['*.jar']),
+//            Dependencies.kotlinStdLib,
+//            Dependencies.androidXCoreKts,
 
             Dependencies.gson,
-
             Dependencies.threeTenAndroidBackport,
 
-            Dependencies.javax,
-            Dependencies.javaxAnnotation,
+//            Dependencies.javax,
+//            Dependencies.javaxAnnotation,
 
-            project(":entities"),
+//            project(":entities"),
             project(":repository")
     )
 
@@ -89,41 +103,51 @@ dependencies {
     )
 
     androidTestImplementation(
-            Dependencies.androidXTestCore,
-            Dependencies.androidXTestRunner,
-            Dependencies.androidXTestRules,
+//            Dependencies.androidXTestCore,
+//            Dependencies.androidXTestRunner,
+//            Dependencies.androidXTestRules,
             Dependencies.roomTesting,
-            Dependencies.androidXArchCoreTesting,
-            Dependencies.androidXJunitExtension,
-            Dependencies.junit5JupiterApi,
-            Dependencies.junit5JupiterParams
+//            Dependencies.androidXArchCoreTesting,
+//            Dependencies.androidXJunitExtension,
+//            Dependencies.junit5JupiterApi,
+//            Dependencies.junit5JupiterParams
     )
 
 //    androidTestImplementation(Dependencies.threeTenBackport) {
 //        //exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
 //        exclude module: Dependencies.threeTenAndroidBackport
+//        exclude group: "org.threeten", module: "threetenbp-1.4.0-no-tzdb-no-tzdb"
 //    }
 
-    testImplementation(
-            Dependencies.junit,
-            Dependencies.mockK,
-            Dependencies.junit5JupiterApi,
-            Dependencies.junit5JupiterParams,
-            Dependencies.hamcrest,
-            Dependencies.roboelectric
-    )
+//    testImplementation(
+//            Dependencies.junit,
+//            Dependencies.mockK,
+//            Dependencies.junit5JupiterApi,
+//            Dependencies.junit5JupiterParams,
+//            Dependencies.hamcrest,
+//            Dependencies.roboelectric
+//    )
 
     testImplementation(Dependencies.threeTenBackport) {
         //exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
         exclude module: Dependencies.threeTenAndroidBackport
+        exclude group: "org.threeten.bp", module: "threetenbp-1.4.0-no-tzdb-no-tzdb"
     }
 
-    testRuntimeOnly(
-            Dependencies.junit5JupiterEngine
-    )
-
-    androidTestRuntimeOnly(
-            Dependencies.junit5JupiterEngine
-    )
+//    testRuntimeOnly(
+//            Dependencies.junit5JupiterEngine
+//    )
+//
+//    androidTestRuntimeOnly(
+//            Dependencies.junit5JupiterEngine
+//    )
 
 }
+
+//configurations {
+//    all {
+//        resolutionStrategy {
+//            force Dependencies.threeTenBackport
+//        }
+//    }
+//}

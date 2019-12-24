@@ -62,7 +62,7 @@ internal class SplashActivityViewModelTest {
 //        splashActivityViewModel = SplashActivityViewModel(
 //            context,
 //            testSchedulerProvider,
-//            appPreferencesRepo,
+//            AppPreferenceImpl(),
 //            versionRepo,
 //            testamentRepo,
 //            bookRepo,
@@ -82,6 +82,8 @@ internal class SplashActivityViewModelTest {
 //        every { appPreferencesRepo.isDBInitialized } answers { false }
 //
 //        appPreferencesRepo.isDBInitialized = false
+
+//        every { versionRepo.insertVersions(any()) } answers { Completable.complete() }
 //
 //        assertEquals(AppResult.loading<Unit>(), splashActivityViewModel.notificationLiveData.getOrAwaitValue().getContentIfNotHandled())
     }

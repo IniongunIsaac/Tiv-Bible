@@ -1,1 +1,1 @@
-/Users/isaaciniongun/StudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Dependencies.class:/Users/isaaciniongun/StudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Versions.class
+/Users/isaaciniongun/StudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Dependencies.class:/Users/isaaciniongun/StudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Modules.class:/Users/isaaciniongun/StudioProjects/TivBible/buildSrc/build/classes/kotlin/main/Versions.class

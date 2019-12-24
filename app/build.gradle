@@ -7,6 +7,10 @@ plugins {
     id("de.mannodermaus.android-junit5")
 }
 
+apply from: rootProject.file('enable-jacoco.gradle')
+
+enableJacoco(project, 'debug')
+
 android {
 
     compileSdkVersion Versions.compileSdkVersion
@@ -36,11 +40,20 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            testCoverageEnabled true
+        }
     }
 
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     testOptions {
@@ -105,6 +118,8 @@ dependencies {
     )
 
     androidTestImplementation(
+            Dependencies.androidXTestCore,
+            Dependencies.androidXJunitExtension,
             Dependencies.espresso,
             Dependencies.espressoContrib,
             Dependencies.androidXTestRunner,

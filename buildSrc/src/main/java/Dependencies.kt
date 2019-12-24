@@ -15,6 +15,8 @@ object Versions {
     const val versionCode = 1
     const val versionName = "1.0"
 
+    const val java = 1.8
+
     const val kotlin = "1.3.60"
     const val gradle = "3.5.2"
     const val navLifecycle = "2.1.0"
@@ -38,6 +40,7 @@ object Versions {
     const val rxAndroid = "2.1.1"
 
     const val threeTenAndroidBackport = "1.2.1"
+    const val jacoco = "0.8.1"
 
     const val juint = "4.12"
     const val junitExtension = "1.1.1"
@@ -51,6 +54,15 @@ object Versions {
     const val threeTenBackport = "1.4.0"
 }
 
+object Modules {
+    const val app = ":app"
+    const val roomdb = ":roomdb"
+    const val entities = ":entities"
+    const val repository = ":repository"
+    const val preferences = ":preferences"
+    const val common = ":common"
+}
+
 object Dependencies {
 
     //Classpaths
@@ -58,6 +70,7 @@ object Dependencies {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navLifecycle}"
     const val junit5DeMannodermausGradlePlugin = "de.mannodermaus.gradle.plugins:android-junit5:${Versions.junit5DeMannodermausGradlePlugin}"
+    const val jacoco = "org.jacoco:org.jacoco.core:${Versions.jacoco}"
 
     //Kotlin Standard Library
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"

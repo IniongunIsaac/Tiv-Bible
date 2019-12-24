@@ -54,7 +54,7 @@ internal class BookmarkRepoImplTest {
         every { bookmarkDaoMock.getBookmarkByDate(bookmarkedOn) } returns Observable.just(
             testBookmarks.filter { it.bookmarkedOn == OffsetDateTime.parse(bookmarkedOn) })
 
-        bookmarkRepoImpl.getBookmarkByDate(bookmarkedOn).test().assertValue { it.count() == 1 }
+        bookmarkRepoImpl.getBookmarkByDate(bookmarkedOn).test().assertValue { it.isNotEmpty() }
 
     }
 

@@ -21,6 +21,7 @@ import io.reactivex.Single
 import io.reactivex.functions.Function3
 import org.apache.commons.lang3.text.WordUtils
 import java.io.BufferedReader
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -172,7 +173,7 @@ class SplashActivityViewModel @Inject constructor(
                             orderNo = bibleBook.orderNo,
                             numberOfChapters = numOfChapters,
                             numberOfVerses = numOfBookVerses,
-                            name = WordUtils.capitalize(bibleBook.book.toLowerCase())
+                            name = WordUtils.capitalize(bibleBook.book.toLowerCase(Locale.getDefault()))
                         )
 
                         //create chapters list for saving into the database
