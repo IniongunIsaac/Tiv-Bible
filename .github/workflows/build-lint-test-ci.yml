@@ -80,7 +80,7 @@ jobs:
   jacoco-test-report:
     name: Generate Jacoco Test Report
     runs-on: [macos-latest]
-    needs: [build, lint, unit-tests, instrumented-tests]
+    needs: [build, lint, unit-test, instrumented-test]
     if: success()
 
     steps:
@@ -105,6 +105,7 @@ jobs:
   build-debug-apk:
     name: Generate APK
     runs-on: [macos-latest]
+    needs: [build, lint, unit-test, instrumented-test]
 
     steps:
       - name: Checkout Repository
