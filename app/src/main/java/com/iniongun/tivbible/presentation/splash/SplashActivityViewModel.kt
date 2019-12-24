@@ -19,7 +19,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.Function3
-import org.apache.commons.lang3.text.WordUtils
+import org.apache.commons.text.WordUtils
 import java.io.BufferedReader
 import java.util.*
 import javax.inject.Inject

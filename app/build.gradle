@@ -1,29 +1,8 @@
-plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
-    id("de.mannodermaus.android-junit5")
-}
-
-apply from: rootProject.file('enable-jacoco.gradle')
-
-enableJacoco(project, 'debug')
+apply from: rootProject.file('android-modules-common-config.gradle')
 
 android {
 
-    compileSdkVersion Versions.compileSdkVersion
-
-    buildToolsVersion Versions.buildToolsVersion
-
     defaultConfig {
-        applicationId Versions.applicationId
-        minSdkVersion Versions.minSdkVersion
-        targetSdkVersion Versions.targetSdkVersion
-        versionCode Versions.versionCode
-        versionName Versions.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -35,27 +14,6 @@ android {
         enabled = true
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        debug {
-            testCoverageEnabled true
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
-
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -65,10 +23,7 @@ android {
 dependencies {
 
     implementation(
-            fileTree(dir: 'libs', include: ['*.jar']),
-            Dependencies.kotlinStdLib,
             Dependencies.appCompat,
-            Dependencies.androidXCoreKts,
             Dependencies.constraintLayout,
 
             Dependencies.coroutines,
@@ -84,16 +39,15 @@ dependencies {
 
             Dependencies.gson,
 
-            Dependencies.wordUtilities,
+            Dependencies.commonsText,
 
             Dependencies.dagger,
             Dependencies.daggerAndroidSupport,
 
-            project(':roomdb'),
-            project(":entities"),
-            project(":repository"),
-            project(":preferences"),
-            project(":common")
+            project(Modules.roomdb),
+            project(Modules.repository),
+            project(Modules.preferences),
+            project(Modules.common)
     )
 
     kapt(
@@ -102,28 +56,15 @@ dependencies {
     )
 
     testImplementation(
-            Dependencies.junit,
-            Dependencies.mockK,
-            Dependencies.junit5JupiterApi,
-            Dependencies.junit5JupiterParams,
-            Dependencies.roboelectric,
             Dependencies.androidXTestCore,
             Dependencies.androidXTestCoreKtx,
             Dependencies.androidXArchCoreTesting,
             Dependencies.androidXJunitExtension
     )
 
-    testRuntimeOnly(
-            Dependencies.junit5JupiterEngine
-    )
-
     androidTestImplementation(
-            Dependencies.androidXTestCore,
-            Dependencies.androidXJunitExtension,
             Dependencies.espresso,
-            Dependencies.espressoContrib,
-            Dependencies.androidXTestRunner,
-            Dependencies.androidXTestRules,
+            Dependencies.espressoContrib
     )
 
 }

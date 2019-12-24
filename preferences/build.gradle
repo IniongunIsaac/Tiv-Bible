@@ -11,16 +11,16 @@ enableJacoco(project, 'debug')
 
 android {
 
-    compileSdkVersion Versions.compileSdkVersion
+    compileSdkVersion DepVersions.compileSdkVersion
 
-    buildToolsVersion Versions.buildToolsVersion
+    buildToolsVersion DepVersions.buildToolsVersion
 
     defaultConfig {
 
-        minSdkVersion Versions.minSdkVersion
-        targetSdkVersion Versions.targetSdkVersion
-        versionCode Versions.versionCode
-        versionName Versions.versionName
+        minSdkVersion DepVersions.minSdkVersion
+        targetSdkVersion DepVersions.targetSdkVersion
+        versionCode DepVersions.versionCode
+        versionName DepVersions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

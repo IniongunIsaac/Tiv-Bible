@@ -19,7 +19,11 @@ buildscript {
     }
 
     
-    }
+}
+
+plugins {
+    id("de.fayard.buildSrcVersions") version "0.7.0"
+}
 
 apply plugin: "android-reporting"
 

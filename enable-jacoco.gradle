@@ -31,7 +31,7 @@ ext.enableJacoco = { Project project, String variant ->
     }
 
     project.jacoco {
-        toolVersion = Versions.jacoco
+        toolVersion = DepVersions.jacoco
     }
 
     project.tasks.create(
@@ -69,13 +69,13 @@ ext.enableJacoco = { Project project, String variant ->
         description = "Generate Jacoco coverage reports for the ${project.name} with the " +
                 "$variant variant."
 
-        classDirectories = files([javaClasses], [kotlinClasses])
+        classDirectories.from = files([javaClasses], [kotlinClasses])
 
-        additionalSourceDirs = files(coverageSourceDirs)
+        additionalSourceDirs.from = files(coverageSourceDirs)
 
-        sourceDirectories = files(coverageSourceDirs)
+        sourceDirectories.from = files(coverageSourceDirs)
 
-        executionData = files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
+        executionData.from = files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
 
         reports {
             xml.enabled = true
