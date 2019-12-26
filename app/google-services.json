@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "10175455130",
+    "firebase_url": "https://tiv-bible.firebaseio.com",
+    "project_id": "tiv-bible",
+    "storage_bucket": "tiv-bible.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10175455130:android:b683e42e8dd058ecb72423",
+        "android_client_info": {
+          "package_name": "com.iniongun.tivbible"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10175455130-d742r8cpbkvvt24l3esvt8m1022ueabu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3hmkXSwN2_fda_Jp-_QRzSeiDnabI6FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10175455130-d742r8cpbkvvt24l3esvt8m1022ueabu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10175455130:android:1f7a31e02b444543b72423",
+        "android_client_info": {
+          "package_name": "com.iniongun.tivbible.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10175455130-d742r8cpbkvvt24l3esvt8m1022ueabu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3hmkXSwN2_fda_Jp-_QRzSeiDnabI6FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10175455130-d742r8cpbkvvt24l3esvt8m1022ueabu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

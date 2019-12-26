@@ -1,0 +1,4 @@
+Core Features:
+
+- Internal database initialization on application startup.
+- Improved user interface with updated fonts.

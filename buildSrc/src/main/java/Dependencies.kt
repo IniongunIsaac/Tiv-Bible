@@ -44,6 +44,16 @@ object DepVersions {
     const val commonsLang3 = "3.9"
     const val commonsText = "1.8"
 
+    const val googleServices = "4.3.3"
+    const val firebaseAnalytics = "17.2.1"
+    const val firebasePerformanceMonitoring = "19.0.4"
+    const val firebasePerformanceMonitoringPlugin = "1.3.1"
+    const val firebaseMessaging = "20.1.0"
+    const val firebaseAppDistribution = "1.3.1"
+    const val multiDex = "2.0.1"
+    const val fabricGradle = "1.31.2"
+    const val crashlytics = "2.10.1"
+
     const val juint = "4.12"
     const val junitExtension = "1.1.1"
     const val junit5DeMannodermausGradlePlugin = "1.5.1.0"
@@ -73,6 +83,18 @@ object Dependencies {
     const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${DepVersions.navLifecycle}"
     const val junit5DeMannodermausGradlePlugin = "de.mannodermaus.gradle.plugins:android-junit5:${DepVersions.junit5DeMannodermausGradlePlugin}"
     const val jacoco = "org.jacoco:org.jacoco.core:${DepVersions.jacoco}"
+    const val googleServices = "com.google.gms:google-services:${DepVersions.googleServices}"
+    const val fabricGradle = "io.fabric.tools:gradle:${DepVersions.fabricGradle}"
+    const val firebasePerformanceMonitoringPlugin = "com.google.firebase:perf-plugin:${DepVersions.firebasePerformanceMonitoringPlugin}"
+    const val firebaseAppDistribution = "com.google.firebase:firebase-appdistribution-gradle:${DepVersions.firebaseAppDistribution}"
+
+
+
+    //Firebase
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${DepVersions.firebaseAnalytics}"
+    const val crashlytics = "com.crashlytics.sdk.android:crashlytics:${DepVersions.crashlytics}"
+    const val firebasePerformanceMonitoring = "com.google.firebase:firebase-perf:${DepVersions.firebasePerformanceMonitoring}"
+    const val firebaseMessaging = "com.google.firebase:firebase-messaging:${DepVersions.firebaseMessaging}"
 
     //Kotlin Standard Library
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${DepVersions.kotlin}"
@@ -141,6 +163,9 @@ object Dependencies {
     //Apache string utilities
     const val wordUtilities = "org.apache.commons:commons-lang3:${DepVersions.commonsLang3}"
     const val commonsText = "org.apache.commons:commons-text:${DepVersions.commonsText}"
+
+    //Others
+    const val multiDex = "androidx.multidex:multidex:${DepVersions.multiDex}"
 
     //Testing
     const val junit = "junit:junit:${DepVersions.juint}"

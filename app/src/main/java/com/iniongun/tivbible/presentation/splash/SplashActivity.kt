@@ -30,7 +30,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         hideStatusAndNavigationBar()
+
     }
 
     override fun setNotificationObserver() {
@@ -74,6 +76,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
 
     override fun showLoadingDialog() {
         setupProgressGroup.visibility = VISIBLE
+        copyrightVersionTextView.visibility = GONE
     }
 
     override fun dismissLoadingDialog() {
