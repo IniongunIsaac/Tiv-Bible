@@ -116,7 +116,7 @@ jobs:
           java-version: 1.8
 
       - name: Export Firebase Token
-        runs: export FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}
+        run: export FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}
 
       - name: Build debug APK
         run: ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
