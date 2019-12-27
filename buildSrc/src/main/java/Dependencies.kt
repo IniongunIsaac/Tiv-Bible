@@ -16,6 +16,7 @@ object DepVersions {
     const val versionName = "1.0"
 
     const val java = 1.8
+    const val jaxb = "2.3.1"
 
     const val kotlin = "1.3.61"
     const val gradle = "3.5.3"
@@ -87,8 +88,6 @@ object Dependencies {
     const val fabricGradle = "io.fabric.tools:gradle:${DepVersions.fabricGradle}"
     const val firebasePerformanceMonitoringPlugin = "com.google.firebase:perf-plugin:${DepVersions.firebasePerformanceMonitoringPlugin}"
     const val firebaseAppDistribution = "com.google.firebase:firebase-appdistribution-gradle:${DepVersions.firebaseAppDistribution}"
-
-
 
     //Firebase
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${DepVersions.firebaseAnalytics}"
@@ -166,6 +165,7 @@ object Dependencies {
 
     //Others
     const val multiDex = "androidx.multidex:multidex:${DepVersions.multiDex}"
+    const val jaxb = "javax.xml.bind:jaxb-api:${DepVersions.jaxb}"
 
     //Testing
     const val junit = "junit:junit:${DepVersions.juint}"
