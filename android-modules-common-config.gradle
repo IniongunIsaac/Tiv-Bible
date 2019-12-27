@@ -6,9 +6,9 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 apply plugin: "de.mannodermaus.android-junit5"
 
-apply from: rootProject.file('enable-jacoco.gradle')
+apply from: rootProject.file('jacoco-common-config.gradle')
 
-enableJacoco(project, 'debug')
+//enableJacoco(project, 'debug')
 
 android {
 
@@ -84,26 +84,34 @@ dependencies {
             Dependencies.androidXTestRules,
             Dependencies.androidXArchCoreTesting,
             Dependencies.androidXJunitExtension,
-            Dependencies.junit5JupiterApi,
+            //Dependencies.junit5JupiterApi,
             Dependencies.junit5JupiterParams
     )
+
+    androidTestImplementation(Dependencies.junit5JupiterApi) {
+        exclude group: "org.junit.platform", module: "junit-platform-commons"
+    }
 
     testImplementation(
             Dependencies.junit,
             Dependencies.mockK,
-            Dependencies.junit5JupiterApi,
+            //Dependencies.junit5JupiterApi,
             Dependencies.junit5JupiterParams,
             Dependencies.hamcrest,
             Dependencies.roboelectric
     )
 
-    testRuntimeOnly(
-            Dependencies.junit5JupiterEngine
-    )
+    testImplementation(Dependencies.junit5JupiterApi) {
+        exclude group: "org.junit.platform", module: "junit-platform-commons"
+    }
 
-    androidTestRuntimeOnly(
-            Dependencies.junit5JupiterEngine
-    )
+    testRuntimeOnly(Dependencies.junit5JupiterEngine) {
+        exclude group: "org.junit.platform", module: "junit-platform-commons"
+    }
+
+    androidTestRuntimeOnly(Dependencies.junit5JupiterEngine) {
+        exclude group: "org.junit.platform", module: "junit-platform-commons"
+    }
 
 //    runtimeOnly(
 //            Dependencies.jaxb

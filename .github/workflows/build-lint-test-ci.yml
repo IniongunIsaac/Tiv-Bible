@@ -76,14 +76,7 @@ jobs:
           java-version: 1.8
 
       - name: Generate JaCoCo Test Report
-        run: ./gradlew jacocoTestReport
-
-      - name: Upload JaCoCo Test Report Artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: jacoco-test-report
-          path: app/build/reports/jacoco-test-report.html
-
+        run: ./gradlew jacocoFullProjectReport
 
   build-debug-apk:
     name: Generate APK
@@ -121,6 +114,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+
+      - name: Export Firebase Token
+        runs: export FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}
 
       - name: Build debug APK
         run: ./gradlew assembleDebug appDistributionUploadDebug --stacktrace

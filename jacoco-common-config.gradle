@@ -1,0 +1,117 @@
+//ext.enableJacoco = { Project project, String variant ->
+//
+//    project.plugins.apply('jacoco')
+//
+//    final capVariant = variant.capitalize()
+//
+//    StringBuilder folderSb = new StringBuilder(variant.length() + 1)
+//
+//    for (int i = 0; i < variant.length(); i++) {
+//
+//        char c = variant.charAt(i)
+//
+//        if (Character.isUpperCase(c)) {
+//            folderSb.append('/')
+//            folderSb.append(Character.toLowerCase(c))
+//        } else {
+//            folderSb.append(c)
+//        }
+//    }
+//
+//    final folder = folderSb.toString()
+//
+//    project.android.testOptions {
+//
+//        unitTests.all {
+//            jacoco {
+//                includeNoLocationClasses = true
+//            }
+//        }
+//
+//    }
+//
+//    project.jacoco {
+//        toolVersion = DepVersions.jacoco
+//    }
+//
+//    project.tasks.create(
+//            name: 'jacocoTestReport',
+//            type: JacocoReport,
+//            dependsOn: "test${capVariant}UnitTest"
+//    ) {
+//        def buildDir = project.buildDir
+//
+//        def coverageSourceDirs = [
+//                "src/main/java",
+//                "src/main/kotlin"
+//        ]
+//        def fileFilter = [
+//                '**/R.class',
+//                '**/R$*.class',
+//                '**/*$ViewInjector*.*',
+//                '**/*$ViewBinder*.*',
+//                '**/BuildConfig.*',
+//                '**/Manifest*.*'
+//        ]
+//
+//        def javaClasses = fileTree(
+//                dir: "$buildDir/intermediates/classes/$folder",
+//                excludes: fileFilter
+//        )
+//
+//        def kotlinClasses = fileTree(
+//                dir: "$buildDir/tmp/kotlin-classes/$variant",
+//                excludes: fileFilter
+//        )
+//
+//        group = "Reporting"
+//
+//        description = "Generate Jacoco coverage reports for the ${project.name} with the " +
+//                "$variant variant."
+//
+//        classDirectories.from = files([javaClasses], [kotlinClasses])
+//
+//        additionalSourceDirs.from = files(coverageSourceDirs)
+//
+//        sourceDirectories.from = files(coverageSourceDirs)
+//
+//        executionData.from = files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
+//
+//        reports {
+//            xml.enabled = false
+//            html.enabled = true
+//        }
+//
+//    }
+//}
+
+apply plugin: 'jacoco'
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    reports {
+        xml.enabled = false
+        csv.enabled = false
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/*$$ViewBinder*.*',
+                      '**/inject/*',
+                      '**/*$InjectAdapter.*',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/Dagger*.*',
+                      '**/*_Provide*Factory.*',
+                      '**/*_Member*Injector.*',
+                      '**/*_Factory.*']
+
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from = files([debugTree])
+    executionData.from = fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec", "outputs/code-coverage/connected/*coverage.ec"
+    ])
+}

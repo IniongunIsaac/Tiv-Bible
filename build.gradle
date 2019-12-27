@@ -35,6 +35,7 @@ plugins {
 }
 
 apply plugin: "android-reporting"
+apply plugin: 'jacoco'
 
 allprojects {
     repositories {
@@ -50,4 +51,40 @@ task clean(type: Delete) {
 
 subprojects {
     task allDependencies(type: DependencyReportTask) {}
+}
+
+
+task jacocoFullProjectReport(type: JacocoReport, dependsOn: [
+        "${Modules.app}:jacocoTestReport",
+        "${Modules.common}:jacocoTestReport",
+        "${Modules.preferences}:jacocoTestReport",
+        "${Modules.repository}:jacocoTestReport",
+        "${Modules.roomdb}:jacocoTestReport"
+]) {
+    reports {
+        xml.enabled = false
+        csv.enabled = false
+        html.enabled = true
+    }
+    sourceDirectories.from = files([tasks.getByPath("${Modules.app}:jacocoTestReport").sourceDirectories,
+                               tasks.getByPath("${Modules.common}:jacocoTestReport").sourceDirectories,
+                               tasks.getByPath("${Modules.preferences}:jacocoTestReport").sourceDirectories,
+                               tasks.getByPath("${Modules.repository}:jacocoTestReport").sourceDirectories,
+                               tasks.getByPath("${Modules.roomdb}:jacocoTestReport").sourceDirectories
+    ])
+
+    classDirectories.from = files([tasks.getByPath("${Modules.app}:jacocoTestReport").classDirectories,
+                              tasks.getByPath("${Modules.common}:jacocoTestReport").classDirectories,
+                              tasks.getByPath("${Modules.preferences}:jacocoTestReport").classDirectories,
+                              tasks.getByPath("${Modules.repository}:jacocoTestReport").classDirectories,
+                              tasks.getByPath("${Modules.roomdb}:jacocoTestReport").classDirectories
+    ])
+
+    executionData.from = files([tasks.getByPath("${Modules.app}:jacocoTestReport").executionData,
+                           tasks.getByPath("${Modules.common}:jacocoTestReport").executionData,
+                           tasks.getByPath("${Modules.preferences}:jacocoTestReport").executionData,
+                           tasks.getByPath("${Modules.repository}:jacocoTestReport").executionData,
+                           tasks.getByPath("${Modules.roomdb}:jacocoTestReport").executionData
+    ])
+
 }
