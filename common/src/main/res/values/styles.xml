@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -9,6 +9,11 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/comfortaa</item>
         <!-- Target Android sdk versions < 26 and > 14. -->
         <item name="fontFamily">@font/comfortaa</item>
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -20,7 +25,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/app_text_size</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:fontFamily">@font/comfortaa</item>
     </style>
 
@@ -55,6 +60,15 @@
     <style name="AppText.GrayedOut" parent="AppText">
         <item name="android:textSize">@dimen/app_text_size</item>
         <item name="android:textColor">@color/faint_text_color</item>
+    </style>
+
+    <style name="AppOutlinedTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/app_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>

@@ -8,8 +8,6 @@ apply plugin: "de.mannodermaus.android-junit5"
 
 apply from: rootProject.file('jacoco-common-config.gradle')
 
-//enableJacoco(project, 'debug')
-
 android {
 
     compileSdkVersion DepVersions.compileSdkVersion

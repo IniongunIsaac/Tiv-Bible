@@ -9,7 +9,8 @@ dependencies {
             Dependencies.javax,
             Dependencies.javaxAnnotation,
 
-            project(":repository")
+            project(Modules.repository),
+            project(Modules.common)
     )
 
     androidTestImplementation(

@@ -3,7 +3,20 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'io.fabric'
 apply from: rootProject.file('android-modules-common-config.gradle')
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(rootDir.getCanonicalPath() + '/' + keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
 
     defaultConfig {
 
@@ -19,9 +32,15 @@ android {
 
     buildTypes {
 
+        release {
+            //signingConfig signingConfigs.release
+        }
+
         debug {
             versionNameSuffix "-debug"
             applicationIdSuffix ".debug"
+
+            //signingConfig signingConfigs.release
 
             firebaseAppDistribution {
                 releaseNotesFile="./appdistribution/releasenotes.txt"
@@ -81,7 +100,8 @@ dependencies {
             project(Modules.roomdb),
             project(Modules.repository),
             project(Modules.preferences),
-            project(Modules.common)
+            project(Modules.common),
+            project(Modules.reader)
     )
 
     kapt(

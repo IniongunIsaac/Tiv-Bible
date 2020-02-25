@@ -3,13 +3,17 @@ package com.iniongun.tivbible.presentation.splash
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.iniongun.tivbible.BR
 import com.iniongun.tivbible.R
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
+import com.iniongun.tivbible.common.utils.navigation.AppActivityNavCommands
 import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.databinding.ActivitySplashBinding
 import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.schedule
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewModel>() {
 
@@ -22,7 +26,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
 
     override fun getViewModel() = splashActivityViewModel
 
-    override fun getBindingVariable() = 0
+    override fun getBindingVariable() = BR.ViewModel
 
     override fun getBinding(binding: ActivitySplashBinding) {
         this.binding = binding
@@ -32,6 +36,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
         super.onCreate(savedInstanceState)
 
         hideStatusAndNavigationBar()
+
+        observeStartHomeActivityLiveData()
 
     }
 
@@ -65,12 +71,30 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
                         showMessage(currentFocus!!, message)
                     }
 
-                    //navigate to next screen of the app
+                    startHomeActivity()
 
                 }
 
             }
 
+        })
+    }
+
+    private fun startHomeActivity() {
+        //navigate to reader section of the app
+        startActivity(AppActivityNavCommands.getHomeActivityIntent(this))
+        //remove splash activity from backstack
+        finish()
+    }
+
+    private fun observeStartHomeActivityLiveData() {
+        splashActivityViewModel.startHomeLiveData.observe(this, LiveDataEventObserver {
+            if (it) {
+                dismissLoadingDialog()
+                Timer().schedule(3000) {
+                    startHomeActivity()
+                }
+            }
         })
     }
 
@@ -81,6 +105,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
 
     override fun dismissLoadingDialog() {
         setupProgressGroup.visibility = GONE
+        progressBar.visibility = GONE
+        setupInProgressTextView.visibility = GONE
         copyrightVersionTextView.visibility = VISIBLE
     }
 

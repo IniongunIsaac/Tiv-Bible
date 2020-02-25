@@ -2,6 +2,7 @@ package com.iniongun.tivbible.preferences.repostoryImpl
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.iniongun.tivbible.common.utils.theme.ThemeConstants
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.preferences.utils.PreferenceConstants
 import com.iniongun.tivbible.preferences.utils.getTypeToken
@@ -22,7 +23,9 @@ class AppPreferencesRepoImpl @Inject constructor(
         get() = getPreference(PreferenceConstants.DB_INITIALIZED_KEY, false)
         set(value) = setPreference(PreferenceConstants.DB_INITIALIZED_KEY, value)
 
-    //private val verseType = object : TypeToken<Verse>() {}.type
+    override var currentTheme: String
+        get() = getPreference(PreferenceConstants.CURRENT_THEME_KEY, ThemeConstants.SYSTEM_DEFAULT.name)
+        set(value) = setPreference(PreferenceConstants.CURRENT_THEME_KEY, value)
 
     override var testPreferenceVerse: Verse
         get() = gson.fromJson<Verse>(getPreference(PreferenceConstants.TEST_PREFERENCE_VERSE_KEY, ""), getTypeToken<Verse>())

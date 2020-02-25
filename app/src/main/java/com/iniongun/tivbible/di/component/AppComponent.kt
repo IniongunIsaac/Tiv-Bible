@@ -21,7 +21,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         RoomModule::class,
         RepositoryModule::class,
         ViewModelsModule::class,
-        AppActivityBindingModule::class
+        AppActivityBindingModule::class,
+        AppFragmentBindingModule::class
     ]
 )
 @AppScope

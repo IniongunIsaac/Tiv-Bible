@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_read">
+
+    <fragment
+        android:id="@+id/navigation_read"
+        android:name="com.iniongun.tivbible.reader.read.ReadFragment"
+        android:label="@string/title_read"
+        tools:layout="@layout/read_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.iniongun.tivbible.reader.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/search_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_more"
+        android:name="com.iniongun.tivbible.reader.more.MoreFragment"
+        android:label="@string/title_more"
+        tools:layout="@layout/more_fragment" />
+</navigation>

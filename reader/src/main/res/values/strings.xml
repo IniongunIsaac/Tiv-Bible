@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">reader</string>
+    <string name="title_activity_home">Home Activity</string>
+    <string name="title_read">Read</string>
+    <string name="title_search">Search</string>
+    <string name="title_more">More</string>
+    <string name="font_text">Aa</string>
+</resources>

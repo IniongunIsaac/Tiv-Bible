@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="ViewModel"
+            type="com.iniongun.tivbible.presentation.splash.SplashActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="?android:attr/colorBackground"
         tools:context=".presentation.splash.SplashActivity">
 
 
@@ -21,7 +23,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/holy_bible_in_tiv_text"
-            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:indeterminate="true"
-            android:indeterminateTint="@color/white"
+            android:indeterminateTint="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -50,7 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/setup_in_progress_please_wait_text"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -71,7 +71,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/copyright_text"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

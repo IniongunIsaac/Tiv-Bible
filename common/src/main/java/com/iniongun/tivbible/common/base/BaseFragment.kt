@@ -53,6 +53,8 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
 
         setViewModelObservers()
 
+        (activity as BaseActivity<*, *>).setNotificationObserver()
+
         getLayoutBinding(binding)
 
         return binding.root

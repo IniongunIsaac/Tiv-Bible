@@ -2,6 +2,7 @@ package com.iniongun.tivbible.di.modules
 
 import com.iniongun.tivbible.di.scopes.PerActivity
 import com.iniongun.tivbible.presentation.splash.SplashActivity
+import com.iniongun.tivbible.reader.home.HomeActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,5 +17,9 @@ abstract class AppActivityBindingModule {
     @PerActivity
     @ContributesAndroidInjector
     internal abstract fun bindSplashActivity(): SplashActivity
+
+    @PerActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindHomeActivity(): HomeActivity
 
 }

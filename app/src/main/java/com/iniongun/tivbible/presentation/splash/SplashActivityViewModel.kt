@@ -1,13 +1,16 @@
 package com.iniongun.tivbible.presentation.splash
 
 import android.content.Context
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.state.AppResult
+import com.iniongun.tivbible.common.utils.theme.ThemeConstants
+import com.iniongun.tivbible.common.utils.theme.ThemeHelper
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
@@ -44,8 +47,24 @@ class SplashActivityViewModel @Inject constructor(
     private var newTestamentId = ""
     private var versionId = ""
 
+    private val _startHomeLiveData = MutableLiveData<LiveDataEvent<Boolean>>()
+    val startHomeLiveData = _startHomeLiveData as LiveData<LiveDataEvent<Boolean>>
+
     init {
+        getUserSavedTheme()
         setUpDB()
+    }
+
+    private fun getUserSavedTheme() {
+
+        var currentTheme = when (preferencesRepo.currentTheme) {
+            ThemeConstants.LIGHT.name -> ThemeConstants.LIGHT
+            ThemeConstants.DARK.name -> ThemeConstants.DARK
+            ThemeConstants.BATTERY_SAVER.name -> ThemeConstants.BATTERY_SAVER
+            else -> ThemeConstants.SYSTEM_DEFAULT
+        }
+
+        ThemeHelper.changeTheme(currentTheme)
     }
 
     private fun getTivBibleJsonData(): List<TivBibleData> {
@@ -62,17 +81,8 @@ class SplashActivityViewModel @Inject constructor(
     private fun setUpDB() {
 
         if (preferencesRepo.isDBInitialized) {
-            _notificationLiveData.postValue(LiveDataEvent(AppResult.success(message = null)))
-            compositeDisposable.add(
-                bookRepo.getAllBooks().subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({
-                        Log.i("Books Size", it.size.toString())
-                        Log.i("Books", it.toString())
-                    }, {
-                        print("cdbiha asixhiuha csaua cbsiuihxajbi axius aidw")
-                    })
-            )
+            _startHomeLiveData.value = LiveDataEvent(true)
+
         } else {
             initializeDB()
         }

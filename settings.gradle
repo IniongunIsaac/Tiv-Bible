@@ -4,5 +4,6 @@ include ':entities'
 include ':repository'
 include ':preferences'
 include ':common'
+include ':reader'
 
 rootProject.name='Tiv Bible'

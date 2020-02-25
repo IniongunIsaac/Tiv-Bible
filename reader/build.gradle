@@ -1,0 +1,48 @@
+apply from: rootProject.file('android-modules-common-config.gradle')
+
+android {
+
+    dataBinding {
+        enabled = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+
+}
+
+dependencies {
+    implementation(
+            Dependencies.constraintLayout,
+            Dependencies.appCompat,
+            Dependencies.materialDesign,
+            Dependencies.androidXVectorDrawables,
+
+            Dependencies.navFragmentKts,
+            Dependencies.navUIKts,
+            Dependencies.navFragment,
+            Dependencies.navUI,
+            Dependencies.legacySupport,
+            Dependencies.lifecycleExt,
+            Dependencies.lifecycleViewModelKts,
+
+            Dependencies.coroutines,
+            Dependencies.coroutinesAndroid,
+
+            Dependencies.rxJava,
+            Dependencies.rxAndroid,
+
+            Dependencies.dagger,
+            Dependencies.daggerAndroidSupport,
+
+            Dependencies.threeTenAndroidBackport,
+
+            project(Modules.entities),
+            project(Modules.common)
+    )
+}

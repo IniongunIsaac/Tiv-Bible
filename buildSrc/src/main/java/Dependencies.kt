@@ -44,6 +44,7 @@ object DepVersions {
     const val jacoco = "0.8.5"
     const val commonsLang3 = "3.9"
     const val commonsText = "1.8"
+    const val androidXVectorDrawables = "1.1.0"
 
     const val googleServices = "4.3.3"
     const val firebaseAnalytics = "17.2.1"
@@ -74,6 +75,7 @@ object Modules {
     const val repository = ":repository"
     const val preferences = ":preferences"
     const val common = ":common"
+    const val reader = ":reader"
 }
 
 object Dependencies {
@@ -113,6 +115,8 @@ object Dependencies {
     //Navigation
     const val navFragmentKts = "androidx.navigation:navigation-fragment-ktx:${DepVersions.navLifecycle}"
     const val navUIKts = "androidx.navigation:navigation-ui-ktx:${DepVersions.navLifecycle}"
+    const val navFragment = "androidx.navigation:navigation-fragment:${DepVersions.navLifecycle}"
+    const val navUI = "androidx.navigation:navigation-ui:${DepVersions.navLifecycle}"
 
     //Gson
     const val gson = "com.google.code.gson:gson:${DepVersions.gson}"
@@ -166,6 +170,7 @@ object Dependencies {
     //Others
     const val multiDex = "androidx.multidex:multidex:${DepVersions.multiDex}"
     const val jaxb = "javax.xml.bind:jaxb-api:${DepVersions.jaxb}"
+    const val androidXVectorDrawables = "androidx.vectordrawable:vectordrawable:${DepVersions.androidXVectorDrawables}"
 
     //Testing
     const val junit = "junit:junit:${DepVersions.juint}"

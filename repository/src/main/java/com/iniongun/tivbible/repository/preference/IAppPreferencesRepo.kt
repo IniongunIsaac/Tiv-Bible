@@ -11,6 +11,8 @@ interface IAppPreferencesRepo {
 
     var isDBInitialized: Boolean
 
+    var currentTheme: String
+
     var testPreferenceVerse: Verse
 
 }
