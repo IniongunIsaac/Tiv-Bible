@@ -4,6 +4,7 @@ import androidx.room.*
 import com.iniongun.tivbible.entities.Book
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * Created by Isaac Iniongun on 2019-11-18
@@ -21,6 +22,9 @@ interface BookDao {
 
     @Query("select * from Book where version_id = :versionId order by order_no asc")
     fun getBooksByVersion(versionId: String): Observable<List<Book>>
+
+    @Query("select * from Book where lower(name) = :bookName ")
+    fun getBookByName(bookName: String): Single<Book>
 
     @Query("select * from Book where testament_id = :testamentId and version_id = :versionId order by order_no asc")
     fun getBooksByTestamentAndVersion(testamentId: String, versionId: String): Observable<List<Book>>

@@ -3,6 +3,7 @@ package com.iniongun.tivbible.roomdb.repositoryImpl.verse
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import com.iniongun.tivbible.roomdb.dao.VerseDao
+import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
@@ -19,6 +20,8 @@ class VersesRepoImpl @Inject constructor(
     override fun getAllVerses() = verseDao.getAllVerses()
 
     override fun getVerseById(verseId: String) = verseDao.getVerseById(verseId)
+
+    override fun getVersesByBook(bookId: String) = verseDao.getVersesByBook(bookId)
 
     override fun getVersesByText(searchText: String) = verseDao.getVersesByText(searchText)
 

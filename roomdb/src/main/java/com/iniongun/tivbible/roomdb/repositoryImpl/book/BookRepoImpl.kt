@@ -3,6 +3,7 @@ package com.iniongun.tivbible.roomdb.repositoryImpl.book
 import com.iniongun.tivbible.entities.Book
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.roomdb.dao.BookDao
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -19,6 +20,8 @@ class BookRepoImpl @Inject constructor(
     override fun getBooksByTestament(testamentId: String) = bookDao.getBooksByTestament(testamentId)
 
     override fun getBooksByVersion(versionId: String) = bookDao.getBooksByVersion(versionId)
+
+    override fun getBookByName(bookName: String) = bookDao.getBookByName(bookName)
 
     override fun getBooksByTestamentAndVersion(
         testamentId: String,

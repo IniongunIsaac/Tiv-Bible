@@ -1,5 +1,8 @@
 package com.iniongun.tivbible.entities
 
+import android.text.SpannedString
+import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -24,3 +27,10 @@ data class Verse(
     val title: String,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )
+
+val Verse.formattedText: SpannedString
+    get() = buildSpannedString {
+        append("\t\t")
+        bold { append("$number.\t") }
+        append(text)
+    }

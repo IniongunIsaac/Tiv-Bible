@@ -30,6 +30,8 @@ dependencies {
             Dependencies.legacySupport,
             Dependencies.lifecycleExt,
             Dependencies.lifecycleViewModelKts,
+            Dependencies.viewPager,
+            Dependencies.timber,
 
             Dependencies.coroutines,
             Dependencies.coroutinesAndroid,
@@ -42,6 +44,7 @@ dependencies {
 
             Dependencies.threeTenAndroidBackport,
 
+            project(Modules.repository),
             project(Modules.entities),
             project(Modules.common)
     )

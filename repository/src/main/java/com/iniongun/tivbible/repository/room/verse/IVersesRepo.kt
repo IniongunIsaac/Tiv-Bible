@@ -18,6 +18,8 @@ interface IVersesRepo {
 
     fun getVerseById(verseId: String): Single<Verse>
 
+    fun getVersesByBook(bookId: String): Observable<List<Verse>>
+
     fun getVersesByText(searchText: String): Observable<List<Verse>>
 
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>

@@ -39,6 +39,14 @@
         <item name="android:textSize">@dimen/app_super_large_text_size</item>
     </style>
 
+    <style name="AppText.Light" parent="AppText">
+        <item name="android:fontFamily">@font/comfortaa_light</item>
+    </style>
+
+    <style name="AppText.Bold" parent="AppText">
+        <item name="android:fontFamily">@font/comfortaa_bold</item>
+    </style>
+
     <style name="AppText.Small" parent="AppText">
         <item name="android:textSize">@dimen/app_small_text_size</item>
     </style>

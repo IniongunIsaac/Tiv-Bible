@@ -33,6 +33,7 @@ object DepVersions {
     const val gson = "2.8.6"
     const val legacySupport = "1.0.0"
     const val architectureCore = "2.1.0"
+    const val viewPager = "1.0.0"
 
     const val javaxInject = "1"
     const val javaxAnnotation = "1.0"
@@ -45,6 +46,7 @@ object DepVersions {
     const val commonsLang3 = "3.9"
     const val commonsText = "1.8"
     const val androidXVectorDrawables = "1.1.0"
+    const val timber = "4.7.1"
 
     const val googleServices = "4.3.3"
     const val firebaseAnalytics = "17.2.1"
@@ -140,6 +142,9 @@ object Dependencies {
     const val lifecycleCommonJava8 = "androidx.lifecycle:lifecycle-common-java8:${DepVersions.navLifecycle}"
     const val legacySupport = "androidx.legacy:legacy-support-v4:${DepVersions.legacySupport}"
 
+    //ViewPager2
+    const val viewPager = "androidx.viewpager2:viewpager2:${DepVersions.viewPager}"
+
     //Dagger
     const val dagger = "com.google.dagger:dagger:${DepVersions.dagger}"
     const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${DepVersions.dagger}"
@@ -171,6 +176,7 @@ object Dependencies {
     const val multiDex = "androidx.multidex:multidex:${DepVersions.multiDex}"
     const val jaxb = "javax.xml.bind:jaxb-api:${DepVersions.jaxb}"
     const val androidXVectorDrawables = "androidx.vectordrawable:vectordrawable:${DepVersions.androidXVectorDrawables}"
+    const val timber = "com.jakewharton.timber:timber:${DepVersions.timber}"
 
     //Testing
     const val junit = "junit:junit:${DepVersions.juint}"

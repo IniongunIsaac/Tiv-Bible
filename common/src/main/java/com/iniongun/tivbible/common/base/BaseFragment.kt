@@ -53,11 +53,15 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
 
         setViewModelObservers()
 
-        (activity as BaseActivity<*, *>).setNotificationObserver()
+        setNotificationObserver()
 
         getLayoutBinding(binding)
 
         return binding.root
+    }
+
+    open fun setNotificationObserver() {
+        (activity as BaseActivity<*, *>).setNotificationObserver()
     }
 
     protected fun navigate(fragmentNavCommand: AppFragmentNavCommands) {
@@ -80,7 +84,7 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
         )
     }
 
-    fun showSnackBar(
+    fun showMessage(
         view: View,
         message: String,
         isError: Boolean = false,
@@ -88,8 +92,10 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
         isWarning: Boolean = false
     ) = (activity as BaseActivity<*, *>).showMessage(view, message, isError, duration, isWarning)
 
-    fun showLoadingDialog() = (activity as BaseActivity<*, *>).showLoadingDialog()
 
-    fun dismissLoadingDialog() = (activity as BaseActivity<*, *>).dismissLoadingDialog()
+
+    open fun showLoadingDialog() = (activity as BaseActivity<*, *>).showLoadingDialog()
+
+    open fun dismissLoadingDialog() = (activity as BaseActivity<*, *>).dismissLoadingDialog()
 
 }

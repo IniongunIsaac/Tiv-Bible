@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
+import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.theme.ThemeConstants
 import com.iniongun.tivbible.common.utils.theme.ThemeHelper
@@ -51,11 +52,11 @@ class SplashActivityViewModel @Inject constructor(
     val startHomeLiveData = _startHomeLiveData as LiveData<LiveDataEvent<Boolean>>
 
     init {
-        getUserSavedTheme()
+        setUserSavedTheme()
         setUpDB()
     }
 
-    private fun getUserSavedTheme() {
+    private fun setUserSavedTheme() {
 
         var currentTheme = when (preferencesRepo.currentTheme) {
             ThemeConstants.LIGHT.name -> ThemeConstants.LIGHT
@@ -129,9 +130,7 @@ class SplashActivityViewModel @Inject constructor(
 
                     return@Function3 Triple(versionId, oldTestamentId, newTestamentId)
 
-                }).subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
+                }).subscribeOnIoObserveOnUi(schedulerProvider, {
 
                     versionId = it.first
                     oldTestamentId = it.second
@@ -149,9 +148,7 @@ class SplashActivityViewModel @Inject constructor(
     private fun saveBooksAndChaptersAndVerses() {
         compositeDisposable.add(
             Observable.just(getTivBibleJsonData())
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe({ tivBibleDataList ->
+                .subscribeOnIoObserveOnUi(schedulerProvider, { tivBibleDataList ->
 
                     val bibleBooks = tivBibleDataList.distinctBy { it.book }.sortedBy { it.orderNo }
 
@@ -232,10 +229,7 @@ class SplashActivityViewModel @Inject constructor(
                                 bookRepo.insertBooks(listOf(book)),
                                 chapterRepo.insertChapters(chapters),
                                 versesRepo.addVerses(verses)
-                            )
-                                .subscribeOn(schedulerProvider.io())
-                                .observeOn(schedulerProvider.ui())
-                                .subscribe({
+                            ).subscribeOnIoObserveOnUi(schedulerProvider, {
                                     print("Added book, chapters and verses sequence...")
                                 }, {
                                     _notificationLiveData.postValue(

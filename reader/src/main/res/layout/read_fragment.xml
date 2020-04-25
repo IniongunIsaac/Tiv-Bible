@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="ViewModel"
+            name="viewModel"
             type="com.iniongun.tivbible.reader.read.ReadViewModel" />
     </data>
 
@@ -16,12 +16,13 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/readToolbar"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:elevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -29,35 +30,20 @@
                 android:paddingEnd="4dp"
                 android:paddingRight="4dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/bookNameTextView"
-                    style="@style/AppText"
+                    style="@style/AppOutlinedTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down"
-                    android:drawableRight="@drawable/ic_arrow_drop_down"
-                    android:paddingTop="5dp"
+                    android:text="Aerenakaa a...19"
+                    app:icon="@drawable/ic_arrow_drop_down"
+                    app:iconGravity="end"
+                    app:iconPadding="5dp"
+                    app:iconTint="?android:attr/textColorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="Aerenakaa a...19"
                     tools:text="Aerenakaa a...19" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/versionTextView"
-                    style="@style/AppText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down"
-                    android:drawableRight="@drawable/ic_arrow_drop_down"
-                    android:paddingTop="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/bookNameTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Version"
-                    tools:text="Version" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fontStyleButton"
@@ -73,14 +59,60 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/versesRecyclerView"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/readToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/readToolbar" />
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/chaptersViewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:items="@{ viewModel.chapters }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readToolbar">
+
+        </androidx.viewpager2.widget.ViewPager2>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/previousButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            app:elevation="8dp"
+            android:backgroundTint="?attr/colorSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readToolbar"
+            app:srcCompat="@drawable/ic_chevron_left" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            app:elevation="8dp"
+            android:backgroundTint="?attr/colorSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readToolbar"
+            app:srcCompat="@drawable/ic_chevron_right" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
