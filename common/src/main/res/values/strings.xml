@@ -5,4 +5,5 @@
     <string name="reader_home_activity_intent">com.iniongun.tivbible.reader.home.start</string>
     <string name="references_activity_intent">com.iniongungroup.mobile.android.references.start</string>
     <string name="genese_text">Genese</string>
+    <string name="search_text">Search</string>
 </resources>

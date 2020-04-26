@@ -16,8 +16,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="@dimen/standard_mid_margin"
+        android:paddingBottom="@dimen/standard_mid_margin"
+        android:paddingStart="@dimen/standard_mid_margin"
+        android:paddingEnd="@dimen/standard_mid_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/bookTextView"

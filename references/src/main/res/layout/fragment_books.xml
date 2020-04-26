@@ -33,9 +33,42 @@
                 android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Search"/>
+                android:hint="@string/search_text"
+                android:imeOptions="actionDone"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/searchEditText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:drawableStart="@drawable/ic_search"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:hint="@string/search_text"-->
+<!--            android:drawablePadding="5dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginRight="@dimen/standard_content_margin"-->
+<!--            android:layout_marginLeft="@dimen/standard_content_margin"-->
+<!--            android:background="@drawable/rounded_border_background"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:drawableLeft="@drawable/ic_search" />-->
+
+<!--        <androidx.appcompat.widget.SearchView-->
+<!--            android:id="@+id/searchView"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginRight="@dimen/standard_content_margin"-->
+<!--            android:layout_marginLeft="@dimen/standard_content_margin"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            app:queryHint="search"-->
+<!--            app:defaultQueryHint="Search"-->
+<!--            android:background="@drawable/rounded_border_background"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/booksRecyclerView"
@@ -45,11 +78,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/standard_content_margin"
-            android:layout_marginLeft="@dimen/standard_content_margin"
-            android:layout_marginEnd="@dimen/standard_content_margin"
-            android:layout_marginRight="@dimen/standard_content_margin"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/standard_mid_margin"
+            android:layout_marginLeft="@dimen/standard_mid_margin"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            android:layout_marginTop="@dimen/standard_mid_margin"
             app:items="@{ viewModel.books }"
             tools:listitem="@layout/single_book_layout"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

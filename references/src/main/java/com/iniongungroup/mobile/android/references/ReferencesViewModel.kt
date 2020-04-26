@@ -32,6 +32,7 @@ class ReferencesViewModel @Inject constructor(
 
     private val _books = MutableLiveData<List<Book>>()
     val books: LiveData<List<Book>> = _books
+    private val _originalBooks = MutableLiveData<List<Book>>()
 
     private val _chapters = MutableLiveData<List<Chapter>>()
     val chapters: LiveData<List<Chapter>> = _chapters
@@ -42,9 +43,19 @@ class ReferencesViewModel @Inject constructor(
             bookRepo.getAllBooks()
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _books.value = it
+                    _originalBooks.value = it
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
                 })
         )
+    }
+
+    fun filterBooks(text: String) {
+        if(text.isEmpty())
+            _books.value = _originalBooks.value
+        else
+            _originalBooks.value?.filter { it.name.contains(text, true) }?.let {
+                if (it.isNotEmpty()) _books.value = it
+            }
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

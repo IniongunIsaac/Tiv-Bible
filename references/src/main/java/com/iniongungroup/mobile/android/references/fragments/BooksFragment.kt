@@ -1,6 +1,7 @@
 package com.iniongungroup.mobile.android.references.fragments
 
 import android.os.Bundle
+import androidx.core.widget.addTextChangedListener
 import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongungroup.mobile.android.references.BR
 import com.iniongungroup.mobile.android.references.R
@@ -8,6 +9,7 @@ import com.iniongungroup.mobile.android.references.ReferencesActivity
 import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import com.iniongungroup.mobile.android.references.adapters.BooksAdapter
 import com.iniongungroup.mobile.android.references.databinding.FragmentBooksBinding
+import kotlinx.android.synthetic.main.fragment_books.*
 import timber.log.Timber
 
 class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() {
@@ -36,6 +38,24 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
         fragmentBooksBinding.doneButton.setOnClickListener {
 
         }
+
+        searchEditText.addTextChangedListener {
+            it?.toString()?.let { newText ->
+                referencesViewModel.filterBooks(newText)
+            }
+        }
+
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?) = false
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                newText?.let { referencesViewModel.filterBooks(it) }
+//                return false
+//            }
+//
+//        })
+
     }
 
     private fun setupBooksRecyclerView() {
