@@ -5,6 +5,9 @@ import com.iniongun.tivbible.reader.more.MoreFragment
 import com.iniongun.tivbible.reader.read.ReadFragment
 import com.iniongun.tivbible.reader.search.SearchFragment
 import com.iniongun.tivbible.reader.settings.SettingsFragment
+import com.iniongungroup.mobile.android.references.fragments.BooksFragment
+import com.iniongungroup.mobile.android.references.fragments.ChaptersFragment
+import com.iniongungroup.mobile.android.references.fragments.VersesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -31,5 +34,17 @@ abstract class AppFragmentBindingModule {
     @PerFragment
     @ContributesAndroidInjector
     internal abstract fun bindSettingsFragment(): SettingsFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindBooksFragment(): BooksFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindChaptersFragment(): ChaptersFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindVersesFragment(): VersesFragment
 
 }

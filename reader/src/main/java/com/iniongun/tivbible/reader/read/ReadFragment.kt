@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
+import com.iniongun.tivbible.common.utils.navigation.AppActivityNavCommands
 import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
@@ -42,6 +43,19 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupChaptersViewPager()
+        setOnclickListeners()
+    }
+
+    private fun setOnclickListeners() {
+        readFragmentBinding.bookNameButton.setOnClickListener {
+            navigateToReferencesActivity()
+        }
+
+        readFragmentBinding.fontStyleButton.setOnClickListener {  }
+    }
+
+    private fun navigateToReferencesActivity() {
+        startActivity(AppActivityNavCommands.getReferencesActivityIntent(requireContext()))
     }
 
     private fun setupChaptersViewPager() {

@@ -13,6 +13,8 @@ object AppActivityNavCommands {
 
     fun getHomeActivityIntent(context: Context) = navigationIntent(context, context.getString(R.string.reader_home_activity_intent))
 
+    fun getReferencesActivityIntent(context: Context) = navigationIntent(context, context.getString(R.string.references_activity_intent))
+
     private fun navigationIntent(context: Context, navAction: String) = Intent(navAction).setPackage(context.packageName)
 
 }

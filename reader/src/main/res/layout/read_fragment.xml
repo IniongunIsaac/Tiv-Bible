@@ -31,7 +31,7 @@
                 android:paddingRight="4dp">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/bookNameTextView"
+                    android:id="@+id/bookNameButton"
                     style="@style/AppOutlinedTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,8 +88,8 @@
             android:id="@+id/previousButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
             app:borderWidth="0dp"
             android:clickable="true"
             app:elevation="8dp"
@@ -103,8 +103,8 @@
             android:id="@+id/nextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
             app:borderWidth="0dp"
             android:clickable="true"
             app:elevation="8dp"

@@ -101,7 +101,8 @@ dependencies {
             project(Modules.repository),
             project(Modules.preferences),
             project(Modules.common),
-            project(Modules.reader)
+            project(Modules.reader),
+            project(Modules.references)
     )
 
     kapt(
