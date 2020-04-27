@@ -22,7 +22,8 @@
         android:paddingEnd="@dimen/standard_mid_margin"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.getBookChapters(book.id) }">
 
         <TextView
             android:id="@+id/bookTextView"

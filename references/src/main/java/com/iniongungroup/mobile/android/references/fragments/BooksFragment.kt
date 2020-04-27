@@ -45,17 +45,6 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
             }
         }
 
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?) = false
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                newText?.let { referencesViewModel.filterBooks(it) }
-//                return false
-//            }
-//
-//        })
-
     }
 
     private fun setupBooksRecyclerView() {

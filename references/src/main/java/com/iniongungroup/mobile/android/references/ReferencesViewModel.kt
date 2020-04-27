@@ -22,20 +22,20 @@ import javax.inject.Inject
 
 class ReferencesViewModel @Inject constructor(
     bookRepo: IBookRepo,
-    chaptersRepo: IChapterRepo,
-    verseRepo: IVersesRepo,
-    schedulerProvider: SchedulerProvider
+    private val chaptersRepo: IChapterRepo,
+    private val verseRepo: IVersesRepo,
+    private val schedulerProvider: SchedulerProvider
 ): BaseViewModel() {
 
-    private val _verses = MutableLiveData<List<Verse>>()
-    val verses: LiveData<List<Verse>> = _verses
+    private val _verses = MutableLiveData<LiveDataEvent<List<Verse>>>()
+    val verses: LiveData<LiveDataEvent<List<Verse>>> = _verses
 
     private val _books = MutableLiveData<List<Book>>()
     val books: LiveData<List<Book>> = _books
     private val _originalBooks = MutableLiveData<List<Book>>()
 
-    private val _chapters = MutableLiveData<List<Chapter>>()
-    val chapters: LiveData<List<Chapter>> = _chapters
+    private val _chapters = MutableLiveData<LiveDataEvent<List<Chapter>>>()
+    val chapters: LiveData<LiveDataEvent<List<Chapter>>> = _chapters
 
     init {
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
@@ -56,6 +56,24 @@ class ReferencesViewModel @Inject constructor(
             _originalBooks.value?.filter { it.name.contains(text, true) }?.let {
                 if (it.isNotEmpty()) _books.value = it
             }
+    }
+
+    fun getBookChapters(bookId: String) {
+        compositeDisposable.add(
+            chaptersRepo.getChaptersByBook(bookId)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    _chapters.value = LiveDataEvent(it)
+                })
+        )
+    }
+
+    fun getChapterVerses(chapterId: String) {
+        compositeDisposable.add(
+            verseRepo.getVersesByChapter(chapterId)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    _verses.value = LiveDataEvent(it)
+                })
+        )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

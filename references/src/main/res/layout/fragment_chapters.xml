@@ -14,15 +14,18 @@
         android:layout_height="match_parent"
         tools:context=".fragments.ChaptersFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chapters"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chaptersRecyclerView"
+            android:layout_marginTop="@dimen/standard_content_margin"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/single_chapter_layout"
+            app:spanCount="5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

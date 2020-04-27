@@ -70,7 +70,16 @@
         <item name="android:textColor">@color/faint_text_color</item>
     </style>
 
-    <style name="AppOutlinedTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="AppButton.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/app_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppButton.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/app_text_size</item>

@@ -32,7 +32,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bookNameButton"
-                    style="@style/AppOutlinedTextButton"
+                    style="@style/AppButton.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aerenakaa a...19"
@@ -47,7 +47,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fontStyleButton"
-                    style="@style/AppOutlinedTextButton"
+                    style="@style/AppButton.Text"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/font_text"
