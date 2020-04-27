@@ -1,8 +1,9 @@
 package com.iniongungroup.mobile.android.references.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.iniongun.tivbible.common.base.BaseFragment
+import com.iniongun.tivbible.common.utils.ScreenSize.*
+import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongungroup.mobile.android.references.BR
 import com.iniongungroup.mobile.android.references.R
@@ -11,9 +12,6 @@ import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import com.iniongungroup.mobile.android.references.adapters.ChaptersAdapter
 import com.iniongungroup.mobile.android.references.databinding.FragmentChaptersBinding
 
-/**
- * A simple [Fragment] subclass.
- */
 class ChaptersFragment : BaseFragment<FragmentChaptersBinding, ReferencesViewModel>() {
 
     private val referencesViewModel by lazy { (requireActivity() as ReferencesActivity).referencesViewModel }
@@ -34,13 +32,32 @@ class ChaptersFragment : BaseFragment<FragmentChaptersBinding, ReferencesViewMod
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setSpanCount()
         chaptersAdapter = ChaptersAdapter(referencesViewModel)
         setupChaptersRecyclerView()
+    }
+
+    private fun setSpanCount() {
+        val spanCount = when (getDeviceScreenSize(resources)) {
+            SMALL -> 3
+            NORMAL -> 5
+            LARGE -> 7
+            XLARGE -> 9
+            UNDEFINED -> 4
+        }
+        referencesViewModel.setSpanCount(spanCount)
     }
 
     override fun setViewModelObservers() {
         super.setViewModelObservers()
         observeChapters()
+        observeShowVersesFragment()
+    }
+
+    private fun observeShowVersesFragment() {
+        referencesViewModel.showVersesFragment.observe(this, LiveDataEventObserver {
+            if (it) (requireActivity() as ReferencesActivity).setViewPagerItem(2)
+        })
     }
 
     private fun observeChapters() {
@@ -50,14 +67,7 @@ class ChaptersFragment : BaseFragment<FragmentChaptersBinding, ReferencesViewMod
     }
 
     private fun setupChaptersRecyclerView() {
-
         fragmentChaptersBinding.chaptersRecyclerView.adapter = chaptersAdapter
-
-//        val viewModel = fragmentChaptersBinding.viewModel
-//        if (viewModel != null)
-//            fragmentChaptersBinding.chaptersRecyclerView.adapter = ChaptersAdapter(viewModel)
-//        else
-//            Timber.e("ViewModel not initialized when attempting to setup ViewPager adapter.")
     }
 
 }

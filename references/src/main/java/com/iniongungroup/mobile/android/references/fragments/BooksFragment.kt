@@ -3,6 +3,7 @@ package com.iniongungroup.mobile.android.references.fragments
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import com.iniongun.tivbible.common.base.BaseFragment
+import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongungroup.mobile.android.references.BR
 import com.iniongungroup.mobile.android.references.R
 import com.iniongungroup.mobile.android.references.ReferencesActivity
@@ -32,6 +33,17 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
         super.onActivityCreated(savedInstanceState)
         setupBooksRecyclerView()
         setOnClickListeners()
+    }
+
+    override fun setViewModelObservers() {
+        super.setViewModelObservers()
+        observeShowChaptersFragment()
+    }
+
+    private fun observeShowChaptersFragment() {
+        referencesViewModel.showChaptersFragment.observe(this, LiveDataEventObserver {
+            if (it) (requireActivity() as ReferencesActivity).setViewPagerItem(1)
+        })
     }
 
     private fun setOnClickListeners() {

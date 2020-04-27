@@ -1,6 +1,7 @@
 package com.iniongungroup.mobile.android.references.bindings
 
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iniongun.tivbible.entities.Book
 import com.iniongun.tivbible.entities.Chapter
@@ -24,4 +25,9 @@ fun setChapterItems(listView: RecyclerView, items: List<Chapter>?) {
     items?.let {
         (listView.adapter as ChaptersAdapter).submitList(it)
     }
+}
+
+@BindingAdapter("app:spanCount")
+fun setSpanCount(recyclerView: RecyclerView, spanCount: Int) {
+    recyclerView.layoutManager = GridLayoutManager(recyclerView.context, spanCount)
 }

@@ -67,7 +67,8 @@ dependencies {
             Dependencies.androidXCoreKts,
 
             Dependencies.javax,
-            Dependencies.javaxAnnotation
+            Dependencies.javaxAnnotation,
+            Dependencies.timber
     )
 
     if (project.name != "entities") {

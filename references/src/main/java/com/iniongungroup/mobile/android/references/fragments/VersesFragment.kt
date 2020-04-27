@@ -3,6 +3,8 @@ package com.iniongungroup.mobile.android.references.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.iniongun.tivbible.common.base.BaseFragment
+import com.iniongun.tivbible.common.utils.ScreenSize.*
+import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongungroup.mobile.android.references.BR
 import com.iniongungroup.mobile.android.references.R
@@ -34,8 +36,20 @@ class VersesFragment : BaseFragment<FragmentVersesBinding, ReferencesViewModel>(
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setSpanCount()
         versesAdapter = VersesAdapter(referencesViewModel)
         setupVersesRecyclerView()
+    }
+
+    private fun setSpanCount() {
+        val spanCount = when (getDeviceScreenSize(resources)) {
+            SMALL -> 3
+            NORMAL -> 5
+            LARGE -> 7
+            XLARGE -> 9
+            UNDEFINED -> 4
+        }
+        referencesViewModel.setSpanCount(spanCount)
     }
 
     private fun setupVersesRecyclerView() {

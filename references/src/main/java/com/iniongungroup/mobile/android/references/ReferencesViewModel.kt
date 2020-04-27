@@ -37,6 +37,15 @@ class ReferencesViewModel @Inject constructor(
     private val _chapters = MutableLiveData<LiveDataEvent<List<Chapter>>>()
     val chapters: LiveData<LiveDataEvent<List<Chapter>>> = _chapters
 
+    private val _spanCount = MutableLiveData(1)
+    val spanCount: LiveData<Int> = _spanCount
+
+    private val _showChaptersFragment = MutableLiveData<LiveDataEvent<Boolean>>()
+    val showChaptersFragment: LiveData<LiveDataEvent<Boolean>> = _showChaptersFragment
+
+    private val _showVersesFragment = MutableLiveData<LiveDataEvent<Boolean>>()
+    val showVersesFragment: LiveData<LiveDataEvent<Boolean>> = _showVersesFragment
+
     init {
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
         compositeDisposable.add(
@@ -49,6 +58,10 @@ class ReferencesViewModel @Inject constructor(
         )
     }
 
+    fun setSpanCount(spanCount: Int) {
+        _spanCount.value = spanCount
+    }
+
     fun filterBooks(text: String) {
         if(text.isEmpty())
             _books.value = _originalBooks.value
@@ -59,19 +72,25 @@ class ReferencesViewModel @Inject constructor(
     }
 
     fun getBookChapters(bookId: String) {
+        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
         compositeDisposable.add(
             chaptersRepo.getChaptersByBook(bookId)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _chapters.value = LiveDataEvent(it)
+                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    _showChaptersFragment.value = LiveDataEvent(true)
                 })
         )
     }
 
     fun getChapterVerses(chapterId: String) {
+        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
         compositeDisposable.add(
             verseRepo.getVersesByChapter(chapterId)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _verses.value = LiveDataEvent(it)
+                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    _showVersesFragment.value = LiveDataEvent(true)
                 })
         )
     }

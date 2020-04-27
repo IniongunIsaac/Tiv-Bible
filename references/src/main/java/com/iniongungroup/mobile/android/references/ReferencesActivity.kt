@@ -43,12 +43,17 @@ class ReferencesActivity : BaseActivity<ActivityReferencesBinding, ReferencesVie
                 this
             )
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab
             tab.text = when (position) {
                 0 -> "Books"
                 1 -> "Chapters"
                 else -> "Verses"
             }
         }.attach()
+    }
+
+    fun setViewPagerItem(position: Int) {
+        viewPager.currentItem = position
     }
 
     private fun configureToolbar() {
