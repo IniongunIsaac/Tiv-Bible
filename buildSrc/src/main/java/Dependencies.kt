@@ -18,11 +18,11 @@ object DepVersions {
     const val java = 1.8
     const val jaxb = "2.3.1"
 
-    const val kotlin = "1.3.61"
+    const val kotlin = "1.3.72"
     const val gradle = "3.5.3"
     const val navLifecycle = "2.1.0"
     const val appCompat = "1.1.0"
-    const val androidXCoreKts = "1.1.0"
+    const val androidXCoreKts = "1.2.0"
     const val constraintLayout = "1.1.3"
     const val materialDesign = "1.1.0-alpha10"
     const val okhttp = "3.12.0"
@@ -78,6 +78,7 @@ object Modules {
     const val preferences = ":preferences"
     const val common = ":common"
     const val reader = ":reader"
+    const val references = ":references"
 }
 
 object Dependencies {

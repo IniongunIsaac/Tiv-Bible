@@ -12,7 +12,7 @@ class AppPreferenceImpl: IAppPreferencesRepo {
     override var isDBInitialized: Boolean
         get() = false
         set(value) {}
-    override var testPreferenceVerse: Verse
+    override var currentVerse: Verse
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
 }

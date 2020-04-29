@@ -1,5 +1,7 @@
 package com.iniongun.tivbible.common.base
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,6 +31,8 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
     DaggerAppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
+
+    private var mShortAnimationDuration: Int = 0
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -180,4 +184,35 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
     }
+
+    fun showView(view: View, shouldShow: Boolean) {
+        if (shouldShow) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is visible
+                // (but fully transparent) during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+
+                // Animate the content view to 100% opacity, and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(mShortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        } else {
+            // Animate the loading view to 0% opacity. After the animation ends,
+            // set its visibility to GONE as an optimization step (it won't
+            // participate in layout passes, etc.)
+            view.animate()
+                .alpha(0f)
+                .setDuration(mShortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                    }
+                })
+        }
+    }
+
 }

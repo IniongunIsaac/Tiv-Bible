@@ -34,6 +34,22 @@ class ChaptersAdapter(private val viewModel: ReadViewModel) :
             binding.viewModel = viewModel
             binding.versesRecyclerView.adapter = VersesAdapter(viewModel)
             binding.executePendingBindings()
+
+            binding.versesRecyclerView.post {
+                binding.versesRecyclerView.smoothScrollToPosition(viewModel.verseNum)
+            }
+
+            binding.versesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    when (newState) {
+                        RecyclerView.SCROLL_STATE_IDLE -> viewModel.setVersesRecyclerViewTouched(true)
+                        RecyclerView.SCROLL_STATE_DRAGGING -> {}
+                        RecyclerView.SCROLL_STATE_SETTLING -> {}
+                    }
+                }
+            })
+
         }
 
         companion object {

@@ -98,4 +98,6 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
 
     open fun dismissLoadingDialog() = (activity as BaseActivity<*, *>).dismissLoadingDialog()
 
+    fun showView(view: View, shouldShow: Boolean) = (activity as BaseActivity<*, *>).showView(view, shouldShow)
+
 }

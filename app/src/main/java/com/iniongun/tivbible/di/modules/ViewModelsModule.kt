@@ -10,6 +10,7 @@ import com.iniongun.tivbible.reader.read.ReadViewModel
 import com.iniongun.tivbible.reader.search.SearchViewModel
 import com.iniongun.tivbible.reader.settings.SettingsViewModel
 import com.iniongun.tivbible.viewModelFactory.ViewModelFactory
+import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -23,7 +24,7 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelsModule {
 
     @Binds
-    internal abstract fun bindGokadaViewModelFactory(
+    internal abstract fun bindViewModelFactory(
         factory: ViewModelFactory
     ): ViewModelProvider.Factory
 
@@ -67,6 +68,13 @@ abstract class ViewModelsModule {
     @AppViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(
         viewModel: SettingsViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(ReferencesViewModel::class)
+    abstract fun bindReferencesViewModel(
+        viewModel: ReferencesViewModel
     ): BaseViewModel
 
 }

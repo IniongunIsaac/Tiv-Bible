@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="book"
+            type="com.iniongun.tivbible.entities.Book" />
+
+        <variable
+            name="viewModel"
+            type="com.iniongungroup.mobile.android.references.ReferencesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/standard_mid_margin"
+        android:paddingBottom="@dimen/standard_mid_margin"
+        android:paddingStart="@dimen/standard_mid_margin"
+        android:paddingEnd="@dimen/standard_mid_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.getBookChapters(book) }">
+
+        <TextView
+            android:id="@+id/bookTextView"
+            style="@style/AppText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{ book.name }"
+            tools:text="@string/genese_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

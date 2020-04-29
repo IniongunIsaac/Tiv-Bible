@@ -45,4 +45,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 }

@@ -2,6 +2,10 @@ apply from: rootProject.file('android-modules-common-config.gradle')
 
 android {
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     dataBinding {
         enabled = true
     }

@@ -23,8 +23,4 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
         searchFragmentBinding = binding
     }
 
-    override fun setViewModelObservers() {
-        super.setViewModelObservers()
-    }
-
 }

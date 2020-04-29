@@ -12,7 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".read.ReadFragment">
+        tools:context=".read.ReadFragment"
+        android:focusable="true"
+        android:clickable="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/readToolbar"
@@ -31,11 +33,11 @@
                 android:paddingRight="4dp">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/bookNameTextView"
-                    style="@style/AppOutlinedTextButton"
+                    android:id="@+id/bookNameButton"
+                    style="@style/AppButton.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aerenakaa a...19"
+                    android:text="@{ viewModel.bookNameAndChapterNumber }"
                     app:icon="@drawable/ic_arrow_drop_down"
                     app:iconGravity="end"
                     app:iconPadding="5dp"
@@ -47,7 +49,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fontStyleButton"
-                    style="@style/AppOutlinedTextButton"
+                    style="@style/AppButton.Text"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/font_text"
@@ -76,43 +78,52 @@
             android:id="@+id/chaptersViewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:items="@{ viewModel.chapters }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/readToolbar">
+            app:layout_constraintTop_toBottomOf="@+id/readToolbar"/>
 
-        </androidx.viewpager2.widget.ViewPager2>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/previousButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            app:borderWidth="0dp"
-            android:clickable="true"
-            app:elevation="8dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:cornerRadius="37dp"
+            android:background="@color/white"
             android:backgroundTint="?attr/colorSurface"
+            android:elevation="@dimen/standard_mid_margin"
+            app:icon="@drawable/ic_chevron_left"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:iconPadding="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/readToolbar"
-            app:srcCompat="@drawable/ic_chevron_left" />
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginBottom="@dimen/standard_content_margin"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            app:borderWidth="0dp"
-            android:clickable="true"
-            app:elevation="8dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:cornerRadius="37dp"
+            android:background="@color/white"
             android:backgroundTint="?attr/colorSurface"
+            android:elevation="@dimen/standard_mid_margin"
+            app:icon="@drawable/ic_chevron_right"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:iconPadding="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/readToolbar"
-            app:srcCompat="@drawable/ic_chevron_right" />
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            android:layout_marginBottom="@dimen/standard_content_margin"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
