@@ -214,9 +214,9 @@ class SplashActivityViewModel @Inject constructor(
                                     Verse(
                                         chapterId = chapter.id,
                                         number = it.verse,
-                                        text = it.text,
+                                        text = it.text.replace("\t", " ").replace("\n", " "),
                                         hasTitle = it.title.isNotEmpty(),
-                                        title = it.title
+                                        title = it.title.replace("\t", " ").replace("\n", " ")
                                     )
                                 )
                             }

@@ -23,7 +23,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> viewModel.getBookChapters(book.id) }">
+        android:onClick="@{() -> viewModel.getBookChapters(book) }">
 
         <TextView
             android:id="@+id/bookTextView"

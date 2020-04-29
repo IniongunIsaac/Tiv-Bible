@@ -1,7 +1,6 @@
 package com.iniongungroup.mobile.android.references.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongun.tivbible.common.utils.ScreenSize.*
 import com.iniongun.tivbible.common.utils.getDeviceScreenSize
@@ -13,9 +12,6 @@ import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import com.iniongungroup.mobile.android.references.adapters.VersesAdapter
 import com.iniongungroup.mobile.android.references.databinding.FragmentVersesBinding
 
-/**
- * A simple [Fragment] subclass.
- */
 class VersesFragment : BaseFragment<FragmentVersesBinding, ReferencesViewModel>() {
 
     private val referencesViewModel by lazy { (requireActivity() as ReferencesActivity).referencesViewModel }
@@ -59,6 +55,13 @@ class VersesFragment : BaseFragment<FragmentVersesBinding, ReferencesViewModel>(
     override fun setViewModelObservers() {
         super.setViewModelObservers()
         observeVerses()
+        observeShowReaderFragment()
+    }
+
+    private fun observeShowReaderFragment() {
+        referencesViewModel.showReaderFragment.observe(this, LiveDataEventObserver {
+            if (it) requireActivity().finish()
+        })
     }
 
     private fun observeVerses() {

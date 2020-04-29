@@ -1,5 +1,7 @@
 package com.iniongun.tivbible.repository.preference
 
+import com.iniongun.tivbible.entities.Book
+import com.iniongun.tivbible.entities.Chapter
 import com.iniongun.tivbible.entities.Verse
 
 /**
@@ -13,6 +15,10 @@ interface IAppPreferencesRepo {
 
     var currentTheme: String
 
-    var testPreferenceVerse: Verse
+    var currentVerse: Verse
+
+    var currentChapter: Chapter
+
+    var currentBook: Book
 
 }

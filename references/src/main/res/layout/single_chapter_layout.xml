@@ -24,11 +24,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chapterButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/chapter_verse_size"
+            android:layout_height="@dimen/chapter_verse_size"
             style="@style/AppButton.Outlined"
             android:text="@{ String.valueOf(chapter.chapterNumber) }"
-            android:onClick="@{() -> viewModel.getChapterVerses(chapter.id) }"
+            android:onClick="@{() -> viewModel.getChapterVerses(chapter) }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -10,6 +10,7 @@ import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.entities.Book
 import com.iniongun.tivbible.entities.Chapter
 import com.iniongun.tivbible.entities.Verse
+import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
@@ -24,6 +25,7 @@ class ReferencesViewModel @Inject constructor(
     bookRepo: IBookRepo,
     private val chaptersRepo: IChapterRepo,
     private val verseRepo: IVersesRepo,
+    private val appPreferencesRepo: IAppPreferencesRepo,
     private val schedulerProvider: SchedulerProvider
 ): BaseViewModel() {
 
@@ -45,6 +47,13 @@ class ReferencesViewModel @Inject constructor(
 
     private val _showVersesFragment = MutableLiveData<LiveDataEvent<Boolean>>()
     val showVersesFragment: LiveData<LiveDataEvent<Boolean>> = _showVersesFragment
+
+    private val _showReaderFragment = MutableLiveData<LiveDataEvent<Boolean>>()
+    val showReaderFragment: LiveData<LiveDataEvent<Boolean>> = _showReaderFragment
+
+    private lateinit var selectedChapter: Chapter
+    private lateinit var selectedBook: Book
+    private lateinit var selectedVerse: Verse
 
     init {
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
@@ -71,10 +80,11 @@ class ReferencesViewModel @Inject constructor(
             }
     }
 
-    fun getBookChapters(bookId: String) {
+    fun getBookChapters(book: Book) {
+        selectedBook = book
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
         compositeDisposable.add(
-            chaptersRepo.getChaptersByBook(bookId)
+            chaptersRepo.getChaptersByBook(book.id)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _chapters.value = LiveDataEvent(it)
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
@@ -83,16 +93,25 @@ class ReferencesViewModel @Inject constructor(
         )
     }
 
-    fun getChapterVerses(chapterId: String) {
+    fun getChapterVerses(chapter: Chapter) {
+        selectedChapter = chapter
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
         compositeDisposable.add(
-            verseRepo.getVersesByChapter(chapterId)
+            verseRepo.getVersesByChapter(chapter.id)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _verses.value = LiveDataEvent(it)
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
                     _showVersesFragment.value = LiveDataEvent(true)
                 })
         )
+    }
+
+    fun handleVerseSelected(verse: Verse) {
+        selectedVerse = verse
+        appPreferencesRepo.currentBook = selectedBook
+        appPreferencesRepo.currentChapter = selectedChapter
+        appPreferencesRepo.currentVerse = selectedVerse
+        _showReaderFragment.value = LiveDataEvent(true)
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

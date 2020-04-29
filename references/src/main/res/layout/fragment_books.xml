@@ -51,7 +51,6 @@
             android:layout_marginEnd="@dimen/standard_mid_margin"
             android:layout_marginRight="@dimen/standard_mid_margin"
             android:layout_marginTop="@dimen/standard_mid_margin"
-            app:items="@{ viewModel.books }"
             tools:listitem="@layout/single_book_layout"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

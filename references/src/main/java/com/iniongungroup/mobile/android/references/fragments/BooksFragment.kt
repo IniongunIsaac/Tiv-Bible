@@ -2,6 +2,7 @@ package com.iniongungroup.mobile.android.references.fragments
 
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongungroup.mobile.android.references.BR
@@ -11,11 +12,12 @@ import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import com.iniongungroup.mobile.android.references.adapters.BooksAdapter
 import com.iniongungroup.mobile.android.references.databinding.FragmentBooksBinding
 import kotlinx.android.synthetic.main.fragment_books.*
-import timber.log.Timber
 
 class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() {
 
     private val referencesViewModel by lazy { (requireActivity() as ReferencesActivity).referencesViewModel }
+
+    private lateinit var booksAdapter: BooksAdapter
 
     private lateinit var fragmentBooksBinding: FragmentBooksBinding
 
@@ -31,12 +33,14 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        booksAdapter = BooksAdapter(referencesViewModel)
         setupBooksRecyclerView()
         setOnClickListeners()
     }
 
     override fun setViewModelObservers() {
         super.setViewModelObservers()
+        observeBooks()
         observeShowChaptersFragment()
     }
 
@@ -60,11 +64,13 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
     }
 
     private fun setupBooksRecyclerView() {
-        val viewModel = fragmentBooksBinding.viewModel
-        if (viewModel != null)
-            fragmentBooksBinding.booksRecyclerView.adapter = BooksAdapter(viewModel)
-        else
-            Timber.w("ViewModel not initialized when attempting to setup ViewPager adapter.")
+        fragmentBooksBinding.booksRecyclerView.adapter = booksAdapter
+    }
+
+    private fun observeBooks() {
+        referencesViewModel.books.observe(this, Observer {
+            booksAdapter.submitList(it)
+        })
     }
 
 }
