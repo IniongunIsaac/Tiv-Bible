@@ -52,6 +52,9 @@ class ReadViewModel @Inject constructor(
     private val _versesRecyclerViewTouched = MutableLiveData<LiveDataEvent<Boolean>>()
     val versesRecyclerViewTouched: LiveData<LiveDataEvent<Boolean>> = _versesRecyclerViewTouched
 
+    private val _verseSelected = MutableLiveData<LiveDataEvent<Boolean>>()
+    val verseSelected: LiveData<LiveDataEvent<Boolean>> = _verseSelected
+
     fun getBookFromSavedPreferencesOrInitializeWithGenese() {
         try {
             val book = appPreferencesRepo.currentBook
@@ -124,6 +127,13 @@ class ReadViewModel @Inject constructor(
 
     fun setVersesRecyclerViewTouched(isTouch: Boolean) {
         _versesRecyclerViewTouched.value = LiveDataEvent(isTouch)
+    }
+
+    fun toggleSelectedVerse(verse: Verse) {
+        with(verse) {
+            isSelected = !isSelected
+            _verseSelected.value = LiveDataEvent(!isSelected)
+        }
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

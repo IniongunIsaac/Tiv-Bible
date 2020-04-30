@@ -13,6 +13,7 @@ import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ReadFragmentBinding
+import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.read.adapters.ChaptersAdapter
 import kotlinx.android.synthetic.main.read_fragment.*
 import java.util.*
@@ -47,6 +48,8 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
 
     private var shouldShowButtons = true
 
+    //var bottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         chaptersAdapter = ChaptersAdapter(readViewModel)
@@ -61,6 +64,7 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
         super.setViewModelObservers()
         observeChapters()
         observeVersesRecyclerViewTouched()
+        observeVerseSelected()
     }
 
     private fun observeVersesRecyclerViewTouched() {
@@ -78,6 +82,12 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
                     }
                 }
             }
+        })
+    }
+
+    private fun observeVerseSelected() {
+        readViewModel.verseSelected.observe(this, LiveDataEventObserver {
+            chaptersAdapter.versesAdapter?.notifyDataSetChanged()
         })
     }
 
@@ -109,6 +119,10 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
         readFragmentBinding.previousButton.setOnClickListener {
             if (getChaptersViewPagerItem(-1) >= 0)
                 setCurrentChaptersViewPagerItem(getChaptersViewPagerItem(-1))
+        }
+
+        fontStyleButton.setOnClickListener {
+            (requireActivity() as HomeActivity).showBottomSheet()
         }
 
     }

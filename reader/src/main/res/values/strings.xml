@@ -7,4 +7,9 @@
     <string name="font_text">Aa</string>
     <string name="verse_title_placeholder">Kwagh u Igbetar</string>
     <string name="verse_text_placeholder">\t\t1. Sha hiihii la Aondo gba sha man tar, tar yo gba lun daang gbilin tso Sha hiihii la Aondo gba sha man tar, tar yo gba lun daang gbilin tso</string>
+    <string name="bookmark_text">Bookmark</string>
+    <string name="copy_text">Copy</string>
+    <string name="share_text">Share</string>
+    <string name="selected_verses_text">Genese 12 : 12 - 26</string>
+    <string name="highlight_with_text">Highlight with:</string>
 </resources>

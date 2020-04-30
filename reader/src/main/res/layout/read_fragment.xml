@@ -126,4 +126,15 @@
             android:layout_marginBottom="@dimen/standard_content_margin"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        -->
+
+<!--        <include layout="@layout/verse_tap_actions_layout"/>-->
+
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
 </layout>
