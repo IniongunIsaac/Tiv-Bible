@@ -1,14 +1,18 @@
 package com.iniongun.tivbible.reader.read.bindings
 
 import android.graphics.Paint
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.reader.read.adapters.ChaptersAdapter
+import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import com.iniongun.tivbible.reader.read.adapters.VersesAdapter
 
 
@@ -31,6 +35,13 @@ fun setItems(viewPager: ViewPager2, items: List<Verse>?) {
     }
 }
 
+@BindingAdapter("app:items")
+fun setHighlightColorItems(recyclerView: RecyclerView, items: List<Int>?) {
+    items?.let {
+        (recyclerView.adapter as HighlightColorsAdapter).submitList(items)
+    }
+}
+
 @BindingAdapter("app:formattedText")
 fun setFormattedText(textView: AppCompatTextView, verse: Verse) {
     textView.text = with(verse) {
@@ -40,6 +51,11 @@ fun setFormattedText(textView: AppCompatTextView, verse: Verse) {
             append(text)
         }
     }
+}
+
+@BindingAdapter("android:background")
+fun setBackgroundColor(button: MaterialButton, @ColorRes color: Int) {
+    button.setBackgroundColor(ContextCompat.getColor(button.context, color))
 }
 
 @BindingAdapter("android:background")

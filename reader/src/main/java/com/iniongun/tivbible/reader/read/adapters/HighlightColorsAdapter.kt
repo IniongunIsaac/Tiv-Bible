@@ -20,8 +20,8 @@ class HighlightColorsAdapter(private val viewModel: ReadViewModel) :
     ListAdapter<Int, HighlightColorsAdapter.ViewHolder>(HighlightColorsDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val verse = getItem(position)
-        holder.bind(viewModel, verse)
+        val color = getItem(position)
+        holder.bind(viewModel, color)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,9 +31,9 @@ class HighlightColorsAdapter(private val viewModel: ReadViewModel) :
     class ViewHolder private constructor(val binding: SingleHighlightLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: ReadViewModel, verse: Int) {
+        fun bind(viewModel: ReadViewModel, color: Int) {
             binding.viewModel = viewModel
-            //binding.verse = verse
+            binding.color = color
             binding.executePendingBindings()
         }
 

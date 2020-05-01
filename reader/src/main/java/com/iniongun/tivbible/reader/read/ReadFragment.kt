@@ -48,8 +48,6 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
 
     private var shouldShowButtons = true
 
-    //var bottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         chaptersAdapter = ChaptersAdapter(readViewModel)
@@ -122,7 +120,7 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
         }
 
         fontStyleButton.setOnClickListener {
-            (requireActivity() as HomeActivity).showBottomSheet()
+            (requireActivity() as HomeActivity).showVerseTapActionsBottomSheet(readViewModel)
         }
 
     }

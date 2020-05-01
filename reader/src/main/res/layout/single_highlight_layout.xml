@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="color"
+            type="Integer" />
+        <variable
             name="viewModel"
             type="com.iniongun.tivbible.reader.read.ReadViewModel" />
     </data>
@@ -17,9 +20,8 @@
             android:id="@+id/highlightButton"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            app:cornerRadius="22dp"
-            android:text=""
-            android:backgroundTint="@color/red"
+            app:cornerRadius="26dp"
+            android:background="@{ color }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
