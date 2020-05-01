@@ -63,6 +63,7 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
         observeChapters()
         observeVersesRecyclerViewTouched()
         observeVerseSelected()
+        observeSelectedVersesText()
     }
 
     private fun observeVersesRecyclerViewTouched() {
@@ -86,6 +87,19 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
     private fun observeVerseSelected() {
         readViewModel.verseSelected.observe(this, LiveDataEventObserver {
             chaptersAdapter.versesAdapter?.notifyDataSetChanged()
+
+            with((requireActivity() as HomeActivity)) {
+                if (!versesTapActionsBottomSheetShowing)
+                    showVerseTapActionsBottomSheet(readViewModel)
+            }
+        })
+    }
+
+    private fun observeSelectedVersesText() {
+        readViewModel.selectedVersesText.observe(this, LiveDataEventObserver {
+            with((requireActivity() as HomeActivity)) {
+                showSelectedVersesText(it)
+            }
         })
     }
 
@@ -120,7 +134,7 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
         }
 
         fontStyleButton.setOnClickListener {
-            (requireActivity() as HomeActivity).showVerseTapActionsBottomSheet(readViewModel)
+
         }
 
     }

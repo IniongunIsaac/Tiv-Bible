@@ -55,6 +55,11 @@ class ReadViewModel @Inject constructor(
     private val _verseSelected = MutableLiveData<LiveDataEvent<Boolean>>()
     val verseSelected: LiveData<LiveDataEvent<Boolean>> = _verseSelected
 
+    private val _selectedVersesText = MutableLiveData<LiveDataEvent<String>>()
+    val selectedVersesText: LiveData<LiveDataEvent<String>> = _selectedVersesText
+
+    private val selectedVerses = arrayListOf<Verse>()
+
     fun getBookFromSavedPreferencesOrInitializeWithGenese() {
         try {
             val book = appPreferencesRepo.currentBook
@@ -133,7 +138,41 @@ class ReadViewModel @Inject constructor(
         with(verse) {
             isSelected = !isSelected
             _verseSelected.value = LiveDataEvent(!isSelected)
+            if (isSelected) {
+                selectedVerses.add(this)
+            } else {
+                selectedVerses.remove(this)
+            }
+            getSelectedVersesText()
         }
+    }
+
+    private fun getSelectedVersesText() {
+        val verses = selectedVerses.sortedBy { it.number }.map { it.number }
+        var left: Int? = null
+        var right: Int? = null
+        val groups = arrayListOf<String>()
+
+        for (index in verses.first()..verses.last() + 1) {
+            if (verses.contains(index)) {
+                if (left == null) {
+                    left = index
+                } else {
+                    right = index
+                }
+            } else {
+                if (left == null) continue
+                val leftx = left
+                if (right != null) {
+                    groups.add("$leftx - $right")
+                } else {
+                    groups.add("$leftx")
+                }
+                left = null
+                right = null
+            }
+        }
+        _selectedVersesText.value = LiveDataEvent("${_bookNameAndChapterNumber.value!!} : ${groups.joinToString(separator = ", ")}" )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

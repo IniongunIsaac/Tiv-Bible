@@ -47,7 +47,7 @@
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
             android:gravity="start"
-            android:text="@string/selected_verses_text"
+            tools:text="@string/selected_verses_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/closeButton" />

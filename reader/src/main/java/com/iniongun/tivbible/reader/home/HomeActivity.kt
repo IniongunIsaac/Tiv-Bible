@@ -34,7 +34,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         activityHomeBinding = binding
     }
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var versesTapActionsBottomSheetBehavior: BottomSheetBehavior<View>
+    var versesTapActionsBottomSheetShowing = false
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
     private val highlightColors = arrayListOf(
@@ -61,7 +62,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
         closeButton.setOnClickListener { showVerseTapActionsBottomSheet() }
 
-        bottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
+        versesTapActionsBottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
     }
 
 
@@ -76,11 +77,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
             }
         }
 
-        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+        if (versesTapActionsBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            versesTapActionsBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            versesTapActionsBottomSheetShowing = true
         } else {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+            versesTapActionsBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            versesTapActionsBottomSheetShowing = false
         }
+    }
+
+    fun showSelectedVersesText(selectedVersesText: String) {
+        selectedVersesTextView.text = selectedVersesText
     }
 
 }
