@@ -90,6 +90,9 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
             versesAdapter?.notifyDataSetChanged()
 
             with(homeActivity) {
+                if (fontSettingsBottomSheetShowing)
+                    toggleFontSettingsBottomSheetVisibility()
+
                 if (!versesTapActionsBottomSheetShowing && readViewModel.selectedVerses.isNotEmpty())
                     showVerseTapActionsBottomSheet(readViewModel)
 
@@ -117,7 +120,14 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
             navigatedToReferencesActivity = true
         }
 
-        fragmentReadNewBinding.fontStyleButton.setOnClickListener { readViewModel.setMessage("Coming Soon!", AppState.SUCCESS) }
+        fragmentReadNewBinding.fontStyleButton.setOnClickListener {
+            with(homeActivity) {
+                if (versesTapActionsBottomSheetShowing)
+                    toggleVerseTapActionsBottomSheetVisibility()
+
+                toggleFontSettingsBottomSheetVisibility()
+            }
+        }
 
         fragmentReadNewBinding.nextButton.setOnClickListener { readViewModel.getChapterVerses(1) }
 

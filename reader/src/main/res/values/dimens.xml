@@ -7,5 +7,6 @@
     <dimen name="dus_offset_y">2dp</dimen>
     <dimen name="dus_stroke_thickness">1.5dp</dimen>
     <dimen name="dus_spacing_extra">5dp</dimen>
+    <dimen name="font_setting_button_dimen">60dp</dimen>
 
 </resources>

@@ -15,4 +15,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="font_size_text">Font Size:</string>
+    <string name="line_spacing_text">Line Spacing:</string>
+    <string name="font_style_text">Font Style:</string>
+    <string name="theme_text">Theme:</string>
+    <string name="aa_text">Aa</string>
+    <string name="automatic_text">Automatic</string>
+    <string name="light_mode_text">Light Mode</string>
+    <string name="dark_mode_text">Dark Mode</string>
+    <string name="go_to_settings_text">Go to Settings</string>
 </resources>

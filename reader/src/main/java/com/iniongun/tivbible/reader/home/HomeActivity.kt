@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
@@ -18,6 +19,7 @@ import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
+import kotlinx.android.synthetic.main.font_settings_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.view.*
 import javax.inject.Inject
@@ -41,7 +43,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     }
 
     private lateinit var versesTapActionsBottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var fontSettingsBottomSheetBehavior: BottomSheetBehavior<View>
     var versesTapActionsBottomSheetShowing = false
+    var fontSettingsBottomSheetShowing = false
     private var readViewModel: ReadViewModelNew? = null
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
@@ -69,11 +73,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
         setOnClickListeners()
 
-        versesTapActionsBottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
+        versesTapActionsBottomSheetBehavior = from(versesTapActionsBottomSheet)
+        fontSettingsBottomSheetBehavior = from(fontSettingsBottomSheet)
     }
 
     private fun setOnClickListeners() {
-        closeButton.setOnClickListener { showVerseTapActionsBottomSheet() }
+        closeButton.setOnClickListener { toggleVerseTapActionsBottomSheetVisibility() }
+
+        closeFontSettingsButton.setOnClickListener { toggleFontSettingsBottomSheetVisibility() }
 
         shareButton.setOnClickListener {
             readViewModel?.let {
@@ -128,12 +135,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     }
 
     fun toggleVerseTapActionsBottomSheetVisibility() {
-        if (versesTapActionsBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            versesTapActionsBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            versesTapActionsBottomSheetShowing = true
-        } else {
-            versesTapActionsBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            versesTapActionsBottomSheetShowing = false
+        with(versesTapActionsBottomSheetBehavior) {
+            if (state != STATE_EXPANDED) {
+                state = STATE_EXPANDED
+                versesTapActionsBottomSheetShowing = true
+            } else {
+                state = STATE_COLLAPSED
+                versesTapActionsBottomSheetShowing = false
+            }
+        }
+    }
+
+    fun toggleFontSettingsBottomSheetVisibility() {
+        with(fontSettingsBottomSheetBehavior) {
+            if (state != STATE_EXPANDED) {
+                state = STATE_EXPANDED
+                fontSettingsBottomSheetShowing = true
+            } else {
+                state = STATE_COLLAPSED
+                fontSettingsBottomSheetShowing = false
+            }
         }
     }
 

@@ -103,4 +103,13 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="AppChoiceChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:fontFamily">@font/comfortaa</item>
+    </style>
+
+    <style name="AppChoiceChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">@dimen/app_text_size</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+    </style>
+
 </resources>

@@ -47,6 +47,8 @@
 
         <include layout="@layout/verse_tap_actions_layout"/>
 
+        <include layout="@layout/font_settings_layout"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
