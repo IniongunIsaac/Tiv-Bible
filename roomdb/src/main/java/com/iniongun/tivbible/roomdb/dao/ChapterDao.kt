@@ -25,7 +25,7 @@ interface ChapterDao {
     fun getChaptersByBook(bookId: String): Observable<List<Chapter>>
 
     @Query("select * from Chapter where book_id = :bookId and chapter_number = :chapterNumber")
-    fun getChaptersByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
+    fun getChapterByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertChapters(vararg chapters: Chapter): Completable

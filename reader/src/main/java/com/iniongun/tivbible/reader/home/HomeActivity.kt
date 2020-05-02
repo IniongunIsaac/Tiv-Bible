@@ -1,5 +1,9 @@
 package com.iniongun.tivbible.reader.home
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.findNavController
@@ -8,14 +12,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iniongun.tivbible.common.base.BaseActivity
+import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
-import com.iniongun.tivbible.reader.read.ReadViewModel
+import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.view.*
 import javax.inject.Inject
+
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() {
 
@@ -36,6 +42,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
     private lateinit var versesTapActionsBottomSheetBehavior: BottomSheetBehavior<View>
     var versesTapActionsBottomSheetShowing = false
+    private var readViewModel: ReadViewModelNew? = null
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
     private val highlightColors = arrayListOf(
@@ -60,23 +67,67 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        closeButton.setOnClickListener { showVerseTapActionsBottomSheet() }
+        setOnClickListeners()
 
         versesTapActionsBottomSheetBehavior = BottomSheetBehavior.from(versesTapActionsBottomSheet)
     }
 
+    private fun setOnClickListeners() {
+        closeButton.setOnClickListener { showVerseTapActionsBottomSheet() }
+
+        shareButton.setOnClickListener {
+            readViewModel?.let {
+                if (it.shareableSelectedVersesText.isEmpty()) {
+                    it.setMessage("No shareable verse(s) selected!",  AppState.FAILED)
+                } else {
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+                    shareIntent.type = "text/plain"
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, selectedVersesTextView.text)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
+                    startActivity(Intent.createChooser(shareIntent, "Share Via"))
+                }
+            }
+        }
+
+        bookmarkButton.setOnClickListener {
+            readViewModel?.let {
+                if (it.shareableSelectedVersesText.isEmpty()) {
+                    it.setMessage("No verse(s) selected to bookmark!",  AppState.FAILED)
+                } else {
+                    readViewModel?.setMessage("Coming soon!", AppState.SUCCESS)
+                }
+            }
+        }
+
+        copyButton.setOnClickListener {
+
+            readViewModel?.let {
+                if (it.shareableSelectedVersesText.isEmpty()) {
+                    it.setMessage("No verse(s) selected to copy!", AppState.FAILED)
+                } else {
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText(selectedVersesTextView.text, "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
+                    clipboard.setPrimaryClip(clip)
+                    it.setMessage("Verse(s) copied successfully!", AppState.SUCCESS)
+                }
+            }
+        }
+    }
 
 
-    fun showVerseTapActionsBottomSheet(viewModel: ReadViewModel? = null) {
-
+    fun showVerseTapActionsBottomSheet(viewModel: ReadViewModelNew? = null) {
         viewModel?.let {
+            readViewModel = it
             if (highlightColorsAdapter == null) {
                 highlightColorsAdapter = HighlightColorsAdapter(it)
                 versesTapActionsBottomSheet.verseHighlightColorsRecyclerView.adapter = highlightColorsAdapter
                 highlightColorsAdapter!!.submitList(highlightColors)
             }
         }
+        toggleVerseTapActionsBottomSheetVisibility()
+    }
 
+    fun toggleVerseTapActionsBottomSheetVisibility() {
         if (versesTapActionsBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
             versesTapActionsBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             versesTapActionsBottomSheetShowing = true

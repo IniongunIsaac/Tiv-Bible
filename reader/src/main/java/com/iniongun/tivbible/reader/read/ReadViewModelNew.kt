@@ -13,22 +13,22 @@ import com.iniongun.tivbible.entities.Chapter
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
+import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import timber.log.Timber
 import javax.inject.Inject
 
-class ReadViewModel @Inject constructor(
+class ReadViewModelNew @Inject constructor(
     private val bookRepo: IBookRepo,
     private val verseRepo: IVersesRepo,
+    private val chapterRepo: IChapterRepo,
     private val appPreferencesRepo: IAppPreferencesRepo,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
     private val _verses = MutableLiveData<List<Verse>>()
-    val verses: LiveData<List<Verse>> = _verses
 
     private val _chapters = MutableLiveData<List<Verse>>()
-    val chapters: LiveData<List<Verse>> = _chapters
 
     private val _currentVerses = MutableLiveData<List<Verse>>()
     val currentVerses: LiveData<List<Verse>> = _currentVerses
@@ -36,22 +36,17 @@ class ReadViewModel @Inject constructor(
     private val _bookNameAndChapterNumber = MutableLiveData<String>()
     val bookNameAndChapterNumber: LiveData<String> = _bookNameAndChapterNumber
 
-    private val _chapterNumber = MutableLiveData<Int>()
-    val chapterNumber: LiveData<Int> = _chapterNumber
-
     var chapterNum = 0
     var verseNum = 0
     var originalVerseNumber = 0
-    var currentVerse: Verse? = null
-    var currentChapter: Chapter? = null
+    private var currentVerse: Verse? = null
+    private var currentChapter: Chapter? = null
+    private var currentBook: Book? = null
 
     private val _verseNumber = MutableLiveData<LiveDataEvent<Int>>()
     val verseNumber: LiveData<LiveDataEvent<Int>> = _verseNumber
 
     var newBookNameAndChapterNumber = "Genese:1"
-
-    private val _versesRecyclerViewTouched = MutableLiveData<LiveDataEvent<Boolean>>()
-    val versesRecyclerViewTouched: LiveData<LiveDataEvent<Boolean>> = _versesRecyclerViewTouched
 
     private val _verseSelected = MutableLiveData<LiveDataEvent<Boolean>>()
     val verseSelected: LiveData<LiveDataEvent<Boolean>> = _verseSelected
@@ -63,34 +58,79 @@ class ReadViewModel @Inject constructor(
 
     val selectedVerses = arrayListOf<Verse>()
 
+    init { appPreferencesRepo.shouldReloadVerses = true }
+
     fun getBookFromSavedPreferencesOrInitializeWithGenese() {
-        try {
-            val book = appPreferencesRepo.currentBook
-            getBookVerses(book)
-        } catch (e: Exception) {
-            _notificationLiveData.value = LiveDataEvent(AppResult.loading())
-            compositeDisposable.add(
-                bookRepo.getBookByName("genese")
-                    .subscribeOnIoObserveOnUi(schedulerProvider, { book ->
-                        _notificationLiveData.value = LiveDataEvent(AppResult.success())
-                        getBookVerses(book)
-                    })
-            )
+        if (appPreferencesRepo.shouldReloadVerses) {
+            appPreferencesRepo.shouldReloadVerses = false
+            try {
+                val book = appPreferencesRepo.currentBook
+                getBookVerses(book)
+            } catch (e: Exception) {
+                _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+                compositeDisposable.add(
+                    bookRepo.getBookByName("genese")
+                        .subscribeOnIoObserveOnUi(schedulerProvider, {
+                            getAndSetCurrentChapterOnFirstTimeLaunch(it)
+                        })
+                )
+            }
         }
     }
 
-    fun getSavedChapterNumber() {
+    private fun getAndSetCurrentChapterOnFirstTimeLaunch(book: Book) {
+        compositeDisposable.add(
+            chapterRepo.getChapterByBookAndChapterNumber(book.id, 1)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    currentChapter = it
+                    appPreferencesRepo.currentChapter = it
+                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    getBookVerses(book)
+                })
+        )
+    }
+
+    private fun getSavedChapterNumber() {
         try {
             val chapter = appPreferencesRepo.currentChapter
-            _chapterNumber.value = chapter.chapterNumber
             chapterNum = chapter.chapterNumber
             currentChapter = chapter
+            getCurrentVerses(chapter.id)
         } catch (e: Exception) {
             Timber.e("Chapter is null")
+            getCurrentVerses()
         }
     }
 
-    fun getSavedVerseNumber() {
+    fun getChapterVerses(number: Int) {
+        currentBook?.let { curBook ->
+            currentChapter?.let { curChap ->
+                val chapNum = curChap.chapterNumber + number
+                when {
+                    chapNum <= 0 -> setMessage("You're currently on the first chapter!", AppState.FAILED)
+                    chapNum > _chapters.value!!.size -> setMessage("You're currently on the last chapter!", AppState.FAILED)
+                    else -> {
+                        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+                        compositeDisposable.add(
+                            chapterRepo.getChapterByBookAndChapterNumber(curBook.id, chapNum)
+                                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                                    currentChapter = it
+                                    appPreferencesRepo.currentChapter = it
+                                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                                    appPreferencesRepo.currentVerseString = ""
+                                    clearSelectedVerses()
+                                    getCurrentVerses(it.id)
+                                }) {
+                                    setMessage("Unable to get next chapter, please try again!", AppState.FAILED)
+                                }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSavedVerseNumber() {
         try {
             val verse = appPreferencesRepo.currentVerse
             _verseNumber.value = LiveDataEvent(verse.number)
@@ -98,12 +138,13 @@ class ReadViewModel @Inject constructor(
             originalVerseNumber = verse.number
             currentVerse = verse
         } catch (e: Exception) {
+            _verseNumber.value = LiveDataEvent(0)
             Timber.e("Verse is null")
         }
     }
 
     private fun getBookVerses(book: Book) {
-
+        currentBook = book
         val nameAndChapter = newBookNameAndChapterNumber.split(":")
         newBookNameAndChapterNumber = "${ book.name.capitalize() }:${nameAndChapter[1]}"
         _bookNameAndChapterNumber.value = newBookNameAndChapterNumber.replace(":", " ")
@@ -116,25 +157,21 @@ class ReadViewModel @Inject constructor(
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
                     _chapters.value = verses.distinctBy { it.chapterId }
                     _verses.value = verses
+                    getSavedChapterNumber()
                 })
         )
     }
 
-    fun getCurrentVerses(chapterId: String = _chapters.value!![0].chapterId) {
+    private fun getCurrentVerses(chapterId: String = _chapters.value!![0].chapterId) {
         _currentVerses.value = _verses.value?.filter { it.chapterId == chapterId }
-    }
 
-    fun setChapterNumber(number: Int) {
-        currentChapter?.let {  verseNum = if (it.chapterNumber != number) 0 else originalVerseNumber }
+        currentChapter?.let {
+            val nameAndChapter = newBookNameAndChapterNumber.split(":")
+            newBookNameAndChapterNumber = "${ nameAndChapter[0] }:${it.chapterNumber}"
+            _bookNameAndChapterNumber.value = newBookNameAndChapterNumber.replace(":", " ")
+        }
 
-        val nameAndChapter = newBookNameAndChapterNumber.split(":")
-        newBookNameAndChapterNumber = "${ nameAndChapter[0] }:$number"
-        _bookNameAndChapterNumber.value = newBookNameAndChapterNumber.replace(":", " ")
-
-    }
-
-    fun setVersesRecyclerViewTouched(isTouch: Boolean) {
-        _versesRecyclerViewTouched.value = LiveDataEvent(isTouch)
+        getSavedVerseNumber()
     }
 
     fun toggleSelectedVerse(verse: Verse) {
@@ -194,6 +231,12 @@ class ReadViewModel @Inject constructor(
 
     fun setHighlightColorForSelectedVerse(color: Int) {
         setMessage("Coming soon!", AppState.SUCCESS)
+    }
+
+    fun clearSelectedVerses() {
+        selectedVerses.clear()
+        _selectedVersesText.value = LiveDataEvent("")
+        shareableSelectedVersesText = ""
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

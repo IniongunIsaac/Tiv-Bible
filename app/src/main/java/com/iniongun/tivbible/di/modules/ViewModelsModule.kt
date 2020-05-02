@@ -7,6 +7,7 @@ import com.iniongun.tivbible.presentation.splash.SplashActivityViewModel
 import com.iniongun.tivbible.reader.home.HomeActivityViewModel
 import com.iniongun.tivbible.reader.more.MoreViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModel
+import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.search.SearchViewModel
 import com.iniongun.tivbible.reader.settings.SettingsViewModel
 import com.iniongun.tivbible.viewModelFactory.ViewModelFactory
@@ -53,6 +54,13 @@ abstract class ViewModelsModule {
     @IntoMap
     @AppViewModelKey(ReadViewModel::class)
     abstract fun bindReadViewModel(
+        viewModel: ReadViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(ReadViewModelNew::class)
+    abstract fun bindReadViewModelNew(
         viewModel: ReadViewModel
     ): BaseViewModel
 

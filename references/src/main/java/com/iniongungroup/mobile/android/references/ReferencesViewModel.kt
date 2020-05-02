@@ -111,6 +111,7 @@ class ReferencesViewModel @Inject constructor(
         appPreferencesRepo.currentBook = selectedBook
         appPreferencesRepo.currentChapter = selectedChapter
         appPreferencesRepo.currentVerse = selectedVerse
+        appPreferencesRepo.shouldReloadVerses = true
         _showReaderFragment.value = LiveDataEvent(true)
     }
 

@@ -3,6 +3,7 @@ package com.iniongun.tivbible.di.modules
 import com.iniongun.tivbible.di.scopes.PerFragment
 import com.iniongun.tivbible.reader.more.MoreFragment
 import com.iniongun.tivbible.reader.read.ReadFragment
+import com.iniongun.tivbible.reader.read.ReadFragmentNew
 import com.iniongun.tivbible.reader.search.SearchFragment
 import com.iniongun.tivbible.reader.settings.SettingsFragment
 import com.iniongungroup.mobile.android.references.fragments.BooksFragment
@@ -26,6 +27,10 @@ abstract class AppFragmentBindingModule {
     @PerFragment
     @ContributesAndroidInjector
     internal abstract fun bindReadFragment(): ReadFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindReadFragmentNew(): ReadFragmentNew
 
     @PerFragment
     @ContributesAndroidInjector

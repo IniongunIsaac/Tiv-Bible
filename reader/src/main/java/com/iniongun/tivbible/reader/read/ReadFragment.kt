@@ -89,8 +89,11 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
             chaptersAdapter.versesAdapter?.notifyDataSetChanged()
 
             with((requireActivity() as HomeActivity)) {
-                if (!versesTapActionsBottomSheetShowing)
-                    showVerseTapActionsBottomSheet(readViewModel)
+                if (!versesTapActionsBottomSheetShowing && readViewModel.selectedVerses.isNotEmpty())
+                    //showVerseTapActionsBottomSheet(readViewModel)
+
+                if (readViewModel.selectedVerses.isEmpty())
+                    toggleVerseTapActionsBottomSheetVisibility()
             }
         })
     }

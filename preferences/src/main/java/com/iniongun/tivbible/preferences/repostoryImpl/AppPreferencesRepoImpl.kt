@@ -35,6 +35,10 @@ class AppPreferencesRepoImpl @Inject constructor(
         get() = gson.fromJson(getPreference(PreferenceConstants.CURRENT_VERSE_KEY, ""), verseType)
         set(value) = setPreference(PreferenceConstants.CURRENT_VERSE_KEY, gson.toJson(value, verseType))
 
+    override var currentVerseString: String
+        get() = getPreference(PreferenceConstants.CURRENT_VERSE_KEY, "")
+        set(value) = setPreference(PreferenceConstants.CURRENT_VERSE_KEY, value)
+
     private val chapterType = object : TypeToken<Chapter>(){}.type
 
     override var currentChapter: Chapter
@@ -46,6 +50,10 @@ class AppPreferencesRepoImpl @Inject constructor(
     override var currentBook: Book
         get() = gson.fromJson(getPreference(PreferenceConstants.CURRENT_BOOK_KEY, ""), bookType)
         set(value) = setPreference(PreferenceConstants.CURRENT_BOOK_KEY, gson.toJson(value, bookType))
+
+    override var shouldReloadVerses: Boolean
+        get() = getPreference(PreferenceConstants.SHOULD_RELOAD_VERSES_KEY, false)
+        set(value) = setPreference(PreferenceConstants.SHOULD_RELOAD_VERSES_KEY, value)
 
     @Suppress("UNCHECKED_CAST")
     @Synchronized

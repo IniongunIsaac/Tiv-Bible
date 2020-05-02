@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.iniongun.tivbible.reader.read.ReadViewModel" />
+            type="com.iniongun.tivbible.reader.read.ReadViewModelNew" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

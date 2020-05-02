@@ -14,5 +14,6 @@ object PreferenceConstants {
     const val CURRENT_CHAPTER_KEY = "Current Chapter"
     const val CURRENT_BOOK_KEY = "Current Book"
     const val CURRENT_THEME_KEY = "Current Theme"
+    const val SHOULD_RELOAD_VERSES_KEY = "Reload Verses"
 
 }

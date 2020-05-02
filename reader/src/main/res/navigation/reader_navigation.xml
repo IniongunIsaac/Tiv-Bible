@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_read"
-        android:name="com.iniongun.tivbible.reader.read.ReadFragment"
+        android:name="com.iniongun.tivbible.reader.read.ReadFragmentNew"
         android:label="@string/title_read"
-        tools:layout="@layout/read_fragment" />
+        tools:layout="@layout/fragment_read_new" />
 
     <fragment
         android:id="@+id/navigation_search"

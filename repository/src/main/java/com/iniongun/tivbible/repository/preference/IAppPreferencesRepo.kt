@@ -21,4 +21,8 @@ interface IAppPreferencesRepo {
 
     var currentBook: Book
 
+    var currentVerseString: String
+
+    var shouldReloadVerses: Boolean
+
 }

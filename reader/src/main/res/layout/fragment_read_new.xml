@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.iniongun.tivbible.reader.read.ReadViewModel" />
+            type="com.iniongun.tivbible.reader.read.ReadViewModelNew" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,14 +74,18 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="UnusedAttribute" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/chaptersViewPager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/versesRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/readToolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/readToolbar"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="10"
+            tools:listitem="@layout/verse_layout" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/previousButton"
@@ -98,6 +102,7 @@
             android:insetBottom="0dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/standard_content_margin"
@@ -119,6 +124,7 @@
             android:insetBottom="0dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/standard_content_margin"

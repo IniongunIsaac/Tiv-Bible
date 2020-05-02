@@ -7,11 +7,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
@@ -143,7 +144,7 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         isWarning: Boolean = false
     ) {
         val snackBar = Snackbar.make(rootView, text, duration)
-        val param = snackBar.view.layoutParams as FrameLayout.LayoutParams
+        val param = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         if (isWarning) snackBarLayout.setBackgroundColor(
@@ -156,8 +157,9 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         else snackBarLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
         snackBarLayout.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-            .setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
         param.gravity = Gravity.TOP
+        param.width = MATCH_PARENT
         snackBar.view.layoutParams = param
         snackBar.show()
     }
