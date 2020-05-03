@@ -32,4 +32,7 @@ interface AudioSpeedDao {
     @Query("delete from AudioSpeed")
     fun deleteAudioSpeeds(): Completable
 
+    @Query("select * from AudioSpeed where name like '%' || :name || '%' limit 1")
+    fun getAudioSpeedByName(name: String): Single<AudioSpeed>
+
 }

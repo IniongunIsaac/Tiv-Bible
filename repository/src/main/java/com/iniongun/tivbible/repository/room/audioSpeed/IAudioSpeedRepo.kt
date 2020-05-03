@@ -20,4 +20,6 @@ interface IAudioSpeedRepo {
 
     fun deleteAudioSpeeds(audioSpeeds: List<AudioSpeed>): Completable
 
+    fun getAudioSpeedByName(name: String): Single<AudioSpeed>
+
 }

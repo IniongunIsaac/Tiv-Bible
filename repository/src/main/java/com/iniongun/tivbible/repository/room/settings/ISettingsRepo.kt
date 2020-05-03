@@ -20,4 +20,6 @@ interface ISettingsRepo {
 
     fun deleteSettings(settings: List<Setting>): Completable
 
+    fun updateSetting(setting: Setting): Completable
+
 }

@@ -20,4 +20,6 @@ interface IThemeRepo {
 
     fun deleteThemes(themes: List<Theme>): Completable
 
+    fun getThemeByName(name: String): Single<Theme>
+
 }

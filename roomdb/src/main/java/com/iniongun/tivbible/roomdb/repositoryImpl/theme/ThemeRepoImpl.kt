@@ -22,4 +22,6 @@ class ThemeRepoImpl @Inject constructor(
 
     override fun deleteThemes(themes: List<Theme>) = themeDao.deleteThemes(themes)
 
+    override fun getThemeByName(name: String) = themeDao.getThemeByName(name)
+
 }

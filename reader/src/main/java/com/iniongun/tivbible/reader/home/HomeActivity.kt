@@ -17,6 +17,7 @@ import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
+import com.iniongun.tivbible.reader.databinding.FontSettingsLayoutBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import kotlinx.android.synthetic.main.font_settings_layout.*
@@ -47,6 +48,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     var versesTapActionsBottomSheetShowing = false
     var fontSettingsBottomSheetShowing = false
     private var readViewModel: ReadViewModelNew? = null
+    private lateinit var fontSettingsLayoutBinding: FontSettingsLayoutBinding
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
     private val highlightColors = arrayListOf(
@@ -73,8 +75,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
         setOnClickListeners()
 
+        //fontSettingsLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.font_settings_layout, null, false)
+
         versesTapActionsBottomSheetBehavior = from(versesTapActionsBottomSheet)
         fontSettingsBottomSheetBehavior = from(fontSettingsBottomSheet)
+
     }
 
     private fun setOnClickListeners() {
@@ -119,6 +124,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 }
             }
         }
+
+        fontSizeMinusButton.setOnClickListener {
+            readViewModel?.let {
+                it.decreaseFontSize()
+            }
+        }
+        fontSizePlusButton.setOnClickListener {
+            readViewModel?.let {
+                it.increaseFontSize()
+            }
+        }
     }
 
 
@@ -146,6 +162,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
     }
 
+    fun setupFontSettingsBottomSheet(vm: ReadViewModelNew) {
+        readViewModel = vm
+        toggleFontSettingsBottomSheetVisibility()
+    }
+
     fun toggleFontSettingsBottomSheetVisibility() {
         with(fontSettingsBottomSheetBehavior) {
             if (state != STATE_EXPANDED) {
@@ -158,7 +179,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
     }
 
-    fun showSelectedVersesText(selectedVersesText: String) {
+    fun updateFontSizeIncrementAndDecrementButtonStates(shouldEnable: Boolean) {
+        fontSizePlusButton.isEnabled = shouldEnable
+        fontSizeMinusButton.isEnabled = shouldEnable
+    }
+
+    fun updateFontSizeTextViewContent(fontSize: Int) {
+        fontSizeTextView.text = getString(R.string.font_size_placeholder, fontSize)
+    }
+
+    fun updateSelectedVersesTextViewContent(selectedVersesText: String) {
         selectedVersesTextView.text = selectedVersesText
     }
 

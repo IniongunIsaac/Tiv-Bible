@@ -6,17 +6,23 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
+import com.iniongun.tivbible.common.utils.ScreenSize.*
+import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
-import com.iniongun.tivbible.common.utils.theme.ThemeConstants
+import com.iniongun.tivbible.common.utils.theme.ThemeConstants.*
 import com.iniongun.tivbible.common.utils.theme.ThemeHelper
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
+import com.iniongun.tivbible.repository.room.audioSpeed.IAudioSpeedRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
+import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
+import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.testament.ITestamentRepo
+import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import com.iniongun.tivbible.repository.room.version.IVersionRepo
 import io.reactivex.Completable
@@ -41,7 +47,11 @@ class SplashActivityViewModel @Inject constructor(
     private val testamentRepo: ITestamentRepo,
     private val bookRepo: IBookRepo,
     private val chapterRepo: IChapterRepo,
-    private val versesRepo: IVersesRepo
+    private val versesRepo: IVersesRepo,
+    private val audioSpeedRepo: IAudioSpeedRepo,
+    private val themeRepo: IThemeRepo,
+    private val fontStyleRepo: IFontStyleRepo,
+    private val settingsRepo: ISettingsRepo
 ) : BaseViewModel() {
 
     private var oldTestamentId = ""
@@ -52,20 +62,35 @@ class SplashActivityViewModel @Inject constructor(
     val startHomeLiveData = _startHomeLiveData as LiveData<LiveDataEvent<Boolean>>
 
     init {
-        setUserSavedTheme()
+        //setUserSavedTheme()
         setUpDB()
     }
 
-    private fun setUserSavedTheme() {
+    private fun setUserSavedSettings() {
 
-        var currentTheme = when (preferencesRepo.currentTheme) {
-            ThemeConstants.LIGHT.name -> ThemeConstants.LIGHT
-            ThemeConstants.DARK.name -> ThemeConstants.DARK
-            ThemeConstants.BATTERY_SAVER.name -> ThemeConstants.BATTERY_SAVER
-            else -> ThemeConstants.SYSTEM_DEFAULT
-        }
+//        val currentTheme = when (preferencesRepo.currentTheme) {
+//            LIGHT.name -> LIGHT
+//            DARK.name -> DARK
+//            BATTERY_SAVER.name -> BATTERY_SAVER
+//            else -> SYSTEM_DEFAULT
+//        }
 
-        ThemeHelper.changeTheme(currentTheme)
+        compositeDisposable.add(
+            settingsRepo.getAllSettings().subscribeOnIoObserveOnUi(schedulerProvider, {
+                with(it.first()) {
+                    val currentTheme = when(theme.name) {
+                        LIGHT.name -> LIGHT
+                        DARK.name -> DARK
+                        BATTERY_SAVER.name -> BATTERY_SAVER
+                        else -> SYSTEM_DEFAULT
+                    }
+
+                    ThemeHelper.changeTheme(currentTheme)
+                }
+            })
+        )
+
+        //ThemeHelper.changeTheme(currentTheme)
     }
 
     private fun getTivBibleJsonData(): List<TivBibleData> {
@@ -82,8 +107,8 @@ class SplashActivityViewModel @Inject constructor(
     private fun setUpDB() {
 
         if (preferencesRepo.isDBInitialized) {
+            setUserSavedSettings()
             _startHomeLiveData.value = LiveDataEvent(true)
-
         } else {
             initializeDB()
         }
@@ -91,11 +116,72 @@ class SplashActivityViewModel @Inject constructor(
     }
 
     private fun initializeDB() {
-
         _notificationLiveData.postValue(LiveDataEvent(AppResult.loading()))
+        addFontStylesAndThemesAndAudioSpeeds()
+        //saveVersionsAndTestaments()
+    }
 
-        saveVersionsAndTestaments()
+    private fun setupDefaultSettings(data: Triple<AudioSpeed, Theme, FontStyle>) {
+        var fontSize = 0
+        var lineSpacing = 0
 
+        when(getDeviceScreenSize(context.resources)) {
+            SMALL -> {
+                fontSize = 12
+                lineSpacing = 7
+            }
+
+            NORMAL, UNDEFINED -> {
+                fontSize = 14
+                lineSpacing = 8
+            }
+
+            LARGE -> {
+                fontSize = 16
+                lineSpacing = 9
+            }
+
+            XLARGE -> {
+                fontSize = 18
+                lineSpacing = 10
+            }
+        }
+
+        val settings = listOf(Setting(fontSize = fontSize, lineSpacing = lineSpacing, fontStyle = data.third, theme = data.second, stayAwake = true, audioSpeed = data.first))
+        compositeDisposable.add(
+            settingsRepo.insertSettings(settings)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    setUserSavedSettings()
+                    saveVersionsAndTestaments()
+                })
+        )
+    }
+
+    private fun addFontStylesAndThemesAndAudioSpeeds() {
+        val audioSpeeds = listOf(AudioSpeed(name = "High"), AudioSpeed(name = "Low"), AudioSpeed(name = "Medium"))
+        val themes = listOf(Theme(name = "SYSTEM_DEFAULT"), Theme(name = "LIGHT"), Theme(name = "DARK"), Theme(name = "BATTERY_SAVER"))
+        val fontStyles = listOf(FontStyle(name = "comfortaa.ttf"), FontStyle(name = "happy_monkey.ttf"), FontStyle(name = "metamorphous.ttf"), FontStyle(name = "roboto.ttf"),
+            FontStyle(name = "montserrat.ttf"), FontStyle(name = "amatic_sc.ttf"), FontStyle(name = "inconsolata_expanded.ttf"), FontStyle(name = "indie_flower.ttf"),
+            FontStyle(name = "jost.ttf"), FontStyle(name = "lato.ttf"), FontStyle(name = "lobster.ttf"))
+
+        compositeDisposable.add(
+            Completable.mergeArray(
+                audioSpeedRepo.insertAudioSpeeds(audioSpeeds),
+                themeRepo.insertThemes(themes),
+                fontStyleRepo.insertFontStyles(fontStyles)
+            ).subscribeOnIoObserveOnUi(schedulerProvider, { getDefaultFontStyleAndThemeAndAudioSpeedIds() })
+        )
+    }
+
+    private fun getDefaultFontStyleAndThemeAndAudioSpeedIds() {
+        compositeDisposable.add(
+            Single.zip(
+                audioSpeedRepo.getAudioSpeedByName("Medium"),
+                themeRepo.getThemeByName("SYSTEM_DEFAULT"),
+                fontStyleRepo.getFontStyleByName("comfortaa.ttf"),
+                Function3<AudioSpeed, Theme, FontStyle, Triple<AudioSpeed, Theme, FontStyle>> { audioSpeed, theme, fontStyle -> Triple(audioSpeed, theme, fontStyle) }
+            ).subscribeOnIoObserveOnUi(schedulerProvider, { setupDefaultSettings(it) })
+        )
     }
 
     private fun saveVersionsAndTestaments() {
@@ -107,16 +193,12 @@ class SplashActivityViewModel @Inject constructor(
             Completable.mergeArray(
                 versionRepo.insertVersions(versions),
                 testamentRepo.insertTestaments(testaments)
-            )
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    getVersionAndTestamentId("Old", "Old", "New")
-                }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate versions and testaments.")))
-                })
+            ).subscribeOnIoObserveOnUi(schedulerProvider, {
+                getVersionAndTestamentId("Old", "Old", "New")
+            }) {
+                _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate versions and testaments.")))
+            }
         )
-
     }
 
     private fun getVersionAndTestamentId(versionName: String, vararg testamentIds: String) {
@@ -126,17 +208,13 @@ class SplashActivityViewModel @Inject constructor(
                 versionRepo.getVersionIdByName(versionName),
                 testamentRepo.getTestamentIdByName(testamentIds[0]),
                 testamentRepo.getTestamentIdByName(testamentIds[1]),
-                Function3<String, String, String, Triple<String, String, String>> { versionId, oldTestamentId, newTestamentId ->
+                Function3<String, String, String, Triple<String, String, String>> { versionId, oldTestamentId, newTestamentId -> Triple(versionId, oldTestamentId, newTestamentId) }
+            ).subscribeOnIoObserveOnUi(schedulerProvider, {
+                versionId = it.first
+                oldTestamentId = it.second
+                newTestamentId = it.third
 
-                    return@Function3 Triple(versionId, oldTestamentId, newTestamentId)
-
-                }).subscribeOnIoObserveOnUi(schedulerProvider, {
-
-                    versionId = it.first
-                    oldTestamentId = it.second
-                    newTestamentId = it.third
-
-                    saveBooksAndChaptersAndVerses()
+                saveBooksAndChaptersAndVerses()
 
                 }, {
                     _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to retrieve versions and testaments Ids.")))

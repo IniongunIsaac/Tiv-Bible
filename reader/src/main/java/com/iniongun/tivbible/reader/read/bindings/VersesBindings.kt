@@ -1,6 +1,7 @@
 package com.iniongun.tivbible.reader.read.bindings
 
 import android.graphics.Paint
+import android.util.TypedValue
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -75,4 +76,24 @@ fun setDottedLineBackground(textView: AppCompatTextView, enabled: Boolean) {
         textView.paintFlags = textView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
         //textView.text = textView.text.toString().replace("<u>", "").replace("</u>", "")
     }
+}
+
+@BindingAdapter("app:textSize")
+fun setTextSize(textView: AppCompatTextView, size: Int) {
+    textView.textSize = size.toFloat()
+}
+
+@BindingAdapter("app:titleTextSize")
+fun setTitleTextSize(textView: AppCompatTextView, size: Int) {
+    textView.textSize = (size - 2).toFloat()
+}
+
+@BindingAdapter("app:lineSpacingExtra")
+fun setLineSpacingExtra(textView: AppCompatTextView, size: Int) {
+    textView.setLineSpacing(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size.toFloat(),  textView.context.resources.displayMetrics), 1.0f);
+}
+
+@BindingAdapter("app:textSize")
+fun setTextSize(button: MaterialButton, size: Int) {
+    button.textSize = size.toFloat()
 }

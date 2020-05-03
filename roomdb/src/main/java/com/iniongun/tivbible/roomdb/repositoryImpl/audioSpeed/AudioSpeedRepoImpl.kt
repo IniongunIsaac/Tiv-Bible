@@ -22,4 +22,6 @@ class AudioSpeedRepoImpl @Inject constructor(
 
     override fun deleteAudioSpeeds(audioSpeeds: List<AudioSpeed>) = audioSpeedDao.deleteAudioSpeeds(audioSpeeds)
 
+    override fun getAudioSpeedByName(name: String) = audioSpeedDao.getAudioSpeedByName(name)
+
 }

@@ -101,7 +101,7 @@ class ReadFragment : BaseFragment<ReadFragmentBinding, ReadViewModel>() {
     private fun observeSelectedVersesText() {
         readViewModel.selectedVersesText.observe(this, LiveDataEventObserver {
             with((requireActivity() as HomeActivity)) {
-                showSelectedVersesText(it)
+                updateSelectedVersesTextViewContent(it)
             }
         })
     }

@@ -46,9 +46,6 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     }
 
     private fun setupVersesRecyclerView() {
-        //versesAdapter = VersesAdapterNew(readViewModel)
-        //fragmentReadNewBinding.versesRecyclerView.adapter = versesAdapter
-
         fragmentReadNewBinding.versesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -67,6 +64,8 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         observeVerseSelected()
         observeSelectedVersesText()
         observeCurrentVerses()
+        observeShouldEnableFontDecrementAndIncrementButtons()
+        observeSettings()
     }
 
     private fun observeCurrentVerses() {
@@ -105,8 +104,21 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private fun observeSelectedVersesText() {
         readViewModel.selectedVersesText.observe(this, LiveDataEventObserver {
             with(homeActivity) {
-                if (it.isNotEmpty()) showSelectedVersesText(it)
+                if (it.isNotEmpty()) updateSelectedVersesTextViewContent(it)
             }
+        })
+    }
+
+    private fun observeShouldEnableFontDecrementAndIncrementButtons() {
+        readViewModel.shouldEnableFontIncrementAndDecrementButtons.observe(this, Observer {
+            homeActivity.updateFontSizeIncrementAndDecrementButtonStates(it)
+        })
+    }
+
+    private fun observeSettings() {
+        readViewModel.settings.observe(this, Observer {
+            versesAdapter?.notifyDataSetChanged()
+            homeActivity.updateFontSizeTextViewContent(it.fontSize)
         })
     }
 
@@ -125,7 +137,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
                 if (versesTapActionsBottomSheetShowing)
                     toggleVerseTapActionsBottomSheetVisibility()
 
-                toggleFontSettingsBottomSheetVisibility()
+                setupFontSettingsBottomSheet(readViewModel)
             }
         }
 

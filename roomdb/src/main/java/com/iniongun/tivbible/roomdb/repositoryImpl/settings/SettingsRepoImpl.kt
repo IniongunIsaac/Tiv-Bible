@@ -21,4 +21,6 @@ class SettingsRepoImpl @Inject constructor(
     override fun insertSettings(settings: List<Setting>) = settingDao.insertSettings(settings)
 
     override fun deleteSettings(settings: List<Setting>) = settingDao.deleteSettings(settings)
+
+    override fun updateSetting(setting: Setting) = settingDao.updateSetting(setting)
 }
