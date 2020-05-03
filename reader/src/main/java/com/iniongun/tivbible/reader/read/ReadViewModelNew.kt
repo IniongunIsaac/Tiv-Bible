@@ -15,6 +15,8 @@ import com.iniongun.tivbible.entities.Book
 import com.iniongun.tivbible.entities.Chapter
 import com.iniongun.tivbible.entities.Setting
 import com.iniongun.tivbible.entities.Verse
+import com.iniongun.tivbible.reader.utils.LineSpacingType
+import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
@@ -69,8 +71,8 @@ class ReadViewModelNew @Inject constructor(
     val settings: LiveData<Setting> = _settings
     private lateinit var currentSettings: Setting
 
-    private val _shouldEnableFontIncrementAndDecrementButtons = MutableLiveData<Boolean>()
-    val shouldEnableFontIncrementAndDecrementButtons: LiveData<Boolean> = _shouldEnableFontIncrementAndDecrementButtons
+    private val _shouldEnableFontSettingsUIControls = MutableLiveData<Boolean>()
+    val shouldEnableFontSettingsUIControls: LiveData<Boolean> = _shouldEnableFontSettingsUIControls
 
     private val deviceScreenSize by lazy { getDeviceScreenSize(context.resources) }
 
@@ -272,12 +274,12 @@ class ReadViewModelNew @Inject constructor(
 
     private fun updateUserSettings() {
         _notificationLiveData.value = LiveDataEvent(AppResult.loading())
-        _shouldEnableFontIncrementAndDecrementButtons.value = false
+        _shouldEnableFontSettingsUIControls.value = false
         compositeDisposable.add(
             settingsRepo.updateSetting(currentSettings)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
-                    _shouldEnableFontIncrementAndDecrementButtons.value = true
+                    _shouldEnableFontSettingsUIControls.value = true
                     getUserSettings()
                 })
         )
@@ -286,7 +288,7 @@ class ReadViewModelNew @Inject constructor(
     fun increaseFontSize() {
         val maximumFontSizeForDevice = getMaximumFontSizeForDevice()
         if (currentSettings.fontSize == maximumFontSizeForDevice)
-            setMessage("Maximum font size for your device is $maximumFontSizeForDevice", AppState.FAILED)
+            setMessage("Maximum font size for your device is ${maximumFontSizeForDevice}px", AppState.FAILED)
         else {
             ++currentSettings.fontSize
             updateUserSettings()
@@ -296,7 +298,7 @@ class ReadViewModelNew @Inject constructor(
     fun decreaseFontSize() {
         val minimumFontSizeForDevice = getMinimumFontSizeForDevice()
         if (currentSettings.fontSize == minimumFontSizeForDevice)
-            setMessage("Minimum font size for your device is $minimumFontSizeForDevice", AppState.FAILED)
+            setMessage("Minimum font size for your device is ${minimumFontSizeForDevice}px", AppState.FAILED)
         else {
             --currentSettings.fontSize
             updateUserSettings()
@@ -346,6 +348,17 @@ class ReadViewModelNew @Inject constructor(
             LARGE -> 11
             XLARGE -> 12
         }
+    }
+
+    fun updateLineSpacing(lineSpacingType: LineSpacingType) {
+        val lineSpacing = when(lineSpacingType) {
+            TWO -> getDeviceLineSpacingTwo()
+            THREE -> getDeviceLineSpacingThree()
+            FOUR -> getDeviceLineSpacingFour()
+        }
+
+        currentSettings.lineSpacing = lineSpacing
+        updateUserSettings()
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

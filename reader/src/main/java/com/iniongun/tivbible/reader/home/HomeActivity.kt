@@ -20,6 +20,7 @@ import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
 import com.iniongun.tivbible.reader.databinding.FontSettingsLayoutBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
+import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import kotlinx.android.synthetic.main.font_settings_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.view.*
@@ -130,9 +131,28 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 it.decreaseFontSize()
             }
         }
+
         fontSizePlusButton.setOnClickListener {
             readViewModel?.let {
                 it.increaseFontSize()
+            }
+        }
+
+        lineSpacingTwoButton.setOnClickListener {
+            readViewModel?.let {
+                it.updateLineSpacing(TWO)
+            }
+        }
+
+        lineSpacingThreeButton.setOnClickListener {
+            readViewModel?.let {
+                it.updateLineSpacing(THREE)
+            }
+        }
+
+        lineSpacingFourButton.setOnClickListener {
+            readViewModel?.let {
+                it.updateLineSpacing(FOUR)
             }
         }
     }
@@ -179,9 +199,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
     }
 
-    fun updateFontSizeIncrementAndDecrementButtonStates(shouldEnable: Boolean) {
+    fun updateFontSettingsUIStates(shouldEnable: Boolean) {
         fontSizePlusButton.isEnabled = shouldEnable
         fontSizeMinusButton.isEnabled = shouldEnable
+        lineSpacingTwoButton.isEnabled = shouldEnable
+        lineSpacingThreeButton.isEnabled = shouldEnable
+        lineSpacingFourButton.isEnabled = shouldEnable
+        fontStyleChipGroup.isEnabled = shouldEnable
+        themeChipGroup.isEnabled = shouldEnable
     }
 
     fun updateFontSizeTextViewContent(fontSize: Int) {

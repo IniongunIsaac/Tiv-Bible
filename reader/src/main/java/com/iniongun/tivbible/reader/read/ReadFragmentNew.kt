@@ -64,7 +64,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         observeVerseSelected()
         observeSelectedVersesText()
         observeCurrentVerses()
-        observeShouldEnableFontDecrementAndIncrementButtons()
+        observeShouldEnableFontSettingsUIControls()
         observeSettings()
     }
 
@@ -109,9 +109,9 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         })
     }
 
-    private fun observeShouldEnableFontDecrementAndIncrementButtons() {
-        readViewModel.shouldEnableFontIncrementAndDecrementButtons.observe(this, Observer {
-            homeActivity.updateFontSizeIncrementAndDecrementButtonStates(it)
+    private fun observeShouldEnableFontSettingsUIControls() {
+        readViewModel.shouldEnableFontSettingsUIControls.observe(this, Observer {
+            homeActivity.updateFontSettingsUIStates(it)
         })
     }
 
