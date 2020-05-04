@@ -15,7 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.chip.Chip
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.capitalizeWords
-import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.common.utils.state.AppState.FAILED
+import com.iniongun.tivbible.common.utils.state.AppState.SUCCESS
 import com.iniongun.tivbible.entities.FontStyle
 import com.iniongun.tivbible.entities.Setting
 import com.iniongun.tivbible.entities.Theme
@@ -83,7 +84,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         shareButton.setOnClickListener {
             readViewModel?.let {
                 if (it.shareableSelectedVersesText.isEmpty()) {
-                    it.setMessage("No shareable verse(s) selected!",  AppState.FAILED)
+                    it.setMessage("No shareable verse(s) selected!",  FAILED)
                 } else {
                     val shareIntent = Intent(Intent.ACTION_SEND)
                     shareIntent.type = "text/plain"
@@ -97,9 +98,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         bookmarkButton.setOnClickListener {
             readViewModel?.let {
                 if (it.shareableSelectedVersesText.isEmpty()) {
-                    it.setMessage("No verse(s) selected to bookmark!",  AppState.FAILED)
+                    it.setMessage("No verse(s) selected to bookmark!",  FAILED)
                 } else {
-                    readViewModel?.setMessage("Coming soon!", AppState.SUCCESS)
+                    readViewModel?.saveBookmarks()
                 }
             }
         }
@@ -108,12 +109,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
             readViewModel?.let {
                 if (it.shareableSelectedVersesText.isEmpty()) {
-                    it.setMessage("No verse(s) selected to copy!", AppState.FAILED)
+                    it.setMessage("No verse(s) selected to copy!", FAILED)
                 } else {
                     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText(selectedVersesTextView.text, "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
                     clipboard.setPrimaryClip(clip)
-                    it.setMessage("Verse(s) copied successfully!", AppState.SUCCESS)
+                    it.setMessage("Verse(s) copied successfully!", SUCCESS)
                 }
             }
         }
@@ -149,7 +150,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
 
         goToSettingsButton.setOnClickListener {
-            readViewModel?.let { it.setMessage("Coming Soon!", AppState.SUCCESS) }
+            readViewModel?.let { it.setMessage("Coming Soon!", SUCCESS) }
         }
     }
 

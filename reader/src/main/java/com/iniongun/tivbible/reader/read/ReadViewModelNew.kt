@@ -11,11 +11,13 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.common.utils.state.AppState.SUCCESS
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.reader.utils.LineSpacingType
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
+import com.iniongun.tivbible.repository.room.bookmark.IBookmarkRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
@@ -23,6 +25,7 @@ import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import org.threeten.bp.OffsetDateTime
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,6 +38,7 @@ class ReadViewModelNew @Inject constructor(
     private val settingsRepo: ISettingsRepo,
     private val fontStyleRepo: IFontStyleRepo,
     private val themeRepo: IThemeRepo,
+    private val bookmarkRepo: IBookmarkRepo,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -263,13 +267,13 @@ class ReadViewModelNew @Inject constructor(
     fun setMessage(message: String, messageType: AppState) {
         when(messageType) {
             AppState.FAILED -> _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
-            AppState.SUCCESS -> _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
+            SUCCESS -> _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
         }
 
     }
 
     fun setHighlightColorForSelectedVerse(color: Int) {
-        setMessage("Coming soon!", AppState.SUCCESS)
+        setMessage("Coming soon!", SUCCESS)
     }
 
     fun clearSelectedVerses() {
@@ -391,6 +395,16 @@ class ReadViewModelNew @Inject constructor(
     fun changeTheme(theme: Theme) {
         currentSettings.theme = theme
         updateUserSettings()
+    }
+
+    fun saveBookmarks() {
+        val bookmarks = selectedVerses.map { Bookmark(OffsetDateTime.now(), it) }
+        compositeDisposable.add(
+            bookmarkRepo.insertBookmarks(bookmarks)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    setMessage("Verse(s) bookmarked successfully!", SUCCESS)
+                })
+        )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {
