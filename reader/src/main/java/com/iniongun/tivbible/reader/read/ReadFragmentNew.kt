@@ -69,6 +69,8 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         observeShouldEnableFontSettingsUIControls()
         observeSettings()
         observeFontStylesAndThemes()
+        observeHighlightColors()
+        observeHighlights()
     }
 
     private fun observeCurrentVerses() {
@@ -82,7 +84,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private fun observeVerseNumber() {
         readViewModel.verseNumber.observe(this, LiveDataEventObserver {
             fragmentReadNewBinding.versesRecyclerView.post {
-                fragmentReadNewBinding.versesRecyclerView.smoothScrollToPosition(it)
+                fragmentReadNewBinding.versesRecyclerView.scrollToPosition(it)
             }
         })
     }
@@ -95,12 +97,27 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
                 if (fontSettingsBottomSheetShowing)
                     toggleFontSettingsBottomSheetVisibility()
 
-                if (!versesTapActionsBottomSheetShowing && readViewModel.selectedVerses.isNotEmpty())
-                    showVerseTapActionsBottomSheet(readViewModel)
+                if (!versesTapActionsBottomSheetShowing && readViewModel.selectedVerses.isNotEmpty()) {
+                    readViewModel.getHighlightColors()
+                    if (readViewModel.highlightColorsList.isNotEmpty())
+                        toggleVerseTapActionsBottomSheetVisibility()
+                }
 
                 if (readViewModel.selectedVerses.isEmpty())
                     toggleVerseTapActionsBottomSheetVisibility()
             }
+        })
+    }
+
+    private fun observeHighlightColors() {
+        readViewModel.highlightColors.observe(this, Observer {
+            homeActivity.showVerseTapActionsBottomSheet(readViewModel)
+        })
+    }
+
+    private fun observeHighlights() {
+        readViewModel.highlights.observe(this, Observer {
+            versesAdapter?.notifyDataSetChanged()
         })
     }
 

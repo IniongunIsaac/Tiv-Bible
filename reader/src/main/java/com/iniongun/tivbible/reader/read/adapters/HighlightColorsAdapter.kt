@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.iniongun.tivbible.entities.HighlightColor
 import com.iniongun.tivbible.reader.databinding.SingleHighlightLayoutBinding
 import com.iniongun.tivbible.reader.read.ReadViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
@@ -18,7 +19,7 @@ import com.iniongun.tivbible.reader.read.ReadViewModelNew
  * Adapter for the task list. Has a reference to the [ReadViewModel] to send actions back to it.
  */
 class HighlightColorsAdapter(private val viewModel: ReadViewModelNew) :
-    ListAdapter<Int, HighlightColorsAdapter.ViewHolder>(HighlightColorsDiffCallback()) {
+    ListAdapter<HighlightColor, HighlightColorsAdapter.ViewHolder>(HighlightColorsDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val color = getItem(position)
@@ -32,9 +33,9 @@ class HighlightColorsAdapter(private val viewModel: ReadViewModelNew) :
     class ViewHolder private constructor(val binding: SingleHighlightLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: ReadViewModelNew, color: Int) {
+        fun bind(viewModel: ReadViewModelNew, color: HighlightColor) {
             binding.viewModel = viewModel
-            binding.color = color
+            binding.highlightColor = color
             binding.executePendingBindings()
         }
 
@@ -55,12 +56,12 @@ class HighlightColorsAdapter(private val viewModel: ReadViewModelNew) :
  * Used by ListAdapter to calculate the minimum number of changes between and old list and a new
  * list that's been passed to `submitList`.
  */
-class HighlightColorsDiffCallback : DiffUtil.ItemCallback<Int>() {
-    override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean {
-        return oldItem == newItem
+class HighlightColorsDiffCallback : DiffUtil.ItemCallback<HighlightColor>() {
+    override fun areItemsTheSame(oldItem: HighlightColor, newItem: HighlightColor): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: HighlightColor, newItem: HighlightColor): Boolean {
+        return oldItem.id == newItem.id
     }
 }

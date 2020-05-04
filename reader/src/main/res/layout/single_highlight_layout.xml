@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="color"
-            type="Integer" />
+            name="highlightColor"
+            type="com.iniongun.tivbible.entities.HighlightColor" />
         <variable
             name="viewModel"
             type="com.iniongun.tivbible.reader.read.ReadViewModelNew" />
@@ -21,8 +21,8 @@
             android:layout_width="40dp"
             android:layout_height="50dp"
             app:cornerRadius="26dp"
-            android:background="@{ color }"
-            android:onClick="@{ () -> viewModel.setHighlightColorForSelectedVerse(color) }"
+            android:background="@{ highlightColor.hexCode }"
+            android:onClick="@{ () -> viewModel.setHighlightColorForSelectedVerses(highlightColor) }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

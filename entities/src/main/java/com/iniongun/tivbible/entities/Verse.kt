@@ -25,6 +25,8 @@ data class Verse(
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 ) {
     @Ignore var isSelected: Boolean = false
+    @Ignore var isHighlighted: Boolean = false
+    @Ignore var highlight: Highlight? = null
 }
 
 val Verse.formattedText: SpannedString

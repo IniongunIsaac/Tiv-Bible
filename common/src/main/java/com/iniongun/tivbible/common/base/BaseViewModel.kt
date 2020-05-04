@@ -30,6 +30,18 @@ abstract class BaseViewModel: ViewModel(), CoroutineScope {
 
     private val job = Job()
 
+    fun postLoadingState() {
+        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+    }
+
+    fun removeLoadingState() {
+        _notificationLiveData.value = LiveDataEvent(AppResult.success())
+    }
+
+    fun postFailureNotification(message: String? = null) {
+        _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
+    }
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job + coroutineExceptionHandler
 

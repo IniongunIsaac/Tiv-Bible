@@ -56,10 +56,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     private var readViewModel: ReadViewModelNew? = null
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
-    private val highlightColors = arrayListOf(
-        R.color.color1, R.color.color2, R.color.color3, R.color.color4, R.color.color5, R.color.color6, R.color.color7, R.color.color8, R.color.color9, R.color.color10,
-        R.color.color11, R.color.color12, R.color.color13, R.color.color14, R.color.color15, R.color.color16, R.color.color17, R.color.color18, R.color.color19, R.color.color20
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +102,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
 
         copyButton.setOnClickListener {
-
             readViewModel?.let {
                 if (it.shareableSelectedVersesText.isEmpty()) {
                     it.setMessage("No verse(s) selected to copy!", FAILED)
@@ -154,15 +149,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
     }
 
-
     fun showVerseTapActionsBottomSheet(viewModel: ReadViewModelNew? = null) {
-        viewModel?.let {
-            readViewModel = it
-            if (highlightColorsAdapter == null) {
-                highlightColorsAdapter = HighlightColorsAdapter(it)
-                versesTapActionsBottomSheet.verseHighlightColorsRecyclerView.adapter = highlightColorsAdapter
-                highlightColorsAdapter!!.submitList(highlightColors)
-            }
+
+        if (readViewModel == null || highlightColorsAdapter == null) {
+            readViewModel = viewModel
+            highlightColorsAdapter = HighlightColorsAdapter(readViewModel!!)
+            versesTapActionsBottomSheet.verseHighlightColorsRecyclerView.adapter = highlightColorsAdapter
+            highlightColorsAdapter?.submitList(readViewModel!!.highlightColorsList)
         }
         toggleVerseTapActionsBottomSheetVisibility()
     }

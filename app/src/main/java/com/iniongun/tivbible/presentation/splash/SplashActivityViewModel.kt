@@ -15,11 +15,13 @@ import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.theme.ThemeConstants.*
 import com.iniongun.tivbible.common.utils.theme.ThemeHelper
 import com.iniongun.tivbible.entities.*
+import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.audioSpeed.IAudioSpeedRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
+import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.testament.ITestamentRepo
 import com.iniongun.tivbible.repository.room.theme.IThemeRepo
@@ -30,6 +32,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 import org.apache.commons.text.WordUtils
+import timber.log.Timber
 import java.io.BufferedReader
 import java.util.*
 import javax.inject.Inject
@@ -51,7 +54,8 @@ class SplashActivityViewModel @Inject constructor(
     private val audioSpeedRepo: IAudioSpeedRepo,
     private val themeRepo: IThemeRepo,
     private val fontStyleRepo: IFontStyleRepo,
-    private val settingsRepo: ISettingsRepo
+    private val settingsRepo: ISettingsRepo,
+    private val highlightColorRepo: IHighlightColorRepo
 ) : BaseViewModel() {
 
     private var oldTestamentId = ""
@@ -150,12 +154,19 @@ class SplashActivityViewModel @Inject constructor(
         val fontStyles = listOf(FontStyle(name = "comfortaa.ttf"), FontStyle(name = "happy_monkey.ttf"), FontStyle(name = "metamorphous.ttf"), FontStyle(name = "roboto.ttf"),
             FontStyle(name = "montserrat.ttf"), FontStyle(name = "amatic_sc.ttf"), FontStyle(name = "inconsolata_expanded.ttf"), FontStyle(name = "indie_flower.ttf"),
             FontStyle(name = "jost.ttf"), FontStyle(name = "lato.ttf"), FontStyle(name = "lobster.ttf"))
+        val colors = listOf( HighlightColor(hexCode = android.R.color.transparent),
+            HighlightColor(hexCode = R.color.color1), HighlightColor(hexCode = R.color.color2), HighlightColor(hexCode = R.color.color3), HighlightColor(hexCode = R.color.color4), HighlightColor(hexCode = R.color.color5),
+            HighlightColor(hexCode = R.color.color6), HighlightColor(hexCode = R.color.color7), HighlightColor(hexCode = R.color.color8), HighlightColor(hexCode = R.color.color9), HighlightColor(hexCode = R.color.color10),
+            HighlightColor(hexCode = R.color.color11), HighlightColor(hexCode = R.color.color12), HighlightColor(hexCode = R.color.color13), HighlightColor(hexCode = R.color.color14), HighlightColor(hexCode = R.color.color15),
+            HighlightColor(hexCode = R.color.color16), HighlightColor(hexCode = R.color.color17), HighlightColor(hexCode = R.color.color18), HighlightColor(hexCode = R.color.color19), HighlightColor(hexCode = R.color.color20)
+        )
 
         compositeDisposable.add(
             Completable.mergeArray(
                 audioSpeedRepo.insertAudioSpeeds(audioSpeeds),
                 themeRepo.insertThemes(themes),
-                fontStyleRepo.insertFontStyles(fontStyles)
+                fontStyleRepo.insertFontStyles(fontStyles),
+                highlightColorRepo.insertHighlightColors(colors)
             ).subscribeOnIoObserveOnUi(schedulerProvider, { getDefaultFontStyleAndThemeAndAudioSpeedIds() })
         )
     }
@@ -183,7 +194,7 @@ class SplashActivityViewModel @Inject constructor(
             ).subscribeOnIoObserveOnUi(schedulerProvider, {
                 getVersionAndTestamentId("Old", "Old", "New")
             }) {
-                _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate versions and testaments.")))
+                postFailureNotification("An error occurred while trying to populate versions and testaments.")
             }
         )
     }
@@ -204,7 +215,7 @@ class SplashActivityViewModel @Inject constructor(
                 saveBooksAndChaptersAndVerses()
 
                 }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to retrieve versions and testaments Ids.")))
+                    postFailureNotification("An error occurred while trying to retrieve versions and testaments Ids.")
                 })
         )
 
@@ -295,15 +306,9 @@ class SplashActivityViewModel @Inject constructor(
                                 chapterRepo.insertChapters(chapters),
                                 versesRepo.addVerses(verses)
                             ).subscribeOnIoObserveOnUi(schedulerProvider, {
-                                    print("Added book, chapters and verses sequence...")
+                                    Timber.e("Added book, chapters and verses sequence...")
                                 }, {
-                                    _notificationLiveData.postValue(
-                                        LiveDataEvent(
-                                            AppResult.failed(
-                                                "An error occurred while trying to add book, chapters and verses sequence..."
-                                            )
-                                        )
-                                    )
+                                postFailureNotification("An error occurred while trying to add book, chapters and verses sequence...")
                                 })
                         )
 
@@ -315,13 +320,13 @@ class SplashActivityViewModel @Inject constructor(
                     _notificationLiveData.postValue(LiveDataEvent(AppResult.success(message = null)))
 
                 }, {
-                    _notificationLiveData.postValue(LiveDataEvent(AppResult.failed("An error occurred while trying to populate books, chapters and verses.")))
+                    postFailureNotification("An error occurred while trying to populate books, chapters and verses.")
                 })
         )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {
-        _notificationLiveData.postValue(LiveDataEvent(AppResult.failed(throwable.message)))
+        postFailureNotification(throwable.message)
     }
 
 }

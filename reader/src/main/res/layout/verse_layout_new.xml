@@ -60,6 +60,7 @@
             app:lineSpacingExtra="@{ viewModel.settings.lineSpacing }"
             android:text="@{ VerseKt.getFormattedText(verse) }"
             android:background="@{ verse.isSelected }"
+            app:backgroundColor="@{ verse }"
             android:layerType="software"
             tools:text="@string/verse_text_placeholder"
             app:layout_constraintEnd_toEndOf="parent"

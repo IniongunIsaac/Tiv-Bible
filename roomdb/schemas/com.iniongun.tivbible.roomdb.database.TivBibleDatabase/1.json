@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5e22babcdef0aaba47620917101a9648",
+    "identityHash": "1e010f5c75de463d89b970f79ec90d81",
     "entities": [
       {
         "tableName": "AudioSpeed",
@@ -249,12 +249,12 @@
       },
       {
         "tableName": "HighlightColor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hex_code` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hex_code` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "hexCode",
             "columnName": "hex_code",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -275,7 +275,7 @@
       },
       {
         "tableName": "Highlight",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`highlighted_on` TEXT NOT NULL, `id` TEXT NOT NULL, `highlight_color_hex_code` TEXT NOT NULL, `highlight_color_id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`highlighted_on` TEXT NOT NULL, `highlight_color_hex_code` INTEGER NOT NULL, `highlight_color_id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, PRIMARY KEY(`verse_id`, `verse_number`))",
         "fields": [
           {
             "fieldPath": "highlightedOn",
@@ -284,15 +284,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "color.hexCode",
             "columnName": "highlight_color_hex_code",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -340,7 +334,8 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "verse_id",
+            "verse_number"
           ],
           "autoGenerate": false
         },
@@ -711,7 +706,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e22babcdef0aaba47620917101a9648')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e010f5c75de463d89b970f79ec90d81')"
     ]
   }
 }

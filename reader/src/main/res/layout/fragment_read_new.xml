@@ -88,7 +88,7 @@
             app:layout_constraintTop_toBottomOf="@+id/readToolbar"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="10"
-            tools:listitem="@layout/verse_layout" />
+            tools:listitem="@layout/verse_layout_new" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/previousButton"

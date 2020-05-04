@@ -6,12 +6,14 @@ import android.util.TypedValue
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.backgroundColor
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
+import com.iniongun.tivbible.entities.HighlightColor
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.reader.read.adapters.ChaptersAdapter
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
@@ -46,7 +48,7 @@ fun setItems(viewPager: ViewPager2, items: List<Verse>?) {
 }
 
 @BindingAdapter("app:items")
-fun setHighlightColorItems(recyclerView: RecyclerView, items: List<Int>?) {
+fun setHighlightColorItems(recyclerView: RecyclerView, items: List<HighlightColor>?) {
     items?.let {
         (recyclerView.adapter as HighlightColorsAdapter).submitList(items)
     }
@@ -105,4 +107,13 @@ fun setFontStyle(textView: AppCompatTextView, fontName: String) {
 @BindingAdapter("app:fontTypeface")
 fun setFontStyle(button: MaterialButton, fontName: String) {
     button.typeface = Typeface.createFromAsset(button.context.assets, "font/$fontName")
+}
+
+@BindingAdapter("app:backgroundColor")
+fun setBackgroundColor(textView: AppCompatTextView, verse: Verse) {
+    if (verse.isHighlighted) {
+        textView.text = buildSpannedString { backgroundColor(ContextCompat.getColor(textView.context, verse.highlight!!.color.hexCode)) { append(textView.text) } }
+    } else {
+        textView.text = buildSpannedString { backgroundColor(android.R.color.transparent) { append(textView.text) } }
+    }
 }

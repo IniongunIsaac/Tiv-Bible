@@ -11,6 +11,7 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.common.utils.state.AppState.FAILED
 import com.iniongun.tivbible.common.utils.state.AppState.SUCCESS
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.reader.utils.LineSpacingType
@@ -20,6 +21,8 @@ import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.bookmark.IBookmarkRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
+import com.iniongun.tivbible.repository.room.highlight.IHighlightRepo
+import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
@@ -39,6 +42,8 @@ class ReadViewModelNew @Inject constructor(
     private val fontStyleRepo: IFontStyleRepo,
     private val themeRepo: IThemeRepo,
     private val bookmarkRepo: IBookmarkRepo,
+    private val highlightColorRepo: IHighlightColorRepo,
+    private val highlightRepo: IHighlightRepo,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -86,16 +91,24 @@ class ReadViewModelNew @Inject constructor(
     private val _fontStylesAndThemes = MutableLiveData<Pair<List<FontStyle>, List<Theme>>>()
     val fontStylesAndThemes: LiveData<Pair<List<FontStyle>, List<Theme>>> = _fontStylesAndThemes
 
+    var highlightColorsList = listOf<HighlightColor>()
+    private val _highlightColors = MutableLiveData<List<HighlightColor>>()
+    val highlightColors: LiveData<List<HighlightColor>> = _highlightColors
+
+    private var highlightsList = listOf<Highlight>()
+    private val _highlights = MutableLiveData<List<Highlight>>()
+    val highlights: LiveData<List<Highlight>> = _highlights
+
     init {
         getUserSettings()
         appPreferencesRepo.shouldReloadVerses = true
     }
 
     private fun getUserSettings() {
-        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+        postLoadingState()
         compositeDisposable.add(
             settingsRepo.getAllSettings().subscribeOnIoObserveOnUi(schedulerProvider, {
-                _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                removeLoadingState()
                 val settings = it.first()
                 currentSettings = settings
                 _settings.value = settings
@@ -110,7 +123,7 @@ class ReadViewModelNew @Inject constructor(
                 val book = appPreferencesRepo.currentBook
                 getBookVerses(book)
             } catch (e: Exception) {
-                _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+                postLoadingState()
                 compositeDisposable.add(
                     bookRepo.getBookByName("genese")
                         .subscribeOnIoObserveOnUi(schedulerProvider, {
@@ -127,7 +140,7 @@ class ReadViewModelNew @Inject constructor(
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     currentChapter = it
                     appPreferencesRepo.currentChapter = it
-                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    removeLoadingState()
                     getBookVerses(book)
                 })
         )
@@ -150,21 +163,21 @@ class ReadViewModelNew @Inject constructor(
             currentChapter?.let { curChap ->
                 val chapNum = curChap.chapterNumber + number
                 when {
-                    chapNum <= 0 -> setMessage("You're currently on the first chapter!", AppState.FAILED)
-                    chapNum > _chapters.value!!.size -> setMessage("You're currently on the last chapter!", AppState.FAILED)
+                    chapNum <= 0 -> setMessage("You're currently on the first chapter!", FAILED)
+                    chapNum > _chapters.value!!.size -> setMessage("You're currently on the last chapter!", FAILED)
                     else -> {
-                        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+                        postLoadingState()
                         compositeDisposable.add(
                             chapterRepo.getChapterByBookAndChapterNumber(curBook.id, chapNum)
                                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                                     currentChapter = it
                                     appPreferencesRepo.currentChapter = it
-                                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                                    removeLoadingState()
                                     appPreferencesRepo.currentVerseString = ""
                                     clearSelectedVerses()
                                     getCurrentVerses(it.id)
                                 }) {
-                                    setMessage("Unable to get next chapter, please try again!", AppState.FAILED)
+                                    setMessage("Unable to get next chapter, please try again!", FAILED)
                                 }
                         )
                     }
@@ -174,6 +187,7 @@ class ReadViewModelNew @Inject constructor(
     }
 
     private fun getSavedVerseNumber() {
+        getVersesHighlights()
         try {
             val verse = appPreferencesRepo.currentVerse
             _verseNumber.value = LiveDataEvent(verse.number)
@@ -192,12 +206,12 @@ class ReadViewModelNew @Inject constructor(
         newBookNameAndChapterNumber = "${ book.name.capitalize() }:${nameAndChapter[1]}"
         _bookNameAndChapterNumber.value = newBookNameAndChapterNumber.replace(":", " ")
 
-        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+        postLoadingState()
 
         compositeDisposable.add(
             verseRepo.getVersesByBook(book.id)
                 .subscribeOnIoObserveOnUi(schedulerProvider, { verses ->
-                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    removeLoadingState()
                     _chapters.value = verses.distinctBy { it.chapterId }
                     _verses.value = verses
                     getSavedChapterNumber()
@@ -266,14 +280,67 @@ class ReadViewModelNew @Inject constructor(
 
     fun setMessage(message: String, messageType: AppState) {
         when(messageType) {
-            AppState.FAILED -> _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
+            FAILED -> _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
             SUCCESS -> _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
         }
 
     }
 
-    fun setHighlightColorForSelectedVerse(color: Int) {
-        setMessage("Coming soon!", SUCCESS)
+    fun getHighlightColors() {
+        if (highlightColorsList.isEmpty()) {
+            postLoadingState()
+            compositeDisposable.add(
+                highlightColorRepo.getAllHighlightColors()
+                    .subscribeOnIoObserveOnUi(schedulerProvider, {
+                        highlightColorsList = it
+                        _highlightColors.value = it
+                        removeLoadingState()
+                    })
+            )
+        }
+    }
+
+    fun setHighlightColorForSelectedVerses(color: HighlightColor) {
+        val highlights = selectedVerses.map { Highlight(OffsetDateTime.now(), color, it) }
+        postLoadingState()
+        compositeDisposable.add(
+            highlightRepo.insertHighlights(highlights)
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    removeLoadingState()
+                    getVersesHighlights()
+                })
+        )
+    }
+
+    private fun getVersesHighlights() {
+        postLoadingState()
+        compositeDisposable.add(
+            highlightRepo.getAllHighlights()
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    highlightsList = it
+                    getHighlightedVerses()
+                    removeLoadingState()
+                })
+        )
+    }
+
+    private fun getHighlightedVerses() {
+        _currentVerses.value?.forEach { vs ->
+            highlightsList.forEach { hglght ->
+                if (hglght.verse.text == vs.text && hglght.verse.number == vs.number) {
+                    vs.isHighlighted = true
+                    vs.highlight = hglght
+                }
+            }
+        }
+        _highlights.value = highlightsList
+
+//        _currentVerses.value?.filter { verse -> verse.id in highlightsList.map { it.verse.id } }?.forEach { vs ->
+//            vs.isHighlighted = true
+//            vs.highlight = highlightsList.first { it.verse.text == vs.text && it.verse.number == vs.number }
+//        }
+//        _highlights.value = highlightsList
+
     }
 
     fun clearSelectedVerses() {
@@ -283,12 +350,12 @@ class ReadViewModelNew @Inject constructor(
     }
 
     private fun updateUserSettings() {
-        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+        postLoadingState()
         _shouldEnableFontSettingsUIControls.value = false
         compositeDisposable.add(
             settingsRepo.updateSetting(currentSettings)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
-                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    removeLoadingState()
                     _shouldEnableFontSettingsUIControls.value = true
                     getUserSettings()
                 })
@@ -298,7 +365,7 @@ class ReadViewModelNew @Inject constructor(
     fun increaseFontSize() {
         val maximumFontSizeForDevice = getMaximumFontSizeForDevice()
         if (currentSettings.fontSize == maximumFontSizeForDevice)
-            setMessage("Maximum font size for your device is ${maximumFontSizeForDevice}px", AppState.FAILED)
+            setMessage("Maximum font size for your device is ${maximumFontSizeForDevice}px", FAILED)
         else {
             ++currentSettings.fontSize
             updateUserSettings()
@@ -308,7 +375,7 @@ class ReadViewModelNew @Inject constructor(
     fun decreaseFontSize() {
         val minimumFontSizeForDevice = getMinimumFontSizeForDevice()
         if (currentSettings.fontSize == minimumFontSizeForDevice)
-            setMessage("Minimum font size for your device is ${minimumFontSizeForDevice}px", AppState.FAILED)
+            setMessage("Minimum font size for your device is ${minimumFontSizeForDevice}px", FAILED)
         else {
             --currentSettings.fontSize
             updateUserSettings()
@@ -373,14 +440,14 @@ class ReadViewModelNew @Inject constructor(
 
     fun getAppFontStylesAndThemes() {
         if (_fontStylesAndThemes.value?.first == null || _fontStylesAndThemes.value?.second == null) {
-            _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+            postLoadingState()
             compositeDisposable.add(
                 Observable.zip(
                     fontStyleRepo.getAllFontStyles(),
                     themeRepo.getAllThemes(),
                     BiFunction<List<FontStyle>, List<Theme>, Pair<List<FontStyle>, List<Theme>>> { fontStyles, themes -> Pair(fontStyles, themes) }
                 ).subscribeOnIoObserveOnUi(schedulerProvider, {
-                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    removeLoadingState()
                     _fontStylesAndThemes.value = it
                 })
             )
