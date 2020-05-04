@@ -53,7 +53,7 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        createDialog()
+        //createDialog()
     }
 
     private fun hideKeyboardWhenUserTapsOutsideEditText() {
@@ -166,11 +166,13 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
 
     open fun showLoadingDialog() {
         hideKeyboard(this)
-        dialog.show()
+        dialog?.show()
     }
 
     open fun dismissLoadingDialog() {
-        if (dialog.isShowing) dialog.dismiss()
+        dialog?.let {
+            if (it.isShowing) it.dismiss()
+        }
     }
 
     open fun hideStatusAndNavigationBar() {

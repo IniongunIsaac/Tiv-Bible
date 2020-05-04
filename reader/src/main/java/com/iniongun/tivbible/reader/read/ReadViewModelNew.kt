@@ -11,17 +11,18 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.state.AppState
-import com.iniongun.tivbible.entities.Book
-import com.iniongun.tivbible.entities.Chapter
-import com.iniongun.tivbible.entities.Setting
-import com.iniongun.tivbible.entities.Verse
+import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.reader.utils.LineSpacingType
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
+import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
+import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,6 +33,8 @@ class ReadViewModelNew @Inject constructor(
     private val chapterRepo: IChapterRepo,
     private val appPreferencesRepo: IAppPreferencesRepo,
     private val settingsRepo: ISettingsRepo,
+    private val fontStyleRepo: IFontStyleRepo,
+    private val themeRepo: IThemeRepo,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -69,12 +72,15 @@ class ReadViewModelNew @Inject constructor(
 
     private var _settings = MutableLiveData<Setting>()
     val settings: LiveData<Setting> = _settings
-    private lateinit var currentSettings: Setting
+    lateinit var currentSettings: Setting
 
     private val _shouldEnableFontSettingsUIControls = MutableLiveData<Boolean>()
     val shouldEnableFontSettingsUIControls: LiveData<Boolean> = _shouldEnableFontSettingsUIControls
 
     private val deviceScreenSize by lazy { getDeviceScreenSize(context.resources) }
+
+    private val _fontStylesAndThemes = MutableLiveData<Pair<List<FontStyle>, List<Theme>>>()
+    val fontStylesAndThemes: LiveData<Pair<List<FontStyle>, List<Theme>>> = _fontStylesAndThemes
 
     init {
         getUserSettings()
@@ -358,6 +364,32 @@ class ReadViewModelNew @Inject constructor(
         }
 
         currentSettings.lineSpacing = lineSpacing
+        updateUserSettings()
+    }
+
+    fun getAppFontStylesAndThemes() {
+        if (_fontStylesAndThemes.value?.first == null || _fontStylesAndThemes.value?.second == null) {
+            _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+            compositeDisposable.add(
+                Observable.zip(
+                    fontStyleRepo.getAllFontStyles(),
+                    themeRepo.getAllThemes(),
+                    BiFunction<List<FontStyle>, List<Theme>, Pair<List<FontStyle>, List<Theme>>> { fontStyles, themes -> Pair(fontStyles, themes) }
+                ).subscribeOnIoObserveOnUi(schedulerProvider, {
+                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
+                    _fontStylesAndThemes.value = it
+                })
+            )
+        }
+    }
+
+    fun changeFontStyle(fontStyle: FontStyle) {
+        currentSettings.fontStyle = fontStyle
+        updateUserSettings()
+    }
+
+    fun changeTheme(theme: Theme) {
+        currentSettings.theme = theme
         updateUserSettings()
     }
 

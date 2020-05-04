@@ -1,5 +1,6 @@
 package com.iniongun.tivbible.reader.read
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongun.tivbible.common.utils.navigation.AppActivityNavCommands
 import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.entities.Setting
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.FragmentReadNewBinding
@@ -66,6 +68,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         observeCurrentVerses()
         observeShouldEnableFontSettingsUIControls()
         observeSettings()
+        observeFontStylesAndThemes()
     }
 
     private fun observeCurrentVerses() {
@@ -118,7 +121,22 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private fun observeSettings() {
         readViewModel.settings.observe(this, Observer {
             versesAdapter?.notifyDataSetChanged()
+            updateToolbarButtonsFont(it)
             homeActivity.updateFontSizeTextViewContent(it.fontSize)
+        })
+    }
+
+    private fun updateToolbarButtonsFont(settings: Setting) {
+        with(settings) {
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${this.fontStyle.name}")
+            fragmentReadNewBinding.bookNameButton.typeface = typeface
+            fragmentReadNewBinding.fontStyleButton.typeface = typeface
+        }
+    }
+
+    private fun observeFontStylesAndThemes() {
+        readViewModel.fontStylesAndThemes.observe(this, Observer {
+            homeActivity.setupFontStylesAndThemesChipGroups(it, readViewModel.currentSettings)
         })
     }
 
@@ -133,6 +151,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         }
 
         fragmentReadNewBinding.fontStyleButton.setOnClickListener {
+            readViewModel.getAppFontStylesAndThemes()
             with(homeActivity) {
                 if (versesTapActionsBottomSheetShowing)
                     toggleVerseTapActionsBottomSheetVisibility()

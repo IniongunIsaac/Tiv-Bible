@@ -62,19 +62,10 @@ class SplashActivityViewModel @Inject constructor(
     val startHomeLiveData = _startHomeLiveData as LiveData<LiveDataEvent<Boolean>>
 
     init {
-        //setUserSavedTheme()
         setUpDB()
     }
 
     private fun setUserSavedSettings() {
-
-//        val currentTheme = when (preferencesRepo.currentTheme) {
-//            LIGHT.name -> LIGHT
-//            DARK.name -> DARK
-//            BATTERY_SAVER.name -> BATTERY_SAVER
-//            else -> SYSTEM_DEFAULT
-//        }
-
         compositeDisposable.add(
             settingsRepo.getAllSettings().subscribeOnIoObserveOnUi(schedulerProvider, {
                 with(it.first()) {
@@ -84,13 +75,10 @@ class SplashActivityViewModel @Inject constructor(
                         BATTERY_SAVER.name -> BATTERY_SAVER
                         else -> SYSTEM_DEFAULT
                     }
-
                     ThemeHelper.changeTheme(currentTheme)
                 }
             })
         )
-
-        //ThemeHelper.changeTheme(currentTheme)
     }
 
     private fun getTivBibleJsonData(): List<TivBibleData> {
@@ -118,7 +106,6 @@ class SplashActivityViewModel @Inject constructor(
     private fun initializeDB() {
         _notificationLiveData.postValue(LiveDataEvent(AppResult.loading()))
         addFontStylesAndThemesAndAudioSpeeds()
-        //saveVersionsAndTestaments()
     }
 
     private fun setupDefaultSettings(data: Triple<AudioSpeed, Theme, FontStyle>) {

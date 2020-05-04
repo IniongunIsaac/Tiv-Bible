@@ -6,18 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.children
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import com.google.android.material.chip.Chip
 import com.iniongun.tivbible.common.base.BaseActivity
+import com.iniongun.tivbible.common.utils.capitalizeWords
 import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.entities.FontStyle
+import com.iniongun.tivbible.entities.Setting
+import com.iniongun.tivbible.entities.Theme
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
-import com.iniongun.tivbible.reader.databinding.FontSettingsLayoutBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
@@ -49,7 +53,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     var versesTapActionsBottomSheetShowing = false
     var fontSettingsBottomSheetShowing = false
     private var readViewModel: ReadViewModelNew? = null
-    private lateinit var fontSettingsLayoutBinding: FontSettingsLayoutBinding
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
     private val highlightColors = arrayListOf(
@@ -63,20 +66,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_read, R.id.navigation_search, R.id.navigation_more
-            )
-        )
-
-        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         setOnClickListeners()
-
-        //fontSettingsLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.font_settings_layout, null, false)
 
         versesTapActionsBottomSheetBehavior = from(versesTapActionsBottomSheet)
         fontSettingsBottomSheetBehavior = from(fontSettingsBottomSheet)
@@ -155,6 +147,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 it.updateLineSpacing(FOUR)
             }
         }
+
+        goToSettingsButton.setOnClickListener {
+            readViewModel?.let { it.setMessage("Coming Soon!", AppState.SUCCESS) }
+        }
     }
 
 
@@ -185,6 +181,43 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     fun setupFontSettingsBottomSheet(vm: ReadViewModelNew) {
         readViewModel = vm
         toggleFontSettingsBottomSheetVisibility()
+    }
+
+    fun setupFontStylesAndThemesChipGroups(data: Pair<List<FontStyle>, List<Theme>>, setting: Setting) {
+        fontStyleChipGroup.removeAllViews()
+        themeChipGroup.removeAllViews()
+
+        data.first.forEach {
+            val chip = layoutInflater.inflate(R.layout.single_chip_layout, null, false) as Chip
+            chip.text = it.name.removeSuffix(".ttf").replace("_", " ").capitalizeWords()
+            chip.isChecked = it.id == setting.fontStyle.id
+            chip.setOnCheckedChangeListener { chipView, isChecked ->
+                if (isChecked) {
+                    with((fontStyleChipGroup.children.first() as Chip)) {
+                        if (this.isChecked && this != chipView)
+                            this.isChecked = false
+                    }
+                    readViewModel?.let { vm -> vm.changeFontStyle(it) }
+                }
+            }
+            fontStyleChipGroup.addView(chip)
+        }
+
+        data.second.forEach {
+            val chip = layoutInflater.inflate(R.layout.single_chip_layout, null, false) as Chip
+            chip.text = it.name.replace("_", " ").toLowerCase().capitalizeWords()
+            chip.isChecked = it.id == setting.theme.id
+            chip.setOnCheckedChangeListener { chipView, isChecked ->
+                if (isChecked) {
+                    with((themeChipGroup.children.first() as Chip)) {
+                        if (this.isChecked && this != chipView)
+                            this.isChecked = false
+                    }
+                    readViewModel?.let { vm -> vm.changeTheme(it) }
+                }
+            }
+            themeChipGroup.addView(chip)
+        }
     }
 
     fun toggleFontSettingsBottomSheetVisibility() {

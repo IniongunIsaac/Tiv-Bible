@@ -1,6 +1,7 @@
 package com.iniongun.tivbible.reader.read.bindings
 
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.TypedValue
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
@@ -70,11 +71,9 @@ fun setBackgroundColor(button: MaterialButton, @ColorRes color: Int) {
 @BindingAdapter("android:background")
 fun setDottedLineBackground(textView: AppCompatTextView, enabled: Boolean) {
     if (enabled) {
-        //textView.text = HtmlCompat.fromHtml("<u>${textView.text}</u>", HtmlCompat.FROM_HTML_MODE_LEGACY)
         textView.paintFlags = textView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     } else {
         textView.paintFlags = textView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
-        //textView.text = textView.text.toString().replace("<u>", "").replace("</u>", "")
     }
 }
 
@@ -96,4 +95,14 @@ fun setLineSpacingExtra(textView: AppCompatTextView, size: Int) {
 @BindingAdapter("app:textSize")
 fun setTextSize(button: MaterialButton, size: Int) {
     button.textSize = size.toFloat()
+}
+
+@BindingAdapter("app:fontTypeface")
+fun setFontStyle(textView: AppCompatTextView, fontName: String) {
+    textView.typeface = Typeface.createFromAsset(textView.context.assets, "font/$fontName")
+}
+
+@BindingAdapter("app:fontTypeface")
+fun setFontStyle(button: MaterialButton, fontName: String) {
+    button.typeface = Typeface.createFromAsset(button.context.assets, "font/$fontName")
 }
