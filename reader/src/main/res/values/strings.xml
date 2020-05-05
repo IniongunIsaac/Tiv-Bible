@@ -24,4 +24,9 @@
     <string name="go_to_settings_text">Go to Settings</string>
     <string name="font_size_placeholder">%dpx</string>
     <string name="recent_searches_text">Recent Searches</string>
+    <string name="recent_searches_not_found_tex">Your recent searches will appear here!</string>
+    <string name="history_not_found_text">Your history will appear here!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

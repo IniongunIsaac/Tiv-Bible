@@ -15,11 +15,24 @@
         android:id="@+id/navigation_search"
         android:name="com.iniongun.tivbible.reader.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/search_fragment" />
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_navigation_search_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_more"
         android:name="com.iniongun.tivbible.reader.more.MoreFragment"
         android:label="@string/title_more"
         tools:layout="@layout/more_fragment" />
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="com.iniongun.tivbible.reader.search.SearchResultsFragment"
+        android:label="fragment_search_results"
+        tools:layout="@layout/fragment_search_results" />
 </navigation>

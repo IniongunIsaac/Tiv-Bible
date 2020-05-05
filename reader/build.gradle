@@ -1,4 +1,5 @@
 apply from: rootProject.file('android-modules-common-config.gradle')
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
 
@@ -23,6 +24,7 @@ dependencies {
             Dependencies.materialDesign,
             Dependencies.androidXVectorDrawables,
 
+            Dependencies.androidXCoreKts,
             Dependencies.navFragmentKts,
             Dependencies.navUIKts,
             Dependencies.navFragment,

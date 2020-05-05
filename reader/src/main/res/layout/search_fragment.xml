@@ -59,7 +59,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/verseChapterNumbersRecyclerView"
+            android:id="@+id/chapterNumbersRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_mid_margin"
@@ -78,20 +78,20 @@
             android:id="@+id/recentSearchesLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="@dimen/standard_content_margin"
             android:text="@string/recent_searches_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/verseChapterNumbersRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/chapterNumbersRecyclerView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clearRecentSearchesButton"
             style="@style/AppButton.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
             android:gravity="center|end"
             android:text="@string/clear_text"
             app:layout_constraintBottom_toBottomOf="@+id/recentSearchesLabelTextView"
@@ -109,13 +109,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentSearchesRecyclerView"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
             app:layout_constraintBottom_toTopOf="@+id/clearHistoryButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -125,12 +126,29 @@
             tools:listitem="@layout/single_recent_search_layout"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/recentSearchesNotFoundTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/recent_searches_not_found_tex"
+            android:gravity="center"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/clearHistoryButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recentSearchesSeparatorView"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/historyLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="@dimen/standard_content_margin"
             android:text="@string/history_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline2" />
@@ -140,8 +158,8 @@
             style="@style/AppButton.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
             android:gravity="center|end"
             android:text="@string/clear_text"
             app:layout_constraintBottom_toBottomOf="@+id/historyLabelTextView"
@@ -161,12 +179,13 @@
             android:id="@+id/historyRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            android:layout_marginBottom="@dimen/standard_content_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -174,6 +193,23 @@
             app:layout_constraintTop_toBottomOf="@id/historySeparatorView"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/single_history_layout"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/historyNotFoundTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/history_not_found_text"
+            android:gravity="center"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/historySeparatorView"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
