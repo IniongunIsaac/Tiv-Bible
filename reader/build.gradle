@@ -32,6 +32,7 @@ dependencies {
             Dependencies.lifecycleViewModelKts,
             Dependencies.viewPager,
             Dependencies.timber,
+            //Dependencies.recyclerview,
 
             Dependencies.coroutines,
             Dependencies.coroutinesAndroid,

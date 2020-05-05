@@ -6,4 +6,7 @@
     <string name="references_activity_intent">com.iniongungroup.mobile.android.references.start</string>
     <string name="genese_text">Genese</string>
     <string name="search_text">Search</string>
+    <string name="book_label">Book Name</string>
+    <string name="history_text">History</string>
+    <string name="clear_text">Clear</string>
 </resources>

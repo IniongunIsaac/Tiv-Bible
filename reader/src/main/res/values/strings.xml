@@ -23,4 +23,5 @@
     <string name="dark_mode_text">Dark Mode</string>
     <string name="go_to_settings_text">Go to Settings</string>
     <string name="font_size_placeholder">%dpx</string>
+    <string name="recent_searches_text">Recent Searches</string>
 </resources>

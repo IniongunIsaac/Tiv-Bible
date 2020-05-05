@@ -146,6 +146,9 @@ object Dependencies {
     //ViewPager2
     const val viewPager = "androidx.viewpager2:viewpager2:${DepVersions.viewPager}"
 
+    //RecyclerView
+    const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha02"
+
     //Dagger
     const val dagger = "com.google.dagger:dagger:${DepVersions.dagger}"
     const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${DepVersions.dagger}"

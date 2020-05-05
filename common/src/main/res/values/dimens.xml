@@ -9,5 +9,6 @@
     <dimen name="app_super_large_text_size">24sp</dimen>
     <dimen name="standard_content_margin">16dp</dimen>
     <dimen name="standard_mid_margin">8dp</dimen>
+    <dimen name="chapter_verse_size">60dp</dimen>
 
 </resources>
