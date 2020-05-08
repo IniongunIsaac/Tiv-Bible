@@ -25,6 +25,7 @@ import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
+import com.iniongun.tivbible.reader.search.SearchViewModel
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.reader.utils.ModuleType
 import com.iniongun.tivbible.reader.utils.ModuleType.*
@@ -39,6 +40,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
     @Inject
     lateinit var homeActivityViewModel: HomeActivityViewModel
+
+    @Inject
+    lateinit var searchViewModel: SearchViewModel
 
     private lateinit var activityHomeBinding: ActivityHomeBinding
 

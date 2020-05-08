@@ -43,4 +43,6 @@ interface ChapterDao {
     @Query("select book.name as bookName, chapter.chapter_number as chapterNumber, chapter.id as chapterId from book, chapter where book.id = chapter.book_id and chapter.id = :chapterId ")
     fun getBookNameAndChapterNumber(chapterId: String): Single<BookNameAndChapterNumber>
 
+
+
 }

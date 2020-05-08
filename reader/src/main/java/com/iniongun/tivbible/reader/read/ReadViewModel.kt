@@ -184,14 +184,6 @@ class ReadViewModel @Inject constructor(
         shareableSelectedVersesText = selectedVersesList.joinToString("\n\n") { "${it.number}.\t${it.text}" }
     }
 
-    fun setMessage(message: String, messageType: AppState) {
-        when(messageType) {
-            AppState.FAILED -> _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
-            AppState.SUCCESS -> _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
-        }
-
-    }
-
     fun setHighlightColorForSelectedVerse(color: Int) {
         setMessage("Coming soon!", AppState.SUCCESS)
     }

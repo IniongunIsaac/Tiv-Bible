@@ -9,8 +9,6 @@ import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
-import com.iniongun.tivbible.common.utils.state.AppResult
-import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.common.utils.state.AppState.FAILED
 import com.iniongun.tivbible.common.utils.state.AppState.SUCCESS
 import com.iniongun.tivbible.entities.*
@@ -153,6 +151,7 @@ class ReadViewModelNew @Inject constructor(
             val chapter = appPreferencesRepo.currentChapter
             chapterNum = chapter.chapterNumber
             currentChapter = chapter
+            saveHistory(chapter)
             getCurrentVerses(chapter.id)
         } catch (e: Exception) {
             Timber.e("Chapter is null")
@@ -280,14 +279,6 @@ class ReadViewModelNew @Inject constructor(
         }
         _selectedVersesText.value = LiveDataEvent("${_bookNameAndChapterNumber.value!!} : ${groups.joinToString(separator = ", ")}" )
         shareableSelectedVersesText = selectedVersesList.joinToString("\n\n") { "${it.number}.\t${it.text}" }
-    }
-
-    fun setMessage(message: String, messageType: AppState) {
-        when(messageType) {
-            FAILED -> _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
-            SUCCESS -> _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
-        }
-
     }
 
     fun getHighlightColors() {
@@ -479,12 +470,10 @@ class ReadViewModelNew @Inject constructor(
     }
 
     private fun saveHistory(chapter: Chapter) {
-        Timber.e("saveHistory Called!")
         postLoadingState()
         compositeDisposable.add(
             historyRepo.insertHistory(listOf(History(chapter, currentBook!!, "${currentBook!!.name} : ${chapter.chapterNumber}")))
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
-                    Timber.e("History Inserted!")
                     removeLoadingState()
                 }) { removeLoadingState() }
         )

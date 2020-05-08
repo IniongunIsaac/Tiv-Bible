@@ -39,8 +39,8 @@ class SearchViewModel @Inject constructor(
     private val _history = MutableLiveData<List<History>>()
     val history: LiveData<List<History>> = _history
 
-    private val _searchVerses = MutableLiveData<List<Verse>>()
-    val searchVerses: LiveData<List<Verse>> = _searchVerses
+    private val _booksAndChaptersAndVerses = MutableLiveData<List<BookAndChapterAndVerse>>()
+    val booksAndChaptersAndVerses: LiveData<List<BookAndChapterAndVerse>> = _booksAndChaptersAndVerses
 
     private var selectedChapter: Chapter? = null
     private val _chapterSelected = MutableLiveData<LiveDataEvent<Boolean>>()
@@ -51,6 +51,12 @@ class SearchViewModel @Inject constructor(
 
     private val _showSearchResults = MutableLiveData<LiveDataEvent<Boolean>>()
     val showSearchResults : LiveData<LiveDataEvent<Boolean>> = _showSearchResults
+
+    private val _searchText = MutableLiveData<String>()
+    val searchText: LiveData<String> = _searchText
+
+    private val _searchResultSelected = MutableLiveData<LiveDataEvent<Boolean>>()
+    val searchResultSelected : LiveData<LiveDataEvent<Boolean>> = _searchResultSelected
 
     init {
         getBooks()
@@ -150,17 +156,24 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun search(text: String) {
+    fun search(text: String?) {
+
+        if (text.isNullOrEmpty()){
+            postFailureNotification("Please enter search text!")
+            return
+        }
+
         postLoadingState()
 
-        val versesObservable = if (selectedChapter != null) verseRepo.getVersesByTextAndChapter(text, selectedChapter!!.id) else verseRepo.getVersesByText(text)
+        val versesObservable = if (selectedChapter != null) verseRepo.getBooksAndChaptersAndVersesByTextAndChapter(text!!, selectedChapter!!.id) else verseRepo.getBooksAndChaptersAndVersesByText(text!!)
 
         compositeDisposable.add(
             versesObservable.subscribeOnIoObserveOnUi(schedulerProvider, {
                     removeLoadingState()
                     if (it.isNotEmpty()) {
+                        _searchText.value = text
                         saveRecentSearch(text)
-                        _searchVerses.value = it
+                        _booksAndChaptersAndVerses.value = it
                     } else {
                         postSuccessMessage("No results found for your search!")
                     }
@@ -178,6 +191,15 @@ class SearchViewModel @Inject constructor(
                 }) { removeLoadingState() }
         )
     }
+
+    fun handleSearchResultSelected(bookAndChapterAndVerse: BookAndChapterAndVerse) {
+        appPreferencesRepo.currentBook = bookAndChapterAndVerse.book
+        appPreferencesRepo.currentChapter = bookAndChapterAndVerse.chapter
+        appPreferencesRepo.currentVerse = bookAndChapterAndVerse.verse
+        _searchResultSelected.value = LiveDataEvent(true)
+    }
+
+    val xxx = "xxxxxxx"
 
     override fun handleCoroutineException(throwable: Throwable) {
         postFailureNotification(throwable.message)

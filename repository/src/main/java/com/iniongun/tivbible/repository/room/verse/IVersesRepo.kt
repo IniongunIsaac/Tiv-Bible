@@ -1,5 +1,6 @@
 package com.iniongun.tivbible.repository.room.verse
 
+import com.iniongun.tivbible.entities.BookAndChapterAndVerse
 import com.iniongun.tivbible.entities.Verse
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -27,5 +28,9 @@ interface IVersesRepo {
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>
 
     fun deleteVerses(verses: List<Verse>): Completable
+
+    fun getBooksAndChaptersAndVersesByText(searchText: String): Observable<List<BookAndChapterAndVerse>>
+
+    fun getBooksAndChaptersAndVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<BookAndChapterAndVerse>>
 
 }

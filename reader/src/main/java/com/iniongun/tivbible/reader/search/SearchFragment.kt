@@ -19,13 +19,12 @@ import com.iniongun.tivbible.reader.search.adapters.ChaptersAdapter
 import com.iniongun.tivbible.reader.search.adapters.HistoryAdapter
 import com.iniongun.tivbible.reader.search.adapters.RecentSearchAdapter
 import com.iniongun.tivbible.reader.utils.ModuleType
+import com.iniongun.tivbible.reader.utils.sharedSearchViewModel
 import kotlinx.android.synthetic.main.search_fragment.*
-import javax.inject.Inject
 
 class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
-    @Inject
-    lateinit var searchViewModel: SearchViewModel
+    private val searchViewModel by lazy { (requireActivity() as HomeActivity).searchViewModel }
 
     private lateinit var searchFragmentBinding: SearchFragmentBinding
 
@@ -45,6 +44,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        sharedSearchViewModel = searchViewModel
         setOnClickListeners()
     }
 
@@ -122,7 +122,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { searchViewModel.search(it) }
+                searchViewModel.search(query)
                 return false
             }
 

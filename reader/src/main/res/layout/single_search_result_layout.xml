@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.iniongun.tivbible.entities.BookAndChapterAndVerseKt"/>
+
+        <variable
+            name="bookAndChapterAndVerse"
+            type="com.iniongun.tivbible.entities.BookAndChapterAndVerse" />
+
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.search.SearchViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/standard_mid_margin"
+        android:layout_margin="@dimen/standard_mid_margin"
+        app:cardCornerRadius="@dimen/standard_mid_margin"
+        android:onClick="@{ () -> viewModel.handleSearchResultSelected(bookAndChapterAndVerse) }">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/verseTextTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/AppText"
+                android:text="@{ bookAndChapterAndVerse.verseText }"
+                tools:text="Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Aerenakaa A Mbaapostoli 27:100"
+                android:textStyle="bold"
+                android:text="@{ BookAndChapterAndVerseKt.getBookAndChapterAndVerseString(bookAndChapterAndVerse) }"
+                style="@style/AppText.Bold"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

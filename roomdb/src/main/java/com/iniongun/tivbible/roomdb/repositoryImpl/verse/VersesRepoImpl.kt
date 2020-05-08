@@ -30,4 +30,11 @@ class VersesRepoImpl @Inject constructor(
 
     override fun deleteVerses(verses: List<Verse>) = verseDao.deleteVerses(verses)
 
+    override fun getBooksAndChaptersAndVersesByText(searchText: String) = verseDao.getBooksAndChaptersAndVersesByText(searchText)
+
+    override fun getBooksAndChaptersAndVersesByTextAndChapter(
+        searchText: String,
+        chapterId: String
+    ) = verseDao.getBooksAndChaptersAndVersesByTextAndChapter(searchText, chapterId)
+
 }
