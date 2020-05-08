@@ -37,9 +37,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private var navigatedToReferencesActivity = false
     private var shouldShowButtons = true
     private var versesAdapter: VersesAdapterNew? = null
-    private val homeActivity by lazy {
-        (requireActivity() as HomeActivity)
-    }
+    private val homeActivity by lazy { (requireActivity() as HomeActivity) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

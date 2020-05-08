@@ -35,13 +35,26 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/searchToolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnusedAttribute" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/bookNamesTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_content_margin"
-            android:layout_marginTop="@dimen/standard_mid_margin"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:hint="@string/book_label"
             app:hintEnabled="true"

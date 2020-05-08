@@ -1,6 +1,7 @@
 package com.iniongun.tivbible.roomdb.dao
 
 import androidx.room.*
+import com.iniongun.tivbible.entities.BookNameAndChapterNumber
 import com.iniongun.tivbible.entities.Chapter
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -38,5 +39,8 @@ interface ChapterDao {
 
     @Query("delete from Chapter")
     fun deleteAllChapters(): Completable
+
+    @Query("select book.name as bookName, chapter.chapter_number as chapterNumber, chapter.id as chapterId from book, chapter where book.id = chapter.book_id and chapter.id = :chapterId ")
+    fun getBookNameAndChapterNumber(chapterId: String): Single<BookNameAndChapterNumber>
 
 }

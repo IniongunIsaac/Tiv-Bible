@@ -22,6 +22,7 @@
             android:layout_width="@dimen/chapter_verse_size"
             android:layout_height="@dimen/chapter_verse_size"
             style="@style/AppButton.Outlined"
+            app:selectedBackgroundColor="@{ chapter.isSelected }"
             android:text="@{ String.valueOf(chapter.chapterNumber) }"
             android:onClick="@{ () -> viewModel.handleChapterSelected(chapter) }"
             app:layout_constraintBottom_toBottomOf="parent"

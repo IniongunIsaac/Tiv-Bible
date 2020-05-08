@@ -26,6 +26,9 @@ import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
+import com.iniongun.tivbible.reader.utils.ModuleType
+import com.iniongun.tivbible.reader.utils.ModuleType.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.font_settings_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.view.*
@@ -63,7 +66,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        navView.setupWithNavController(navController)
+        nav_view.setupWithNavController(navController)
 
         setOnClickListeners()
 
@@ -242,6 +245,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
     fun updateSelectedVersesTextViewContent(selectedVersesText: String) {
         selectedVersesTextView.text = selectedVersesText
+    }
+
+    fun showModule(moduleType: ModuleType) {
+        nav_view.selectedItemId = when (moduleType) {
+            READER -> { R.id.navigation_read }
+            SEARCH -> { R.id.navigation_search }
+            MORE -> { R.id.navigation_more }
+        }
     }
 
 }

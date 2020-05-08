@@ -23,6 +23,7 @@ import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.highlight.IHighlightRepo
 import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
+import com.iniongun.tivbible.repository.room.history.IHistoryRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
@@ -44,6 +45,7 @@ class ReadViewModelNew @Inject constructor(
     private val bookmarkRepo: IBookmarkRepo,
     private val highlightColorRepo: IHighlightColorRepo,
     private val highlightRepo: IHighlightRepo,
+    private val historyRepo: IHistoryRepo,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -171,11 +173,13 @@ class ReadViewModelNew @Inject constructor(
                             chapterRepo.getChapterByBookAndChapterNumber(curBook.id, chapNum)
                                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                                     currentChapter = it
+                                    appPreferencesRepo.shouldReloadVerses = true
                                     appPreferencesRepo.currentChapter = it
                                     removeLoadingState()
                                     appPreferencesRepo.currentVerseString = ""
                                     clearSelectedVerses()
                                     getCurrentVerses(it.id)
+                                    saveHistory(it)
                                 }) {
                                     setMessage("Unable to get next chapter, please try again!", FAILED)
                                 }
@@ -474,7 +478,19 @@ class ReadViewModelNew @Inject constructor(
         )
     }
 
+    private fun saveHistory(chapter: Chapter) {
+        Timber.e("saveHistory Called!")
+        postLoadingState()
+        compositeDisposable.add(
+            historyRepo.insertHistory(listOf(History(chapter, currentBook!!, "${currentBook!!.name} : ${chapter.chapterNumber}")))
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    Timber.e("History Inserted!")
+                    removeLoadingState()
+                }) { removeLoadingState() }
+        )
+    }
+
     override fun handleCoroutineException(throwable: Throwable) {
-        _notificationLiveData.postValue(LiveDataEvent(AppResult.failed(throwable.message)))
+        postFailureNotification(throwable.message)
     }
 }

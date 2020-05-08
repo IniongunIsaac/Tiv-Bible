@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -22,6 +23,7 @@ import com.iniongun.tivbible.common.R
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongun.tivbible.common.utils.state.AppState
 import dagger.android.support.DaggerAppCompatActivity
+
 
 /**
  * Created by Isaac Iniongun on 2019-11-26
@@ -43,6 +45,27 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
     abstract fun getBindingVariable(): Int
 
     abstract fun getBinding(binding: D)
+
+    private val progressBar: ProgressBar by lazy {
+        val layout = this.findViewById<View>(android.R.id.content).rootView as ViewGroup
+//        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+//        params.topMargin = 50
+//        val rl = RelativeLayout(this)
+//        rl.gravity = Gravity.TOP
+        val mProgressBar = ProgressBar(this,null, android.R.attr.progressBarStyleHorizontal)
+        mProgressBar.isIndeterminate = true
+        val layoutParams = mProgressBar.layoutParams as CoordinatorLayout.LayoutParams
+        mProgressBar.setBackgroundColor(resources.getColor(R.color.colorAccent))
+        layoutParams.gravity = Gravity.TOP
+        layoutParams.topMargin = 100
+        layoutParams.width = MATCH_PARENT
+        mProgressBar.rootView.layoutParams = layoutParams
+
+        //rl.addView(mProgressBar)
+        layout.addView(mProgressBar, layoutParams)
+
+        return@lazy mProgressBar
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,13 +189,15 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
 
     open fun showLoadingDialog() {
         hideKeyboard(this)
-        dialog?.show()
+        //dialog?.show()
+        //progressBar.visibility = VISIBLE
     }
 
     open fun dismissLoadingDialog() {
-        dialog?.let {
-            if (it.isShowing) it.dismiss()
-        }
+        //progressBar.visibility = GONE
+//        dialog?.let {
+//            if (it.isShowing) it.dismiss()
+//        }
     }
 
     open fun hideStatusAndNavigationBar() {

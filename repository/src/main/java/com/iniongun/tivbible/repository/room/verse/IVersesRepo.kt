@@ -22,6 +22,8 @@ interface IVersesRepo {
 
     fun getVersesByText(searchText: String): Observable<List<Verse>>
 
+    fun getVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<Verse>>
+
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>
 
     fun deleteVerses(verses: List<Verse>): Completable

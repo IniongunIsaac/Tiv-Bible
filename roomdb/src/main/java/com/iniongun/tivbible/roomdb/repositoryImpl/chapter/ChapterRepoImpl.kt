@@ -27,4 +27,6 @@ class ChapterRepoImpl @Inject constructor(
 
     override fun deleteChapters(chapters: List<Chapter>) = chapterDao.deleteChapters(chapters)
 
+    override fun getBookNameAndChapterNumber(chapterId: String) = chapterDao.getBookNameAndChapterNumber(chapterId)
+
 }

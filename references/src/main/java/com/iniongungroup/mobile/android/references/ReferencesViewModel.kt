@@ -9,10 +9,12 @@ import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.entities.Book
 import com.iniongun.tivbible.entities.Chapter
+import com.iniongun.tivbible.entities.History
 import com.iniongun.tivbible.entities.Verse
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
+import com.iniongun.tivbible.repository.room.history.IHistoryRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import javax.inject.Inject
 
@@ -25,6 +27,7 @@ class ReferencesViewModel @Inject constructor(
     bookRepo: IBookRepo,
     private val chaptersRepo: IChapterRepo,
     private val verseRepo: IVersesRepo,
+    private val historyRepo: IHistoryRepo,
     private val appPreferencesRepo: IAppPreferencesRepo,
     private val schedulerProvider: SchedulerProvider
 ): BaseViewModel() {
@@ -63,7 +66,7 @@ class ReferencesViewModel @Inject constructor(
                     _books.value = it
                     _originalBooks.value = it
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
-                })
+                }) { removeLoadingState() }
         )
     }
 
@@ -89,7 +92,7 @@ class ReferencesViewModel @Inject constructor(
                     _chapters.value = LiveDataEvent(it)
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
                     _showChaptersFragment.value = LiveDataEvent(true)
-                })
+                }) { removeLoadingState() }
         )
     }
 
@@ -102,7 +105,7 @@ class ReferencesViewModel @Inject constructor(
                     _verses.value = LiveDataEvent(it)
                     _notificationLiveData.value = LiveDataEvent(AppResult.success())
                     _showVersesFragment.value = LiveDataEvent(true)
-                })
+                }) { removeLoadingState() }
         )
     }
 
@@ -112,10 +115,21 @@ class ReferencesViewModel @Inject constructor(
         appPreferencesRepo.currentChapter = selectedChapter
         appPreferencesRepo.currentVerse = selectedVerse
         appPreferencesRepo.shouldReloadVerses = true
-        _showReaderFragment.value = LiveDataEvent(true)
+        saveHistory(selectedChapter)
+    }
+
+    private fun saveHistory(chapter: Chapter) {
+        postLoadingState()
+        compositeDisposable.add(
+            historyRepo.insertHistory(listOf(History(chapter, selectedBook, "${selectedBook.name} : ${chapter.chapterNumber}")))
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    removeLoadingState()
+                    _showReaderFragment.value = LiveDataEvent(true)
+                }) { removeLoadingState() }
+        )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {
-        _notificationLiveData.postValue(LiveDataEvent(AppResult.failed(throwable.message)))
+        postFailureNotification(throwable.message)
     }
 }

@@ -17,7 +17,7 @@ interface RecentSearchDao {
     @Query("select * from RecentSearch")
     fun getAllRecentSearches(): Observable<List<RecentSearch>>
 
-    @Query("select * from RecentSearch where id = :recentSearchId limit 1")
+    @Query("select * from RecentSearch where text = :recentSearchId limit 1")
     fun getRecentSearchById(recentSearchId: String): Single<RecentSearch>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

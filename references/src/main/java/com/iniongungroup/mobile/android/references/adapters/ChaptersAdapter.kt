@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.iniongun.tivbible.entities.Chapter
 import com.iniongungroup.mobile.android.references.ReferencesViewModel
-import com.iniongungroup.mobile.android.references.databinding.SingleChapterLayoutBinding
+import com.iniongungroup.mobile.android.references.databinding.SingleChapterRefLayoutBinding
 
 /**
  * Created by Isaac Iniongun on 26/04/2020.
@@ -29,7 +29,7 @@ class ChaptersAdapter(private val viewModel: ReferencesViewModel) :
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: SingleChapterLayoutBinding) :
+    class ViewHolder private constructor(val binding: SingleChapterRefLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: ReferencesViewModel, chapter: Chapter) {
@@ -41,7 +41,7 @@ class ChaptersAdapter(private val viewModel: ReferencesViewModel) :
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = SingleChapterLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = SingleChapterRefLayoutBinding.inflate(layoutInflater, parent, false)
 
                 return ViewHolder(binding)
             }

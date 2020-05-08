@@ -17,7 +17,7 @@ interface HistoryDao {
     @Query("select * from History")
     fun getAllHistory(): Observable<List<History>>
 
-    @Query("select * from History where id = :historyId limit 1")
+    @Query("select * from History where chapter_id = :historyId limit 1")
     fun getHistoryById(historyId: String): Single<History>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

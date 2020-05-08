@@ -2,7 +2,6 @@ package com.iniongun.tivbible.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 /**
  * Created by Isaac Iniongun on 2019-07-21.
@@ -11,6 +10,6 @@ import java.util.*
 
 @Entity
 data class RecentSearch(
-    val text: String,
-    @PrimaryKey val id: String = UUID.randomUUID().toString()
+    @PrimaryKey val text: String
+    //@PrimaryKey val id: String = UUID.randomUUID().toString()
 )

@@ -17,5 +17,7 @@
     <color name="text_color_primary">?android:attr/textColorPrimary</color>
     <color name="color_control_normal">?attr/colorControlNormal</color>
     <color name="dark_day_light_night">#000</color>
+    <color name="selected_chapter_color">#fff</color>
+    <color name="unselected_chapter_color">#000</color>
 
 </resources>

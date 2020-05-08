@@ -38,6 +38,10 @@ abstract class BaseViewModel: ViewModel(), CoroutineScope {
         _notificationLiveData.value = LiveDataEvent(AppResult.success())
     }
 
+    fun postSuccessMessage(message: String? = null) {
+        _notificationLiveData.value = LiveDataEvent(AppResult.success(message = message))
+    }
+
     fun postFailureNotification(message: String? = null) {
         _notificationLiveData.value = LiveDataEvent(AppResult.failed(message))
     }
