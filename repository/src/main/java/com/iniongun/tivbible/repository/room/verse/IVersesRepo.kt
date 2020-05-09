@@ -33,4 +33,6 @@ interface IVersesRepo {
 
     fun getBooksAndChaptersAndVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<BookAndChapterAndVerse>>
 
+    fun getBooksAndChaptersAndVersesByTextAndChapterAndBook(searchText: String, chapterId: String, bookId: String): Observable<List<BookAndChapterAndVerse>>
+
 }

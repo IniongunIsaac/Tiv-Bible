@@ -43,6 +43,7 @@ class SearchViewModel @Inject constructor(
     val booksAndChaptersAndVerses: LiveData<List<BookAndChapterAndVerse>> = _booksAndChaptersAndVerses
 
     private var selectedChapter: Chapter? = null
+    private var selectedBook: Book? = null
     private val _chapterSelected = MutableLiveData<LiveDataEvent<Boolean>>()
     val chapterSelected : LiveData<LiveDataEvent<Boolean>> = _chapterSelected
 
@@ -136,8 +137,12 @@ class SearchViewModel @Inject constructor(
 
     fun getChapters(bookName: String) {
         postLoadingState()
+        val book = _books.value!!.first {
+            it.name.toLowerCase(Locale.getDefault()) == bookName.toLowerCase(Locale.getDefault())
+        }
+        selectedBook = book
         compositeDisposable.add(
-            chapterRepo.getChaptersByBook(_books.value!!.first { it.name.toLowerCase(Locale.getDefault()) == bookName.toLowerCase(Locale.getDefault()) }.id)
+            chapterRepo.getChaptersByBook(book.id)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
                     removeLoadingState()
                     _chapters.value = it

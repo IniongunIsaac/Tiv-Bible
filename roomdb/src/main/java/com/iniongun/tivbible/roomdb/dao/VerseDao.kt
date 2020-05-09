@@ -57,4 +57,10 @@ interface VerseDao {
             "from book, chapter, verse where book.id = chapter.book_id and verse.chapter_id = chapter.id and text like '%' || :searchText || '%' and chapter_id = :chapterId order by number asc")
     fun getBooksAndChaptersAndVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<BookAndChapterAndVerse>>
 
+    @Query("select book.testament_id as testamentId, book.version_id as versionId, book.order_no as orderNo, book.number_of_chapters as numberOfChapters, book.number_of_verses as bookNumberOfVerses, book.id as bookId, book.name as bookName, " +
+            "chapter.chapter_number as chapterNumber, chapter.number_of_verses as chapterNumberOfVerses, chapter.id as chapterId, " +
+            "verse.number as verseNumber, verse.text as verseText, verse.has_title as verseHasTitle, verse.title as verseTitle, verse.id as verseId " +
+            "from book, chapter, verse where book.id = chapter.book_id and verse.chapter_id = chapter.id and book_id = :bookId and text like '%' || :searchText || '%' and chapter_id = :chapterId order by number asc")
+    fun getBooksAndChaptersAndVersesByTextAndChapterAndBook(searchText: String, chapterId: String, bookId: String): Observable<List<BookAndChapterAndVerse>>
+
 }

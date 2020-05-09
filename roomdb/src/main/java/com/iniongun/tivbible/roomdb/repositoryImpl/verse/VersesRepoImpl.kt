@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class VersesRepoImpl @Inject constructor(
     private val verseDao: VerseDao
-): IVersesRepo {
+) : IVersesRepo {
 
     override fun addVerses(verses: List<Verse>) = verseDao.insertVerses(verses)
 
@@ -26,15 +26,23 @@ class VersesRepoImpl @Inject constructor(
 
     override fun getVersesByChapter(chapterId: String) = verseDao.getVersesByChapter(chapterId)
 
-    override fun getVersesByTextAndChapter(searchText: String, chapterId: String) = verseDao.getVersesByTextAndChapter(searchText, chapterId)
+    override fun getVersesByTextAndChapter(searchText: String, chapterId: String) =
+        verseDao.getVersesByTextAndChapter(searchText, chapterId)
 
     override fun deleteVerses(verses: List<Verse>) = verseDao.deleteVerses(verses)
 
-    override fun getBooksAndChaptersAndVersesByText(searchText: String) = verseDao.getBooksAndChaptersAndVersesByText(searchText)
+    override fun getBooksAndChaptersAndVersesByText(searchText: String) =
+        verseDao.getBooksAndChaptersAndVersesByText(searchText)
 
     override fun getBooksAndChaptersAndVersesByTextAndChapter(
         searchText: String,
         chapterId: String
     ) = verseDao.getBooksAndChaptersAndVersesByTextAndChapter(searchText, chapterId)
+
+    override fun getBooksAndChaptersAndVersesByTextAndChapterAndBook(
+        searchText: String,
+        chapterId: String,
+        bookId: String
+    ) = verseDao.getBooksAndChaptersAndVersesByTextAndChapterAndBook(searchText, chapterId, bookId)
 
 }
