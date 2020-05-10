@@ -8,5 +8,6 @@
     <dimen name="dus_stroke_thickness">1.5dp</dimen>
     <dimen name="dus_spacing_extra">5dp</dimen>
     <dimen name="font_setting_button_dimen">60dp</dimen>
+    <dimen name="item_copy_share_delete_dimen">30dp</dimen>
 
 </resources>

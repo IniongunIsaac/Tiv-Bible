@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 style="@style/AppText"
                 android:text="@{ bookAndChapterAndVerse.verseText }"
-                tools:text="Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo"/>
+                tools:text="@string/verse_placeholder_text"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="0dp"
@@ -46,7 +46,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Aerenakaa A Mbaapostoli 27:100"
+                tools:text="@string/book_chapter_verse_placeholder_text"
                 android:textStyle="bold"
                 android:text="@{ BookAndChapterAndVerseKt.getBookAndChapterAndVerseString(bookAndChapterAndVerse) }"
                 style="@style/AppText.Bold"/>

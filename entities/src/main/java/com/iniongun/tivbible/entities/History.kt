@@ -19,7 +19,6 @@ data class History(
     @Embedded(prefix = "book_") val book: Book,
     @ColumnInfo(name = "book_name_and_chapter_number") val bookNameAndChapterNumber: String,
     @ColumnInfo(name = "history_date") val historyDate: OffsetDateTime = OffsetDateTime.now(ZoneId.systemDefault())
-    //@PrimaryKey val id: String = UUID.randomUUID().toString()
 ) {
-    @Ignore val dateString = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(historyDate) //historyDate.format(SimpleDateFormat(). )// .toLocalDate().toString()
+    @Ignore val dateString = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(historyDate)
 }

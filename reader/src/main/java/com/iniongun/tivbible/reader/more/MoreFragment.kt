@@ -118,10 +118,8 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
         })
     }
 
-    override fun showLoadingDialog() { progressBar.visibility = VISIBLE
-    }
+    override fun showLoadingDialog() { progressBar.visibility = VISIBLE }
 
-    override fun dismissLoadingDialog() { progressBar.visibility = GONE
-    }
+    override fun dismissLoadingDialog() { progressBar.visibility = GONE }
 
 }

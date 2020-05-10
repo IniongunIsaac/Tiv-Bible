@@ -36,6 +36,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dateTextView"
             style="@style/AppText.Small"
+            android:textColor="?android:attr/textColorTertiary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{ history.dateString }"

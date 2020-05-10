@@ -296,7 +296,7 @@ class ReadViewModelNew @Inject constructor(
     }
 
     fun setHighlightColorForSelectedVerses(color: HighlightColor) {
-        val highlights = selectedVerses.map { Highlight(OffsetDateTime.now(), color, it) }
+        val highlights = selectedVerses.map { Highlight(OffsetDateTime.now(), color, it, currentBook!!, currentChapter!!) }
         postLoadingState()
         compositeDisposable.add(
             highlightRepo.insertHighlights(highlights)
@@ -460,7 +460,7 @@ class ReadViewModelNew @Inject constructor(
     }
 
     fun saveBookmarks() {
-        val bookmarks = selectedVerses.map { Bookmark(OffsetDateTime.now(), it) }
+        val bookmarks = selectedVerses.map { Bookmark(OffsetDateTime.now(), it, currentBook!!, currentChapter!!) }
         compositeDisposable.add(
             bookmarkRepo.insertBookmarks(bookmarks)
                 .subscribeOnIoObserveOnUi(schedulerProvider, {
@@ -481,5 +481,10 @@ class ReadViewModelNew @Inject constructor(
 
     override fun handleCoroutineException(throwable: Throwable) {
         postFailureNotification(throwable.message)
+    }
+
+    override fun onCleared() {
+        appPreferencesRepo.currentVerseString = ""
+        super.onCleared()
     }
 }

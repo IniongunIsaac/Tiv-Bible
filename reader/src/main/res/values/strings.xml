@@ -32,4 +32,10 @@
     <string name="search_results_text">Search Results</string>
     <string name="showing_search_results_for_text">Showing search results for:</string>
     <string name="bookmarks_text">Bookmarks</string>
+    <string name="my_bookmarks_text">My Bookmarks</string>
+    <string name="book_chapter_verse_placeholder_text">Aerenakaa A Mbaapostoli 27:100</string>
+    <string name="verse_placeholder_text">Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo</string>
+    <string name="my_highlights_text">My Highlights</string>
+    <string name="your_highlights_will_appear_here_text">Your highlighted verses will appear here!</string>
+    <string name="your_saved_bookmarks_will_appear_here_text">Your saved bookmarks will appear here!</string>
 </resources>
