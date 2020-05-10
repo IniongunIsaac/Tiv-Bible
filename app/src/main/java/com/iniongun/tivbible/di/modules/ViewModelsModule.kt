@@ -6,10 +6,14 @@ import com.iniongun.tivbible.di.keys.AppViewModelKey
 import com.iniongun.tivbible.presentation.splash.SplashActivityViewModel
 import com.iniongun.tivbible.reader.home.HomeActivityViewModel
 import com.iniongun.tivbible.reader.more.MoreViewModel
+import com.iniongun.tivbible.reader.more.bookmarks.BookmarksViewModel
+import com.iniongun.tivbible.reader.more.help.HelpViewModel
+import com.iniongun.tivbible.reader.more.highlights.HighlightsViewModel
+import com.iniongun.tivbible.reader.more.notes.NotesViewModel
+import com.iniongun.tivbible.reader.more.settings.SettingsViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.search.SearchViewModel
-import com.iniongun.tivbible.reader.settings.SettingsViewModel
 import com.iniongun.tivbible.viewModelFactory.ViewModelFactory
 import com.iniongungroup.mobile.android.references.ReferencesViewModel
 import dagger.Binds
@@ -83,6 +87,34 @@ abstract class ViewModelsModule {
     @AppViewModelKey(ReferencesViewModel::class)
     abstract fun bindReferencesViewModel(
         viewModel: ReferencesViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(BookmarksViewModel::class)
+    abstract fun bindBookmarksViewModel(
+        viewModel: BookmarksViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(HighlightsViewModel::class)
+    abstract fun bindHighlightsViewModel(
+        viewModel: HighlightsViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(NotesViewModel::class)
+    abstract fun bindNotesViewModel(
+        viewModel: NotesViewModel
+    ): BaseViewModel
+
+    @Binds
+    @IntoMap
+    @AppViewModelKey(HelpViewModel::class)
+    abstract fun bindHelpViewModel(
+        viewModel: HelpViewModel
     ): BaseViewModel
 
 }

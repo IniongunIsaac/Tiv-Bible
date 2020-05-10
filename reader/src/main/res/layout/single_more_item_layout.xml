@@ -43,6 +43,7 @@
             android:layout_marginRight="@dimen/standard_content_margin"
             android:gravity="center|start"
             android:text="@{ moreItem.title }"
+            app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
             app:layout_constraintBottom_toBottomOf="@+id/moreItemImageView"
             app:layout_constraintEnd_toStartOf="@+id/rightIconImageView"
             app:layout_constraintStart_toEndOf="@+id/moreItemImageView"

@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="ViewModel"
+            name="viewModel"
             type="com.iniongun.tivbible.reader.more.MoreViewModel" />
     </data>
 
@@ -35,6 +35,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moreTitleTextView"
             android:layout_marginTop="@dimen/standard_mid_margin"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/moreTitleSeparatorView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnusedAttribute" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/moreItemsRecyclerView"

@@ -23,6 +23,7 @@ import com.iniongun.tivbible.entities.Theme
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.ActivityHomeBinding
+import com.iniongun.tivbible.reader.more.MoreViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import com.iniongun.tivbible.reader.search.SearchViewModel
@@ -43,6 +44,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
     @Inject
     lateinit var searchViewModel: SearchViewModel
+
+    @Inject
+    lateinit var moreViewModel: MoreViewModel
 
     private lateinit var activityHomeBinding: ActivityHomeBinding
 

@@ -12,18 +12,19 @@ import com.iniongun.tivbible.reader.utils.MoreItemType.*
 data class MoreItem(@DrawableRes val imageRes: Int, val title: String, val type: MoreItemType)
 
 enum class MoreItemType {
-    BOOKMARKS, HIGHLIGHTS, CREED, COMMANDMENTS, LORDS_PRAYER, SETTINGS, SHARE, ABOUT, RATING, HELP
+    BOOKMARKS, HIGHLIGHTS, NOTES, CREED, COMMANDMENTS, LORDS_PRAYER, SETTINGS, SHARE, ABOUT, RATING, HELP
 }
 
 val moreItems = listOf(
     MoreItem(R.drawable.ic_bookmark, "My Bookmarks", BOOKMARKS),
     MoreItem(R.drawable.ic_highlight, "My Highlights", HIGHLIGHTS),
-    MoreItem(R.drawable.ic_book, "Akar a puekarahar", CREED),
-    MoreItem(R.drawable.ic_book, "Atindi a pue", COMMANDMENTS),
-    MoreItem(R.drawable.ic_book, "Msen u Terwase", LORDS_PRAYER),
-    MoreItem(R.drawable.ic_share, "Share Tiv Bible with others", SHARE),
+    MoreItem(R.drawable.ic_notes, "My Notes", NOTES),
+    MoreItem(R.drawable.ic__book, "Akar A Puekarahar", CREED),
+    MoreItem(R.drawable.ic__book, "Atindi A Pue", COMMANDMENTS),
+    MoreItem(R.drawable.ic__book, "Msen U Terwase", LORDS_PRAYER),
+    MoreItem(R.drawable.ic_share, "Share Tiv Bible App With Friends", SHARE),
     MoreItem(R.drawable.ic_info, "About Tiv Bible App", ABOUT),
-    MoreItem(R.drawable.ic_rate, "Rating us on Playstore", RATING),
+    MoreItem(R.drawable.ic_rate, "Rate us on Playstore", RATING),
     MoreItem(R.drawable.ic_help, "Help", HELP),
     MoreItem(R.drawable.ic_settings, "Settings", SETTINGS)
 )

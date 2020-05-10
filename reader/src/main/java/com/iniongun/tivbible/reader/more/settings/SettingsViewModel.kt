@@ -1,4 +1,4 @@
-package com.iniongun.tivbible.reader.settings
+package com.iniongun.tivbible.reader.more.settings
 
 import com.iniongun.tivbible.common.base.BaseViewModel
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
