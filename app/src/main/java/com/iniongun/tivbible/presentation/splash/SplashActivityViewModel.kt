@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
+import com.iniongun.tivbible.common.utils.Constants.COMMANDMENTS_TITLE
+import com.iniongun.tivbible.common.utils.Constants.CREED_TITLE
+import com.iniongun.tivbible.common.utils.Constants.LORDS_PRAYER_TITLE
 import com.iniongun.tivbible.common.utils.ScreenSize.*
 import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
@@ -22,6 +25,7 @@ import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
+import com.iniongun.tivbible.repository.room.other.IOtherRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.testament.ITestamentRepo
 import com.iniongun.tivbible.repository.room.theme.IThemeRepo
@@ -55,7 +59,8 @@ class SplashActivityViewModel @Inject constructor(
     private val themeRepo: IThemeRepo,
     private val fontStyleRepo: IFontStyleRepo,
     private val settingsRepo: ISettingsRepo,
-    private val highlightColorRepo: IHighlightColorRepo
+    private val highlightColorRepo: IHighlightColorRepo,
+    private val otherRepo: IOtherRepo
 ) : BaseViewModel() {
 
     private var oldTestamentId = ""
@@ -150,10 +155,13 @@ class SplashActivityViewModel @Inject constructor(
 
     private fun addFontStylesAndThemesAndAudioSpeeds() {
         val audioSpeeds = listOf(AudioSpeed(name = "High"), AudioSpeed(name = "Low"), AudioSpeed(name = "Medium"))
+
         val themes = listOf(Theme(name = "SYSTEM_DEFAULT"), Theme(name = "LIGHT"), Theme(name = "DARK"), Theme(name = "BATTERY_SAVER"))
+
         val fontStyles = listOf(FontStyle(name = "comfortaa.ttf"), FontStyle(name = "happy_monkey.ttf"), FontStyle(name = "metamorphous.ttf"), FontStyle(name = "roboto.ttf"),
             FontStyle(name = "montserrat.ttf"), FontStyle(name = "amatic_sc.ttf"), FontStyle(name = "inconsolata_expanded.ttf"), FontStyle(name = "indie_flower.ttf"),
             FontStyle(name = "jost.ttf"), FontStyle(name = "lato.ttf"), FontStyle(name = "lobster.ttf"))
+
         val colors = listOf( HighlightColor(hexCode = android.R.color.transparent),
             HighlightColor(hexCode = R.color.color1), HighlightColor(hexCode = R.color.color2), HighlightColor(hexCode = R.color.color3), HighlightColor(hexCode = R.color.color4), HighlightColor(hexCode = R.color.color5),
             HighlightColor(hexCode = R.color.color6), HighlightColor(hexCode = R.color.color7), HighlightColor(hexCode = R.color.color8), HighlightColor(hexCode = R.color.color9), HighlightColor(hexCode = R.color.color10),
@@ -161,12 +169,18 @@ class SplashActivityViewModel @Inject constructor(
             HighlightColor(hexCode = R.color.color16), HighlightColor(hexCode = R.color.color17), HighlightColor(hexCode = R.color.color18), HighlightColor(hexCode = R.color.color19), HighlightColor(hexCode = R.color.color20)
         )
 
+        val others = listOf(Other(LORDS_PRAYER_TITLE, "Msen u Yesu tese mbahenev nav la (Mateu 6:9-13)", context.getString(com.iniongun.tivbible.common.R.string.msen_u_ter_wase)),
+            Other(CREED_TITLE, "Akaa a Puekarahar a Mbakristu sha won cii ve ne a jighjigh la", context.getString(com.iniongun.tivbible.common.R.string.akaa_a_puekarahar)),
+            Other(COMMANDMENTS_TITLE, "Atindi a Aondo a Pue (Ekesodu 20:1-17)", context.getString(com.iniongun.tivbible.common.R.string.atindi_a_pue))
+        )
+
         compositeDisposable.add(
             Completable.mergeArray(
                 audioSpeedRepo.insertAudioSpeeds(audioSpeeds),
                 themeRepo.insertThemes(themes),
                 fontStyleRepo.insertFontStyles(fontStyles),
-                highlightColorRepo.insertHighlightColors(colors)
+                highlightColorRepo.insertHighlightColors(colors),
+                otherRepo.insertOthers(others)
             ).subscribeOnIoObserveOnUi(schedulerProvider, { getDefaultFontStyleAndThemeAndAudioSpeedIds() })
         )
     }

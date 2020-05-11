@@ -16,6 +16,7 @@ import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.more.adapters.MoreItemsAdapter
 import com.iniongun.tivbible.reader.utils.MoreItemType.*
 import com.iniongun.tivbible.reader.utils.moreItems
+import com.iniongun.tivbible.reader.utils.shareData
 import kotlinx.android.synthetic.main.more_fragment.*
 
 class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
@@ -65,7 +66,7 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
                 HIGHLIGHTS -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToHighlightsFragment())) }
                 NOTES -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToNotesFragment())) }
                 CREED, COMMANDMENTS, ABOUT, LORDS_PRAYER -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToMiscContentFragment())) }
-                SHARE -> { handleShareSelected() }
+                SHARE -> { activity?.shareData("Tiv Bible Mobile App", context!!.getString(R.string.share_tiv_bible_app_content)) }
                 RATING -> { handleRatingSelected() }
                 HELP -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToHelpFragment())) }
                 SETTINGS -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToSettingsFragment())) }
@@ -74,11 +75,7 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
     }
 
     private fun handleRatingSelected() {
-
-    }
-
-    private fun handleShareSelected() {
-
+        moreViewModel.postSuccessMessage("Coming Soon!")
     }
 
     override fun setNotificationObserver() {

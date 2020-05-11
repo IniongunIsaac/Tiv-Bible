@@ -6,3 +6,9 @@ package com.iniongun.tivbible.common.utils
  */
 
 fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.capitalize() }
+
+object Constants {
+    const val LORDS_PRAYER_TITLE = "Msen u Ter wase"
+    const val CREED_TITLE = "Akaa a Puekarahar"
+    const val COMMANDMENTS_TITLE = "Atindi a Pue"
+}

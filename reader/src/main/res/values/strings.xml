@@ -27,8 +27,6 @@
     <string name="recent_searches_not_found_tex">Your recent searches will appear here!</string>
     <string name="history_not_found_text">Your history will appear here!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_results_text">Search Results</string>
     <string name="showing_search_results_for_text">Showing search results for:</string>
     <string name="bookmarks_text">Bookmarks</string>
@@ -40,4 +38,26 @@
     <string name="your_saved_bookmarks_will_appear_here_text">Your saved bookmarks will appear here!</string>
     <string name="my_notes_text">My Notes</string>
     <string name="your_verses_notes_will_appear_here_text">Your verses notes will appear here!</string>
+    <string name="misc_content">
+        Ter wase u A lu sha, i tsegha iti You, tartor wou va, i er ishima you shin tar kpaa vough er i eren i sha nahan. Na se kwaghyan wase nyian u a lu sha ciu
+        ayange ayange la; man de se de anzo ase di er se kpaa se deen mba ve gbe anzo hen vese nahan; man shi de ze a vese ape imeen ilu ga, kpa yima se sha ifer.Gadia tartor ka u wou
+        kua agee man icivir kpaa, gbem sha won, Amen.
+    </string>
+    <string name="share_tiv_bible_app_content">
+        The Tiv Bible Mobile App is a robust, user friendly, FREE and offline app that allows you to read the Holy Bible in Tiv language.
+        It has awesome, cool features such as:
+
+        1. Copy/Paste of multiple verses
+        2. Bookmarking multiple verses for later references.
+        3. Highlighting verses using different highlight colors for emphasis.
+        4. Changing font size and style dynamically while reading the bible.
+        5. Dynamic switching between Light, Dark, System Default and Battery Saver Modes respectively.
+        6. So much more to name a few!!!
+
+        Please download and enjoy the app using the link below:
+
+        https://play.google.com/store/apps/details?id=com.iniongun.tivbible&amp;hl=en
+
+        Oh! Don\'t forget to give the app a good rating on the Playstore!
+    </string>
 </resources>

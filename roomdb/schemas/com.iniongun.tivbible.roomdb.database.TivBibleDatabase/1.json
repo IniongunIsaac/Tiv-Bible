@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0ec1d74a7d06b9dee6a763ae1eac729d",
+    "identityHash": "d0588feca0a50eb981990fc530d1c827",
     "entities": [
       {
         "tableName": "AudioSpeed",
@@ -565,8 +565,20 @@
       },
       {
         "tableName": "Other",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`text` TEXT NOT NULL, `id` TEXT NOT NULL, `other_type_id` TEXT NOT NULL, `other_type_name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `subTitle` TEXT NOT NULL, `text` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subTitle",
+            "columnName": "subTitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "text",
             "columnName": "text",
@@ -576,18 +588,6 @@
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "otherType.id",
-            "columnName": "other_type_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "otherType.name",
-            "columnName": "other_type_name",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -865,7 +865,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ec1d74a7d06b9dee6a763ae1eac729d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd0588feca0a50eb981990fc530d1c827')"
     ]
   }
 }

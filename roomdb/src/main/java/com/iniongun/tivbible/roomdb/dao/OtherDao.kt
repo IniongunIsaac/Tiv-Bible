@@ -20,6 +20,9 @@ interface OtherDao {
     @Query("select * from Other where id = :otherId limit 1")
     fun getOtherById(otherId: String): Single<Other>
 
+    @Query("select * from Other where title like '%' || :searchText || '%' limit 1")
+    fun getOtherByText(searchText: String): Single<Other>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOthers(vararg others: Other): Completable
 
