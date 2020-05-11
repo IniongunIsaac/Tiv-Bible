@@ -38,4 +38,6 @@
     <string name="my_highlights_text">My Highlights</string>
     <string name="your_highlights_will_appear_here_text">Your highlighted verses will appear here!</string>
     <string name="your_saved_bookmarks_will_appear_here_text">Your saved bookmarks will appear here!</string>
+    <string name="my_notes_text">My Notes</string>
+    <string name="your_verses_notes_will_appear_here_text">Your verses notes will appear here!</string>
 </resources>
