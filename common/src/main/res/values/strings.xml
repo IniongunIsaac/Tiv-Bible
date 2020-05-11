@@ -49,4 +49,16 @@
         Ka sha atindi ahar ne je man atindiakaa kua mbaprofeti cii ve har sha mi ye.
     </string>
 
+    <string name="about_tiv_bible">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et fringilla mauris. Nulla sollicitudin semper iaculis. Suspendisse lacinia porttitor augue eu ullamcorper. Phasellus ut
+        pretium lacus, condimentum rhoncus elit. Sed sollicitudin metus et sapien mattis aliquet. Nam quis ipsum aliquet, congue urna ac, tempus lectus. Donec dui felis, interdum a faucibus eu,
+        maximus eget enim. Quisque tellus dolor, luctus eget mauris ac, accumsan egestas lorem. Maecenas rutrum laoreet neque a scelerisque. Quisque vehicula, nunc non maximus sollicitudin, leo
+        felis pulvinar nibh, a laoreet tortor mi et lorem. In ultricies sapien nisl, sit amet consequat erat tempus non. Sed efficitur neque erat, a fermentum nulla euismod in.
+        \n\n
+        Maecenas consectetur ac diam sit amet luctus. Proin quis nibh nec justo facilisis fringilla. Proin dolor nisl, congue id congue sit amet, accumsan vitae felis. Vestibulum quis ante luctus,
+        aliquet nibh ut, facilisis eros. Nullam posuere sapien sit amet purus malesuada, posuere congue orci volutpat. Nulla eleifend volutpat egestas. Mauris at orci vitae felis commodo sagittis.
+        Maecenas placerat nec mi ut maximus. Aenean scelerisque mauris gravida elit elementum, sit amet ultrices enim mattis. Integer laoreet nec lacus ac sodales. Quisque vitae sem turpis. Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit. Morbi non tellus lobortis, ullamcorper lorem viverra, pellentesque nisl. Mauris interdum mauris vel enim blandit rutrum. Vivamus sed nisi metus.
+    </string>
+
 </resources>

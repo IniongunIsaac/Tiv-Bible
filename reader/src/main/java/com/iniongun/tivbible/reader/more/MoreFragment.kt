@@ -1,6 +1,9 @@
 package com.iniongun.tivbible.reader.more
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -18,6 +21,7 @@ import com.iniongun.tivbible.reader.utils.MoreItemType.*
 import com.iniongun.tivbible.reader.utils.moreItems
 import com.iniongun.tivbible.reader.utils.shareData
 import kotlinx.android.synthetic.main.more_fragment.*
+
 
 class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
 
@@ -75,7 +79,21 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
     }
 
     private fun handleRatingSelected() {
-        moreViewModel.postSuccessMessage("Coming Soon!")
+        try {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=${activity!!.packageName}")
+                )
+            )
+        } catch (e: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=${activity!!.packageName}")
+                )
+            )
+        }
     }
 
     override fun setNotificationObserver() {

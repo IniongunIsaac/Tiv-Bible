@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iniongun.tivbible.common.base.BaseViewModel
+import com.iniongun.tivbible.common.utils.Constants.ABOUT_TITLE
 import com.iniongun.tivbible.common.utils.Constants.COMMANDMENTS_TITLE
 import com.iniongun.tivbible.common.utils.Constants.CREED_TITLE
 import com.iniongun.tivbible.common.utils.Constants.LORDS_PRAYER_TITLE
@@ -171,7 +172,8 @@ class SplashActivityViewModel @Inject constructor(
 
         val others = listOf(Other(LORDS_PRAYER_TITLE, "Msen u Yesu tese mbahenev nav la (Mateu 6:9-13)", context.getString(com.iniongun.tivbible.common.R.string.msen_u_ter_wase)),
             Other(CREED_TITLE, "Akaa a Puekarahar a Mbakristu sha won cii ve ne a jighjigh la", context.getString(com.iniongun.tivbible.common.R.string.akaa_a_puekarahar)),
-            Other(COMMANDMENTS_TITLE, "Atindi a Aondo a Pue (Ekesodu 20:1-17)", context.getString(com.iniongun.tivbible.common.R.string.atindi_a_pue))
+            Other(COMMANDMENTS_TITLE, "Atindi a Aondo a Pue (Ekesodu 20:1-17)", context.getString(com.iniongun.tivbible.common.R.string.atindi_a_pue)),
+            Other(ABOUT_TITLE, "About the Tiv Bible App and it's development.", context.getString(com.iniongun.tivbible.common.R.string.about_tiv_bible))
         )
 
         compositeDisposable.add(
