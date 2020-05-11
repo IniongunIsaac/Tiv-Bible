@@ -14,6 +14,9 @@ import com.iniongun.tivbible.reader.databinding.HighlightsFragmentBinding
 import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.more.adapters.HighlightsAdapter
 import com.iniongun.tivbible.reader.utils.ModuleType
+import com.iniongun.tivbible.reader.utils.TapAction
+import com.iniongun.tivbible.reader.utils.copyDataToClipboard
+import com.iniongun.tivbible.reader.utils.shareData
 import kotlinx.android.synthetic.main.highlights_fragment.*
 import javax.inject.Inject
 
@@ -57,6 +60,7 @@ class HighlightsFragment : BaseFragment<HighlightsFragmentBinding, HighlightsVie
         observeSettings()
         observeHighlights()
         observeShowReaderModule()
+        observeTapActionData()
     }
 
     private fun observeSettings() {
@@ -77,6 +81,18 @@ class HighlightsFragment : BaseFragment<HighlightsFragmentBinding, HighlightsVie
     private fun observeShowReaderModule() {
         highlightsViewModel.showReaderModule.observe(this, LiveDataEventObserver {
             if (it) homeActivity.showModule(ModuleType.READER)
+        })
+    }
+
+    private fun observeTapActionData() {
+        highlightsViewModel.tapActionData.observe(this, Observer {
+            when (it.first) {
+                TapAction.SHARE -> { activity?.shareData(it.second.bookNameAndChapterNumberAndVerseNumberString, it.second.verse.text) }
+                TapAction.COPY -> {
+                    activity?.copyDataToClipboard(it.second.bookNameAndChapterNumberAndVerseNumberString, it.second.verse.text)
+                    highlightsViewModel.postSuccessMessage("Highlighted verse copied successfully!")
+                }
+            }
         })
     }
 

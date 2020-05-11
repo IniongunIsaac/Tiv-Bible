@@ -21,6 +21,6 @@ interface IHighlightRepo {
 
     fun insertHighlights(highlights: List<Highlight>): Completable
 
-    fun deleteHighlights(highlightColors: List<Highlight>): Completable
+    fun deleteHighlights(highlights: List<Highlight>): Completable
 
 }

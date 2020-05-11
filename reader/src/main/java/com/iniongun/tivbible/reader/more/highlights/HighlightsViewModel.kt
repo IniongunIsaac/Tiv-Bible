@@ -8,6 +8,8 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.entities.Highlight
 import com.iniongun.tivbible.entities.Setting
+import com.iniongun.tivbible.reader.utils.TapAction
+import com.iniongun.tivbible.reader.utils.TapAction.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.highlight.IHighlightRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
@@ -36,11 +38,14 @@ class HighlightsViewModel @Inject constructor(
     private val _showReaderModule = MutableLiveData<LiveDataEvent<Boolean>>()
     val showReaderModule: LiveData<LiveDataEvent<Boolean>> = _showReaderModule
 
+    private val _tapActionData = MutableLiveData<Pair<TapAction, Highlight>>()
+    val tapActionData: LiveData<Pair<TapAction, Highlight>> = _tapActionData
+
     init {
-        getBookmarksAndSettings()
+        getHighlightsAndSettings()
     }
 
-    private fun getBookmarksAndSettings() {
+    private fun getHighlightsAndSettings() {
         postLoadingState()
         compositeDisposable.add(
             Observable.zip(
@@ -60,6 +65,28 @@ class HighlightsViewModel @Inject constructor(
         appPreferencesRepo.currentChapter = highlight.chapter
         appPreferencesRepo.currentBook = highlight.book
         _showReaderModule.value = LiveDataEvent(true)
+    }
+
+    fun handleHighlightActionButtonTapped(tapAction: TapAction, highlight: Highlight) {
+        when (tapAction) {
+            SHARE, COPY -> { _tapActionData.value = Pair(tapAction, highlight) }
+            DELETE -> { deleteHighlight(highlight) }
+        }
+    }
+
+    private fun deleteHighlight(highlight: Highlight) {
+        postLoadingState()
+        compositeDisposable.add(
+            highlightsRepo.deleteHighlights(listOf(highlight))
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    removeLoadingState()
+                    postSuccessMessage("Highlight deleted successfully!")
+                    getHighlightsAndSettings()
+                }) {
+                    postFailureNotification("Highlight not deleted, please try again!")
+                    removeLoadingState()
+                }
+        )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

@@ -15,6 +15,10 @@ import com.iniongun.tivbible.reader.databinding.BookmarksFragmentBinding
 import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.more.adapters.BookmarksAdapter
 import com.iniongun.tivbible.reader.utils.ModuleType
+import com.iniongun.tivbible.reader.utils.TapAction.COPY
+import com.iniongun.tivbible.reader.utils.TapAction.SHARE
+import com.iniongun.tivbible.reader.utils.copyDataToClipboard
+import com.iniongun.tivbible.reader.utils.shareData
 import kotlinx.android.synthetic.main.bookmarks_fragment.*
 import javax.inject.Inject
 
@@ -58,6 +62,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding, BookmarksViewMo
         observeSettings()
         observeBookmarks()
         observeShowReaderModule()
+        observeTapActionData()
     }
 
     private fun observeSettings() {
@@ -78,6 +83,18 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding, BookmarksViewMo
     private fun observeShowReaderModule() {
         bookmarksViewModel.showReaderModule.observe(this, LiveDataEventObserver {
             if (it) homeActivity.showModule(ModuleType.READER)
+        })
+    }
+
+    private fun observeTapActionData() {
+        bookmarksViewModel.tapActionData.observe(this, Observer {
+            when (it.first) {
+                SHARE -> { activity?.shareData(it.second.bookNameAndChapterNumberAndVerseNumberString, it.second.verse.text) }
+                COPY -> {
+                    activity?.copyDataToClipboard(it.second.bookNameAndChapterNumberAndVerseNumberString, it.second.verse.text)
+                    bookmarksViewModel.postSuccessMessage("Bookmarked verse copied successfully!")
+                }
+            }
         })
     }
 

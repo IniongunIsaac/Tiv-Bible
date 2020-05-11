@@ -8,6 +8,8 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.entities.Bookmark
 import com.iniongun.tivbible.entities.Setting
+import com.iniongun.tivbible.reader.utils.TapAction
+import com.iniongun.tivbible.reader.utils.TapAction.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.bookmark.IBookmarkRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
@@ -36,6 +38,9 @@ class BookmarksViewModel @Inject constructor(
     private val _showReaderModule = MutableLiveData<LiveDataEvent<Boolean>>()
     val showReaderModule: LiveData<LiveDataEvent<Boolean>> = _showReaderModule
 
+    private val _tapActionData = MutableLiveData<Pair<TapAction, Bookmark>>()
+    val tapActionData: LiveData<Pair<TapAction, Bookmark>> = _tapActionData
+
     init {
         getBookmarksAndSettings()
     }
@@ -60,6 +65,28 @@ class BookmarksViewModel @Inject constructor(
         appPreferencesRepo.currentChapter = bookmark.chapter
         appPreferencesRepo.currentBook = bookmark.book
         _showReaderModule.value = LiveDataEvent(true)
+    }
+
+    fun handleBookmarkActionButtonTapped(tapAction: TapAction, bookmark: Bookmark) {
+        when (tapAction) {
+            SHARE, COPY -> { _tapActionData.value = Pair(tapAction, bookmark) }
+            DELETE -> { deleteBookmark(bookmark) }
+        }
+    }
+
+    private fun deleteBookmark(bookmark: Bookmark) {
+        postLoadingState()
+        compositeDisposable.add(
+            bookmarksRepo.deleteBookmarks(listOf(bookmark))
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    removeLoadingState()
+                    postSuccessMessage("Bookmark deleted successfully!")
+                    getBookmarksAndSettings()
+                }) {
+                    postFailureNotification("Bookmark not deleted, please try again!")
+                    removeLoadingState()
+                }
+        )
     }
 
     override fun handleCoroutineException(throwable: Throwable) {

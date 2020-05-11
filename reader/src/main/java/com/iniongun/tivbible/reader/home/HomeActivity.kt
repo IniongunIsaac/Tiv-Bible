@@ -1,15 +1,10 @@
 package com.iniongun.tivbible.reader.home
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.children
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.chip.Chip
@@ -30,6 +25,8 @@ import com.iniongun.tivbible.reader.search.SearchViewModel
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.reader.utils.ModuleType
 import com.iniongun.tivbible.reader.utils.ModuleType.*
+import com.iniongun.tivbible.reader.utils.copyDataToClipboard
+import com.iniongun.tivbible.reader.utils.shareData
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.font_settings_layout.*
 import kotlinx.android.synthetic.main.verse_tap_actions_layout.*
@@ -71,8 +68,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
 
@@ -93,11 +88,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 if (it.shareableSelectedVersesText.isEmpty()) {
                     it.setMessage("No shareable verse(s) selected!",  FAILED)
                 } else {
-                    val shareIntent = Intent(Intent.ACTION_SEND)
-                    shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, selectedVersesTextView.text)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
-                    startActivity(Intent.createChooser(shareIntent, "Share Via"))
+                    shareData("${selectedVersesTextView.text}", "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
                 }
             }
         }
@@ -117,9 +108,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 if (it.shareableSelectedVersesText.isEmpty()) {
                     it.setMessage("No verse(s) selected to copy!", FAILED)
                 } else {
-                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText(selectedVersesTextView.text, "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
-                    clipboard.setPrimaryClip(clip)
+                    copyDataToClipboard(selectedVersesTextView.text.toString(), "${selectedVersesTextView.text}\n\n${it.shareableSelectedVersesText}")
                     it.setMessage("Verse(s) copied successfully!", SUCCESS)
                 }
             }

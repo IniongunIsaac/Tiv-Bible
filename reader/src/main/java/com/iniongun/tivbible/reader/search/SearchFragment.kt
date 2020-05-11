@@ -19,7 +19,6 @@ import com.iniongun.tivbible.reader.search.adapters.ChaptersAdapter
 import com.iniongun.tivbible.reader.search.adapters.HistoryAdapter
 import com.iniongun.tivbible.reader.search.adapters.RecentSearchAdapter
 import com.iniongun.tivbible.reader.utils.ModuleType
-import com.iniongun.tivbible.reader.utils.sharedSearchViewModel
 import kotlinx.android.synthetic.main.search_fragment.*
 
 class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
@@ -44,7 +43,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sharedSearchViewModel = searchViewModel
         setOnClickListeners()
     }
 

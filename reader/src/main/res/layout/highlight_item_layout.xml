@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.iniongun.tivbible.reader.utils.TapAction"/>
         <variable
             name="highlight"
             type="com.iniongun.tivbible.entities.Highlight" />
@@ -84,7 +85,8 @@
                 app:iconTint="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/highlightColorView"
-                app:layout_constraintTop_toBottomOf="@id/verseTextTextView" />
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.SHARE, highlight) }"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/copyButton"
@@ -99,7 +101,8 @@
                 app:iconTint="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/shareButton"
                 app:layout_constraintStart_toEndOf="@id/shareButton"
-                app:layout_constraintTop_toTopOf="@+id/shareButton" />
+                app:layout_constraintTop_toTopOf="@+id/shareButton"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.COPY, highlight) }"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteButton"
@@ -114,7 +117,8 @@
                 app:iconTint="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/copyButton"
                 app:layout_constraintStart_toEndOf="@id/copyButton"
-                app:layout_constraintTop_toTopOf="@+id/copyButton" />
+                app:layout_constraintTop_toTopOf="@+id/copyButton"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.DELETE, highlight) }"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookmarkDateTextView"
