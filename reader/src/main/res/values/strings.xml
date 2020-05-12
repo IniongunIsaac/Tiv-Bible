@@ -60,4 +60,11 @@
 
         Oh! Don\'t forget to give the app a good rating on the Playstore!
     </string>
+    <string name="stay_awake_while_reading_text">Stay Awake while Reading:</string>
+    <string name="no_text">No</string>
+    <string name="audio_speed_text">Audio Speed:</string>
+    <string name="low_text">Low</string>
+    <string name="medium_text">Medium</string>
+    <string name="high_text">High</string>
+    <string name="settings_text">Settings</string>
 </resources>

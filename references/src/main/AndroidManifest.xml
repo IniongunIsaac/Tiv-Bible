@@ -4,7 +4,6 @@
 
     <application>
         <activity
-            android:label="@string/references_text"
             android:name=".ReferencesActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

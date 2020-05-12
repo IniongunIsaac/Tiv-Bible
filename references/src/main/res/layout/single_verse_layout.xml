@@ -28,6 +28,7 @@
             style="@style/AppButton.Outlined"
             android:text="@{ String.valueOf(verse.number) }"
             android:onClick="@{ () -> viewModel.handleVerseSelected(verse) }"
+            app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

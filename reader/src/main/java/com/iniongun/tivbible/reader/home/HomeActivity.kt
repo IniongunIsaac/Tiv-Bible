@@ -1,7 +1,11 @@
 package com.iniongun.tivbible.reader.home
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -10,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.chip.Chip
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.capitalizeWords
+import com.iniongun.tivbible.common.utils.getDeviceScreenSize
 import com.iniongun.tivbible.common.utils.state.AppState.FAILED
 import com.iniongun.tivbible.common.utils.state.AppState.SUCCESS
 import com.iniongun.tivbible.entities.FontStyle
@@ -22,6 +27,7 @@ import com.iniongun.tivbible.reader.more.MoreViewModel
 import com.iniongun.tivbible.reader.read.ReadViewModelNew
 import com.iniongun.tivbible.reader.read.adapters.HighlightColorsAdapter
 import com.iniongun.tivbible.reader.search.SearchViewModel
+import com.iniongun.tivbible.reader.utils.LineSpacingType
 import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import com.iniongun.tivbible.reader.utils.ModuleType
 import com.iniongun.tivbible.reader.utils.ModuleType.*
@@ -64,6 +70,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
     private var readViewModel: ReadViewModelNew? = null
 
     private var highlightColorsAdapter: HighlightColorsAdapter? = null
+
+    val deviceScreenSize by lazy { getDeviceScreenSize(resources) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,7 +153,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         }
 
         goToSettingsButton.setOnClickListener {
-            readViewModel?.let { it.setMessage("Coming Soon!", SUCCESS) }
+            toggleFontSettingsBottomSheetVisibility()
+            showModule(MORE)
         }
     }
 
@@ -184,12 +193,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
         data.first.forEach {
             val chip = layoutInflater.inflate(R.layout.single_chip_layout, null, false) as Chip
             chip.text = it.name.removeSuffix(".ttf").replace("_", " ").capitalizeWords()
+            chip.typeface = Typeface.createFromAsset(assets, "font/${it.name}")
             chip.isChecked = it.id == setting.fontStyle.id
             chip.setOnCheckedChangeListener { chipView, isChecked ->
                 if (isChecked) {
-                    with((fontStyleChipGroup.children.first() as Chip)) {
-                        if (this.isChecked && this != chipView)
-                            this.isChecked = false
+                    fontStyleChipGroup.children.forEach { chpVw ->
+                        val chp = chpVw as Chip
+                        if (chp.isChecked && chpVw != chipView)
+                            chp.isChecked = false
                     }
                     readViewModel?.let { vm -> vm.changeFontStyle(it) }
                 }
@@ -201,11 +212,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
             val chip = layoutInflater.inflate(R.layout.single_chip_layout, null, false) as Chip
             chip.text = it.name.replace("_", " ").toLowerCase().capitalizeWords()
             chip.isChecked = it.id == setting.theme.id
+            readViewModel?.let { vm -> chip.typeface = Typeface.createFromAsset(assets, "font/${vm.currentSettings.fontStyle.name}") }
             chip.setOnCheckedChangeListener { chipView, isChecked ->
                 if (isChecked) {
-                    with((themeChipGroup.children.first() as Chip)) {
-                        if (this.isChecked && this != chipView)
-                            this.isChecked = false
+                    themeChipGroup.children.forEach { chpVw ->
+                        val chp = chpVw as Chip
+                        if (chp.isChecked && chpVw != chipView)
+                            chp.isChecked = false
                     }
                     readViewModel?.let { vm -> vm.changeTheme(it) }
                 }
@@ -223,6 +236,42 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
                 state = STATE_COLLAPSED
                 fontSettingsBottomSheetShowing = false
             }
+        }
+    }
+
+    fun updateBottomSheetsUIElementsFontStyles(typeface: Typeface) {
+        with(typeface) {
+            setBottomNavViewTypeface(typeface = typeface)
+            fontStyleChipGroup.children.forEach { (it as Chip).typeface = this }
+            themeChipGroup.children.forEach { (it as Chip).typeface = this }
+            fontSizeTextView.typeface = this
+            fontSizeLabelTextView.typeface = this
+            fontSizeMinusButton.typeface = this
+            fontSizePlusButton.typeface = this
+            lineSpacingLabelTextView.typeface = this
+            fontStyleLabelTextView.typeface = this
+            themeLabelTextView.typeface = this
+            goToSettingsButton.typeface = this
+            selectedVersesTextView.typeface = this
+            shareButton.typeface = this
+            bookmarkButton.typeface = this
+            copyButton.typeface = this
+            highlightWithLabelTextView.typeface = this
+        }
+    }
+
+    fun setBottomNavViewTypeface(v: View? = nav_view, typeface: Typeface) {
+        try {
+            if (v is ViewGroup) {
+                val vg = v
+                for (i in 0 until vg.childCount) {
+                    val child = vg.getChildAt(i)
+                    setBottomNavViewTypeface(child, typeface)
+                }
+            } else if (v is TextView) {
+                v.typeface = typeface
+            }
+        } catch (e: Exception) {
         }
     }
 
@@ -249,6 +298,29 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
             READER -> { R.id.navigation_read }
             SEARCH -> { R.id.navigation_search }
             MORE -> { R.id.navigation_more }
+        }
+    }
+
+    fun setLineSpacingButtonsBackground(lineSpacingType: LineSpacingType) {
+        when (lineSpacingType) {
+
+            TWO -> {
+                lineSpacingTwoButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                lineSpacingThreeButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+                lineSpacingFourButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+            }
+
+            THREE -> {
+                lineSpacingTwoButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+                lineSpacingThreeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                lineSpacingFourButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+            }
+
+            FOUR -> {
+                lineSpacingTwoButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+                lineSpacingThreeButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+                lineSpacingFourButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            }
         }
     }
 

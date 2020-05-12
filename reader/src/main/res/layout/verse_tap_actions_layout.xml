@@ -115,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/selectedVersesTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textView3"
+            android:id="@+id/highlightWithLabelTextView"
             style="@style/AppText.Header"
             android:textSize="16sp"
             android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView3"
+            app:layout_constraintTop_toBottomOf="@id/highlightWithLabelTextView"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/single_highlight_layout"
             android:orientation="horizontal"

@@ -1,5 +1,6 @@
 package com.iniongungroup.mobile.android.references.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -42,6 +43,7 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
         super.setViewModelObservers()
         observeBooks()
         observeShowChaptersFragment()
+        observeSettings()
     }
 
     private fun observeShowChaptersFragment() {
@@ -70,6 +72,13 @@ class BooksFragment : BaseFragment<FragmentBooksBinding, ReferencesViewModel>() 
     private fun observeBooks() {
         referencesViewModel.books.observe(this, Observer {
             booksAdapter.submitList(it)
+        })
+    }
+
+    private fun observeSettings() {
+        referencesViewModel.settings.observe(this, Observer { setting ->
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${setting.fontStyle.name}")
+            searchEditText.typeface = typeface
         })
     }
 

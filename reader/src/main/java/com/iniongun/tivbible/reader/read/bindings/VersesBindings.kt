@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.TypedValue
 import androidx.annotation.ColorRes
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.backgroundColor
@@ -99,14 +100,19 @@ fun setTextSize(button: MaterialButton, size: Int) {
     button.textSize = size.toFloat()
 }
 
-@BindingAdapter("app:fontTypeface")
-fun setFontStyle(textView: AppCompatTextView, fontName: String) {
-    textView.typeface = Typeface.createFromAsset(textView.context.assets, "font/$fontName")
-}
+//@BindingAdapter("app:fontTypeface")
+//fun setFontStyle(textView: AppCompatTextView, fontName: String) {
+//    textView.typeface = Typeface.createFromAsset(textView.context.assets, "font/$fontName")
+//}
+//
+//@BindingAdapter("app:fontTypeface")
+//fun setFontStyle(button: MaterialButton, fontName: String) {
+//    button.typeface = Typeface.createFromAsset(button.context.assets, "font/$fontName")
+//}
 
 @BindingAdapter("app:fontTypeface")
-fun setFontStyle(button: MaterialButton, fontName: String) {
-    button.typeface = Typeface.createFromAsset(button.context.assets, "font/$fontName")
+fun setFontStyle(checkBox: AppCompatCheckBox, fontName: String) {
+    checkBox.typeface = Typeface.createFromAsset(checkBox.context.assets, "font/$fontName")
 }
 
 @BindingAdapter("app:backgroundColor")

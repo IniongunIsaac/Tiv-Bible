@@ -58,7 +58,9 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
 
     private fun observeSettings() {
         moreViewModel.settings.observe(this, Observer {
-            moreTitleTextView.typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            moreTitleTextView.typeface = typeface
+            (requireActivity() as HomeActivity).setBottomNavViewTypeface(typeface = typeface)
             moreItemsAdapter.submitList(moreItems)
         })
     }
@@ -72,7 +74,7 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
                 CREED, COMMANDMENTS, ABOUT, LORDS_PRAYER -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToMiscContentFragment())) }
                 SHARE -> { activity?.shareData("Tiv Bible Mobile App", context!!.getString(R.string.share_tiv_bible_app_content)) }
                 RATING -> { handleRatingSelected() }
-                HELP -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToHelpFragment())) }
+                HELP -> { moreViewModel.postSuccessMessage("Coming Soon!") }
                 SETTINGS -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToSettingsFragment())) }
             }
         })
@@ -80,19 +82,9 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
 
     private fun handleRatingSelected() {
         try {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=${activity!!.packageName}")
-                )
-            )
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}")))
         } catch (e: ActivityNotFoundException) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=${activity!!.packageName}")
-                )
-            )
+            startActivity( Intent( Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${activity!!.packageName}")))
         }
     }
 

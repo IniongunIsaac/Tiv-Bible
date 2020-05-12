@@ -1,8 +1,12 @@
 package com.iniongungroup.mobile.android.references
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
@@ -35,21 +39,42 @@ class ReferencesActivity : BaseActivity<ActivityReferencesBinding, ReferencesVie
         configureViewPagerAndTabLayout()
 
         configureToolbar()
+        observeSettings()
     }
 
     private fun configureViewPagerAndTabLayout() {
-        viewPager.adapter =
-            ReferencesAdapter(
-                this
-            )
+        viewPager.adapter = ReferencesAdapter(this)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab
             tab.text = when (position) {
                 0 -> "Books"
                 1 -> "Chapters"
                 else -> "Verses"
             }
         }.attach()
+    }
+
+    private fun observeSettings() {
+        referencesViewModel.settings.observe(this, Observer { setting ->
+
+            val typeface = Typeface.createFromAsset(assets, "font/${setting.fontStyle.name}")
+            toolbarTitleTextView.typeface = typeface
+            updateTabLayoutFontStyle(typeface)
+        })
+    }
+
+    private fun updateTabLayoutFontStyle(typeface: Typeface?) {
+        val vg = tabLayout.getChildAt(0) as ViewGroup
+        for (i: Int in 0..vg.childCount) {
+            val vgTab = vg.getChildAt(i) as ViewGroup?
+            vgTab?.let {
+                for (j: Int in 0..vgTab.childCount) {
+                    val tab = vgTab.getChildAt(j)
+                    if (tab is TextView) {
+                        tab.typeface = typeface
+                    }
+                }
+            }
+        }
     }
 
     fun setViewPagerItem(position: Int) {
@@ -59,6 +84,7 @@ class ReferencesActivity : BaseActivity<ActivityReferencesBinding, ReferencesVie
     private fun configureToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

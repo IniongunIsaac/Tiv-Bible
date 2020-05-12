@@ -1,9 +1,13 @@
 package com.iniongun.tivbible.reader.search
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import com.iniongun.tivbible.common.base.BaseFragment
@@ -20,6 +24,7 @@ import com.iniongun.tivbible.reader.search.adapters.HistoryAdapter
 import com.iniongun.tivbible.reader.search.adapters.RecentSearchAdapter
 import com.iniongun.tivbible.reader.utils.ModuleType
 import kotlinx.android.synthetic.main.search_fragment.*
+
 
 class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
@@ -48,6 +53,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
 
     override fun setViewModelObservers() {
         super.setViewModelObservers()
+        observeSettings()
         observeBooks()
         observeChapters()
         observeRecentSearches()
@@ -57,9 +63,34 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
         observeShowSearchResults()
     }
 
+    private fun observeSettings() {
+        searchViewModel.settings.observe(this, Observer {
+            with(Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")) {
+                (searchView.findViewById(androidx.appcompat.R.id.search_src_text) as TextView).typeface = this
+                bookNameAutoCompleteTextView.typeface = this
+                bookNamesTextInputLayout.typeface = this
+                recentSearchesLabelTextView.typeface = this
+                clearRecentSearchesButton.typeface = this
+                recentSearchesNotFoundTextView.typeface = this
+                historyLabelTextView.typeface = this
+                clearHistoryButton.typeface = this
+                historyNotFoundTextView.typeface = this
+                homeActivity.setBottomNavViewTypeface(typeface = this)
+            }
+        })
+    }
+
     private fun observeBooks() {
         searchViewModel.books.observe(this, Observer { books ->
-            val booksAdapter = ArrayAdapter(requireContext(), R.layout.book_item, books.map { it.bookName.capitalizeWords() })
+            val booksAdapter: ArrayAdapter<String> = object : ArrayAdapter<String>(requireContext(),
+                R.layout.book_item, books.map { it.bookName.capitalizeWords() }
+            ) {
+                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view: View = super.getView(position, convertView, parent)
+                    view.findViewById<TextView>(R.id.bookNameTextView).setTypeface(Typeface.createFromAsset(activity!!.assets, "font/${searchViewModel.currentSettings.fontStyle.name}"))
+                    return view
+                }
+            }
             bookNameAutoCompleteTextView.setAdapter(booksAdapter)
         })
     }

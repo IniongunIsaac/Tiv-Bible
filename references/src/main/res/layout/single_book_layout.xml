@@ -25,12 +25,13 @@
         android:focusable="true"
         android:onClick="@{() -> viewModel.getBookChapters(book) }">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/bookTextView"
             style="@style/AppText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{ book.name }"
+            app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
             tools:text="@string/genese_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

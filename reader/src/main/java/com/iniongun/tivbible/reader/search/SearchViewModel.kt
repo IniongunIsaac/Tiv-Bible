@@ -12,6 +12,7 @@ import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.history.IHistoryRepo
 import com.iniongun.tivbible.repository.room.recentSearch.IRecentSearchRepo
+import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
 import java.util.*
 import javax.inject.Inject
@@ -23,7 +24,8 @@ class SearchViewModel @Inject constructor(
     private val recentSearchRepo: IRecentSearchRepo,
     private val historyRepo: IHistoryRepo,
     private val verseRepo: IVersesRepo,
-    private val appPreferencesRepo: IAppPreferencesRepo
+    private val appPreferencesRepo: IAppPreferencesRepo,
+    private val settingsRepo: ISettingsRepo
 ) : BaseViewModel() {
 
     private val _books = MutableLiveData<List<Book>>()
@@ -59,8 +61,25 @@ class SearchViewModel @Inject constructor(
     private val _searchResultSelected = MutableLiveData<LiveDataEvent<Boolean>>()
     val searchResultSelected : LiveData<LiveDataEvent<Boolean>> = _searchResultSelected
 
+    private var _settings = MutableLiveData<Setting>()
+    val settings: LiveData<Setting> = _settings
+    lateinit var currentSettings: Setting
+
     init {
         getBooks()
+        getUserSettings()
+    }
+
+    private  fun getUserSettings() {
+        postLoadingState()
+        compositeDisposable.add(
+            settingsRepo.getAllSettings().subscribeOnIoObserveOnUi(schedulerProvider, {
+                removeLoadingState()
+                val setting = it.first()
+                currentSettings = setting
+                _settings.value = setting
+            }) { removeLoadingState() }
+        )
     }
 
     fun getRecentSearches() {

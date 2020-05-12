@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 style="@style/AppText"
                 android:text="@{ bookAndChapterAndVerse.verseText }"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
                 tools:text="@string/verse_placeholder_text"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -48,6 +49,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="@string/book_chapter_verse_placeholder_text"
                 android:textStyle="bold"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
                 android:text="@{ BookAndChapterAndVerseKt.getBookAndChapterAndVerseString(bookAndChapterAndVerse) }"
                 style="@style/AppText.Bold"/>
 

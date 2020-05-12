@@ -25,3 +25,48 @@ fun getDeviceScreenSize(resources: Resources): ScreenSize {
         else -> error("Unknown screenLayout: $screenLayout")
     }
 }
+
+fun getMinimumFontSizeForDevice(deviceScreenSize: ScreenSize): Int {
+    return when(deviceScreenSize) {
+        SMALL -> 12
+        NORMAL, UNDEFINED -> 14
+        LARGE -> 16
+        XLARGE -> 18
+    }
+}
+
+fun getMaximumFontSizeForDevice(deviceScreenSize: ScreenSize): Int {
+    return when(deviceScreenSize) {
+        SMALL -> 15
+        NORMAL, UNDEFINED -> 17
+        LARGE -> 19
+        XLARGE -> 21
+    }
+}
+
+fun getDeviceLineSpacingTwo(deviceScreenSize: ScreenSize): Int {
+    return when(deviceScreenSize) {
+        SMALL -> 7
+        NORMAL, UNDEFINED -> 8
+        LARGE -> 9
+        XLARGE -> 10
+    }
+}
+
+fun getDeviceLineSpacingThree(deviceScreenSize: ScreenSize): Int {
+    return when(deviceScreenSize) {
+        SMALL -> 8
+        NORMAL, UNDEFINED -> 9
+        LARGE -> 10
+        XLARGE -> 11
+    }
+}
+
+fun getDeviceLineSpacingFour(deviceScreenSize: ScreenSize): Int {
+    return when(deviceScreenSize) {
+        SMALL -> 9
+        NORMAL, UNDEFINED -> 10
+        LARGE -> 11
+        XLARGE -> 12
+    }
+}

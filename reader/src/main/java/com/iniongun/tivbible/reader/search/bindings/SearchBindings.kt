@@ -23,7 +23,6 @@ fun setSelectedBackgroundColor(button: MaterialButton, selected: Boolean) {
         button.setBackgroundColor(ContextCompat.getColor(button.context, android.R.color.transparent))
         button.setTextColor(ContextCompat.getColor(button.context, R.color.unselected_chapter_color))
     }
-
 }
 
 @BindingAdapter("app:items")

@@ -65,7 +65,9 @@ class HighlightsFragment : BaseFragment<HighlightsFragmentBinding, HighlightsVie
 
     private fun observeSettings() {
         highlightsViewModel.settings.observe(this, Observer {
-            toolbarTitleTextView.typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            highlightsNotFoundTextView.typeface = typeface
+            toolbarTitleTextView.typeface = typeface
             highlightsAdapter.notifyDataSetChanged()
         })
     }

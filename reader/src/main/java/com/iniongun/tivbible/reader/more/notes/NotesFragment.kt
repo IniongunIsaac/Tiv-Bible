@@ -49,7 +49,9 @@ class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
 
     private fun observeSettings() {
         notesViewModel.settings.observe(this, Observer {
-            toolbarTitleTextView.typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            notesNotFoundTextView.typeface = typeface
+            toolbarTitleTextView.typeface = typeface
         })
     }
 

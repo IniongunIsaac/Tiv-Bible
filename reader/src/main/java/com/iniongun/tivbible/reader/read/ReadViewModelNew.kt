@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.iniongun.tivbible.common.base.BaseViewModel
-import com.iniongun.tivbible.common.utils.ScreenSize.*
-import com.iniongun.tivbible.common.utils.getDeviceScreenSize
+import com.iniongun.tivbible.common.utils.*
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
@@ -112,7 +111,7 @@ class ReadViewModelNew @Inject constructor(
                 val settings = it.first()
                 currentSettings = settings
                 _settings.value = settings
-            })
+            }) { removeLoadingState() }
         )
     }
 
@@ -358,7 +357,7 @@ class ReadViewModelNew @Inject constructor(
     }
 
     fun increaseFontSize() {
-        val maximumFontSizeForDevice = getMaximumFontSizeForDevice()
+        val maximumFontSizeForDevice = getMaximumFontSizeForDevice(deviceScreenSize)
         if (currentSettings.fontSize == maximumFontSizeForDevice)
             setMessage("Maximum font size for your device is ${maximumFontSizeForDevice}px", FAILED)
         else {
@@ -368,7 +367,7 @@ class ReadViewModelNew @Inject constructor(
     }
 
     fun decreaseFontSize() {
-        val minimumFontSizeForDevice = getMinimumFontSizeForDevice()
+        val minimumFontSizeForDevice = getMinimumFontSizeForDevice(deviceScreenSize)
         if (currentSettings.fontSize == minimumFontSizeForDevice)
             setMessage("Minimum font size for your device is ${minimumFontSizeForDevice}px", FAILED)
         else {
@@ -377,56 +376,11 @@ class ReadViewModelNew @Inject constructor(
         }
     }
 
-    private fun getMinimumFontSizeForDevice(): Int {
-        return when(deviceScreenSize) {
-            SMALL -> 12
-            NORMAL, UNDEFINED -> 14
-            LARGE -> 16
-            XLARGE -> 18
-        }
-    }
-
-    private fun getMaximumFontSizeForDevice(): Int {
-        return when(deviceScreenSize) {
-            SMALL -> 15
-            NORMAL, UNDEFINED -> 17
-            LARGE -> 19
-            XLARGE -> 21
-        }
-    }
-
-    private fun getDeviceLineSpacingTwo(): Int {
-        return when(deviceScreenSize) {
-            SMALL -> 7
-            NORMAL, UNDEFINED -> 8
-            LARGE -> 9
-            XLARGE -> 10
-        }
-    }
-
-    private fun getDeviceLineSpacingThree(): Int {
-        return when(deviceScreenSize) {
-            SMALL -> 8
-            NORMAL, UNDEFINED -> 9
-            LARGE -> 10
-            XLARGE -> 11
-        }
-    }
-
-    private fun getDeviceLineSpacingFour(): Int {
-        return when(deviceScreenSize) {
-            SMALL -> 9
-            NORMAL, UNDEFINED -> 10
-            LARGE -> 11
-            XLARGE -> 12
-        }
-    }
-
     fun updateLineSpacing(lineSpacingType: LineSpacingType) {
         val lineSpacing = when(lineSpacingType) {
-            TWO -> getDeviceLineSpacingTwo()
-            THREE -> getDeviceLineSpacingThree()
-            FOUR -> getDeviceLineSpacingFour()
+            TWO -> getDeviceLineSpacingTwo(deviceScreenSize)
+            THREE -> getDeviceLineSpacingThree(deviceScreenSize)
+            FOUR -> getDeviceLineSpacingFour(deviceScreenSize)
         }
 
         currentSettings.lineSpacing = lineSpacing

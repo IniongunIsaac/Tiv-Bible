@@ -19,10 +19,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/references_text"
             app:titleTextColor="?android:attr/textColorPrimary"
             android:elevation="4dp"
-            android:background="?android:attr/colorBackground"/>
+            android:background="?android:attr/colorBackground">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbarTitleTextView"
+                style="@style/AppText.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/references_text" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <ProgressBar
             android:id="@+id/progressBar"

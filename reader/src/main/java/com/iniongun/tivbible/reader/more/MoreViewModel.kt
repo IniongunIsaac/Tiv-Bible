@@ -3,6 +3,7 @@ package com.iniongun.tivbible.reader.more
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.iniongun.tivbible.common.base.BaseViewModel
+import com.iniongun.tivbible.common.utils.Constants.ABOUT_TITLE
 import com.iniongun.tivbible.common.utils.Constants.COMMANDMENTS_TITLE
 import com.iniongun.tivbible.common.utils.Constants.CREED_TITLE
 import com.iniongun.tivbible.common.utils.Constants.LORDS_PRAYER_TITLE
@@ -55,7 +56,7 @@ class MoreViewModel @Inject constructor(
     fun handleMoreItemClicked(moreItem: MoreItem) {
 
         when (moreItem.type) {
-            CREED, COMMANDMENTS, LORDS_PRAYER -> { getOtherData(moreItem) }
+            CREED, COMMANDMENTS, LORDS_PRAYER, ABOUT -> { getOtherData(moreItem) }
             else -> {
                 _itemSelected.value = LiveDataEvent(moreItem)
             }
@@ -67,6 +68,7 @@ class MoreViewModel @Inject constructor(
             CREED -> { getOtherDataFromStorage(CREED_TITLE, moreItem) }
             COMMANDMENTS -> { getOtherDataFromStorage(COMMANDMENTS_TITLE, moreItem) }
             LORDS_PRAYER -> { getOtherDataFromStorage(LORDS_PRAYER_TITLE, moreItem) }
+            ABOUT -> { getOtherDataFromStorage(ABOUT_TITLE, moreItem) }
         }
     }
 

@@ -7,15 +7,15 @@ import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEvent
 import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
-import com.iniongun.tivbible.entities.Book
-import com.iniongun.tivbible.entities.Chapter
-import com.iniongun.tivbible.entities.History
-import com.iniongun.tivbible.entities.Verse
+import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.repository.preference.IAppPreferencesRepo
 import com.iniongun.tivbible.repository.room.book.IBookRepo
 import com.iniongun.tivbible.repository.room.chapter.IChapterRepo
 import com.iniongun.tivbible.repository.room.history.IHistoryRepo
+import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 /**
@@ -24,12 +24,13 @@ import javax.inject.Inject
  */
 
 class ReferencesViewModel @Inject constructor(
-    bookRepo: IBookRepo,
+    private val bookRepo: IBookRepo,
     private val chaptersRepo: IChapterRepo,
     private val verseRepo: IVersesRepo,
     private val historyRepo: IHistoryRepo,
     private val appPreferencesRepo: IAppPreferencesRepo,
-    private val schedulerProvider: SchedulerProvider
+    private val schedulerProvider: SchedulerProvider,
+    private val settingsRepo: ISettingsRepo
 ): BaseViewModel() {
 
     private val _verses = MutableLiveData<LiveDataEvent<List<Verse>>>()
@@ -58,15 +59,35 @@ class ReferencesViewModel @Inject constructor(
     private lateinit var selectedBook: Book
     private lateinit var selectedVerse: Verse
 
+    private val _settings = MutableLiveData<Setting>()
+    val settings: LiveData<Setting> = _settings
+
     init {
-        _notificationLiveData.value = LiveDataEvent(AppResult.loading())
+//        postLoadingState()
+//        compositeDisposable.add(
+//            bookRepo.getAllBooks()
+//                .subscribeOnIoObserveOnUi(schedulerProvider, {
+//                    _books.value = it
+//                    _originalBooks.value = it
+//                    removeLoadingState()
+//                }) { removeLoadingState() }
+//        )
+        getSettingsAndBooks()
+    }
+
+    private fun getSettingsAndBooks() {
+        postLoadingState()
         compositeDisposable.add(
-            bookRepo.getAllBooks()
-                .subscribeOnIoObserveOnUi(schedulerProvider, {
-                    _books.value = it
-                    _originalBooks.value = it
-                    _notificationLiveData.value = LiveDataEvent(AppResult.success())
-                }) { removeLoadingState() }
+            Observable.zip(
+                settingsRepo.getAllSettings(),
+                bookRepo.getAllBooks(),
+                BiFunction<List<Setting>, List<Book>, Pair<List<Setting>, List<Book>>> { sttngs, bks -> Pair(sttngs, bks) }
+            ).subscribeOnIoObserveOnUi(schedulerProvider, {
+                _settings.value = it.first.first()
+                _books.value = it.second
+                _originalBooks.value = it.second
+                removeLoadingState()
+            }) { removeLoadingState() }
         )
     }
 

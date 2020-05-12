@@ -67,7 +67,9 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding, BookmarksViewMo
 
     private fun observeSettings() {
         bookmarksViewModel.settings.observe(this, Observer {
-            toolbarTitleTextView.typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            bookmarksNotFoundTextView.typeface = typeface
+            toolbarTitleTextView.typeface = typeface
             bookmarksAdapter.notifyDataSetChanged()
         })
     }

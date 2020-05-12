@@ -3,9 +3,13 @@ package com.iniongun.tivbible.reader.read
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.iniongun.tivbible.common.base.BaseFragment
+import com.iniongun.tivbible.common.utils.getDeviceLineSpacingFour
+import com.iniongun.tivbible.common.utils.getDeviceLineSpacingThree
+import com.iniongun.tivbible.common.utils.getDeviceLineSpacingTwo
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongun.tivbible.common.utils.navigation.AppActivityNavCommands
 import com.iniongun.tivbible.common.utils.state.AppState
@@ -15,6 +19,7 @@ import com.iniongun.tivbible.reader.R
 import com.iniongun.tivbible.reader.databinding.FragmentReadNewBinding
 import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.read.adapters.VersesAdapterNew
+import com.iniongun.tivbible.reader.utils.LineSpacingType.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -38,6 +43,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private var shouldShowButtons = true
     private var versesAdapter: VersesAdapterNew? = null
     private val homeActivity by lazy { (requireActivity() as HomeActivity) }
+    private val deviceScreenSize by lazy { homeActivity.deviceScreenSize }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -136,8 +142,25 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private fun observeSettings() {
         readViewModel.settings.observe(this, Observer {
             versesAdapter?.notifyDataSetChanged()
+
             updateToolbarButtonsFont(it)
+
             homeActivity.updateFontSizeTextViewContent(it.fontSize)
+
+            if (it.stayAwake) {
+                activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            } else {
+                activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            }
+
+            val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
+            homeActivity.updateBottomSheetsUIElementsFontStyles(typeface)
+
+            when (it.lineSpacing) {
+                getDeviceLineSpacingTwo(deviceScreenSize) -> { homeActivity.setLineSpacingButtonsBackground(TWO) }
+                getDeviceLineSpacingThree(deviceScreenSize) -> { homeActivity.setLineSpacingButtonsBackground(THREE) }
+                getDeviceLineSpacingFour(deviceScreenSize) -> { homeActivity.setLineSpacingButtonsBackground(FOUR) }
+            }
         })
     }
 
