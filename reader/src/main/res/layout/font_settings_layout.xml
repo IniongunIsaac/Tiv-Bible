@@ -33,8 +33,8 @@
             android:insetBottom="0dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            app:iconPadding="0dp"
             app:icon="@drawable/ic_expand_down"
+            app:iconPadding="0dp"
             app:iconTint="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fontSizeMinusButton"
             style="@style/AppButton.Outlined"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="@dimen/font_setting_button_dimen"
             android:minHeight="@dimen/font_setting_button_dimen"
@@ -110,13 +110,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/fontSizeLabelTextView"
             app:layout_constraintEnd_toStartOf="@+id/fontSizePlusButton"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toTopOf="@+id/fontSizeLabelTextView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fontSizePlusButton"
             style="@style/AppButton.Outlined"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -137,7 +138,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fontSizeTextView"
             style="@style/AppText.Header"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"

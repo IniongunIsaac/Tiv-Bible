@@ -10,35 +10,33 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/versesTapActionsBottomSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/versesTapActionsBottomSheet"
         android:background="?attr/colorSurface"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/AppButton.Text"
             android:id="@+id/closeButton"
-            app:icon="@drawable/ic_expand_down"
-            app:iconTint="?android:attr/textColorPrimary"
-            app:iconPadding="0dp"
+            style="@style/AppButton.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:icon="@drawable/ic_expand_down"
+            app:iconPadding="0dp"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/selectedVersesTextView"
             style="@style/AppText.Header"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_content_margin"
@@ -47,10 +45,12 @@
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
             android:gravity="start"
-            tools:text="@string/selected_verses_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/closeButton" />
+            app:layout_constraintTop_toBottomOf="@id/closeButton"
+            tools:text="@string/selected_verses_text" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/shareButton"
@@ -61,16 +61,17 @@
             android:layout_marginTop="@dimen/standard_content_margin"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
-            android:text="@string/share_text"
             android:backgroundTint="?attr/colorSurface"
             android:elevation="@dimen/standard_mid_margin"
+            android:text="@string/share_text"
+            android:textAllCaps="false"
+            android:textColor="?android:attr/textColorPrimary"
             app:icon="@drawable/ic_share"
             app:iconGravity="textEnd"
             app:iconTint="?android:attr/textColorPrimary"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textAllCaps="false"
             app:layout_constraintEnd_toStartOf="@+id/bookmarkButton"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectedVersesTextView" />
 
@@ -81,15 +82,15 @@
             android:layout_marginTop="@dimen/standard_content_margin"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
-            android:text="@string/bookmark_text"
             android:backgroundTint="?attr/colorSurface"
             android:elevation="@dimen/standard_mid_margin"
+            android:text="@string/bookmark_text"
+            android:textAllCaps="false"
+            android:textColor="?android:attr/textColorPrimary"
             app:icon="@drawable/ic_bookmark"
             app:iconGravity="textEnd"
             app:iconTint="?android:attr/textColorPrimary"
-            android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/copyButton"
-            android:textAllCaps="false"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/shareButton"
             app:layout_constraintTop_toBottomOf="@+id/selectedVersesTextView" />
@@ -101,14 +102,14 @@
             android:layout_marginTop="@dimen/standard_content_margin"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
-            android:text="@string/copy_text"
             android:backgroundTint="?attr/colorSurface"
             android:elevation="@dimen/standard_mid_margin"
+            android:text="@string/copy_text"
+            android:textAllCaps="false"
+            android:textColor="?android:attr/textColorPrimary"
             app:icon="@drawable/ic_copy"
             app:iconGravity="textEnd"
             app:iconTint="?android:attr/textColorPrimary"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/bookmarkButton"
@@ -117,13 +118,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/highlightWithLabelTextView"
             style="@style/AppText.Header"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/highlight_with_text"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shareButton" />
 
@@ -131,14 +132,14 @@
             android:id="@+id/verseHighlightColorsRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/highlightWithLabelTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/single_highlight_layout"
-            android:orientation="horizontal"
             android:layout_marginStart="@dimen/standard_mid_margin"
             android:layout_marginEnd="@dimen/standard_mid_margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/highlightWithLabelTextView"
+            tools:listitem="@layout/single_highlight_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

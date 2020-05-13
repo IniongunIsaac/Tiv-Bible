@@ -164,16 +164,16 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fontSizeTextView"
             style="@style/AppText.Header"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/standard_content_margin"
             android:layout_marginRight="@dimen/standard_content_margin"
-            tools:text="16px"
             app:layout_constraintBottom_toBottomOf="@+id/fontSizePlusButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/fontSizePlusButton"
-            app:layout_constraintTop_toTopOf="@+id/fontSizePlusButton" />
+            app:layout_constraintTop_toTopOf="@+id/fontSizePlusButton"
+            tools:text="16px" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/lineSpacingTwoButton"

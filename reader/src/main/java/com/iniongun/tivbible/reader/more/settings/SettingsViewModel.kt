@@ -10,6 +10,8 @@ import com.iniongun.tivbible.common.utils.rxScheduler.SchedulerProvider
 import com.iniongun.tivbible.common.utils.rxScheduler.subscribeOnIoObserveOnUi
 import com.iniongun.tivbible.common.utils.state.AppResult
 import com.iniongun.tivbible.common.utils.state.AppState
+import com.iniongun.tivbible.common.utils.theme.ThemeConstants.*
+import com.iniongun.tivbible.common.utils.theme.ThemeHelper
 import com.iniongun.tivbible.entities.AudioSpeed
 import com.iniongun.tivbible.entities.FontStyle
 import com.iniongun.tivbible.entities.Setting
@@ -84,9 +86,17 @@ class SettingsViewModel @Inject constructor(
         compositeDisposable.add(
             settingsRepo.getAllSettings().subscribeOnIoObserveOnUi(schedulerProvider, {
                 removeLoadingState()
-                val settings = it.first()
-                currentSettings = settings
-                _settings.value = settings
+                with(it.first()) {
+                    currentSettings = this
+                    _settings.value = this
+                    val currentTheme = when(theme.name) {
+                        LIGHT.name -> LIGHT
+                        DARK.name -> DARK
+                        BATTERY_SAVER.name -> BATTERY_SAVER
+                        else -> SYSTEM_DEFAULT
+                    }
+                    ThemeHelper.changeTheme(currentTheme)
+                }
             })
         )
     }

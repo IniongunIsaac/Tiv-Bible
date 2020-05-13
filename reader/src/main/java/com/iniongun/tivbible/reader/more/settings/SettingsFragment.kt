@@ -3,6 +3,7 @@ package com.iniongun.tivbible.reader.more.settings
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.Observer
@@ -110,6 +111,12 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding, SettingsViewModel
                 getDeviceLineSpacingTwo(deviceScreenSize) -> { setLineSpacingButtonsBackground(TWO) }
                 getDeviceLineSpacingThree(deviceScreenSize) -> { setLineSpacingButtonsBackground(THREE) }
                 getDeviceLineSpacingFour(deviceScreenSize) -> { setLineSpacingButtonsBackground(FOUR) }
+            }
+
+            if (setting.stayAwake) {
+                activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            } else {
+                activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
         })
     }
