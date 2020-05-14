@@ -75,6 +75,7 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
         observeFontStylesAndThemes()
         observeHighlightColors()
         observeHighlights()
+        observeShouldDismissNotesDialog()
     }
 
     private fun observeCurrentVerses() {
@@ -175,6 +176,12 @@ class ReadFragmentNew : BaseFragment<FragmentReadNewBinding, ReadViewModelNew>()
     private fun observeFontStylesAndThemes() {
         readViewModel.fontStylesAndThemes.observe(this, Observer {
             homeActivity.setupFontStylesAndThemesChipGroups(it, readViewModel.currentSettings)
+        })
+    }
+
+    private fun observeShouldDismissNotesDialog() {
+        readViewModel.shouldDismissNotesDialog.observe(this, LiveDataEventObserver {
+            if (it) homeActivity.dismissNotesDialog()
         })
     }
 

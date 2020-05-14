@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d0588feca0a50eb981990fc530d1c827",
+    "identityHash": "06af83acaec2d2f84b0c1579af172f2b",
     "entities": [
       {
         "tableName": "AudioSpeed",
@@ -860,12 +860,116 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`taken_on` TEXT NOT NULL, `verses` TEXT NOT NULL, `comment` TEXT NOT NULL, `id` TEXT NOT NULL, `book_testament_id` TEXT NOT NULL, `book_version_id` TEXT NOT NULL, `book_order_no` INTEGER NOT NULL, `book_number_of_chapters` INTEGER NOT NULL, `book_number_of_verses` INTEGER NOT NULL, `book_id` TEXT NOT NULL, `book_name` TEXT NOT NULL, `chapter_book_id` TEXT NOT NULL, `chapter_chapter_number` INTEGER NOT NULL, `chapter_number_of_verses` INTEGER NOT NULL, `chapter_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "takenOn",
+            "columnName": "taken_on",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "verses",
+            "columnName": "verses",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.testamentId",
+            "columnName": "book_testament_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.versionId",
+            "columnName": "book_version_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.orderNo",
+            "columnName": "book_order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfChapters",
+            "columnName": "book_number_of_chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfVerses",
+            "columnName": "book_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.name",
+            "columnName": "book_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.bookId",
+            "columnName": "chapter_book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.chapterNumber",
+            "columnName": "chapter_chapter_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.numberOfVerses",
+            "columnName": "chapter_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.id",
+            "columnName": "chapter_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd0588feca0a50eb981990fc530d1c827')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06af83acaec2d2f84b0c1579af172f2b')"
     ]
   }
 }

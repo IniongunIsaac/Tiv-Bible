@@ -23,8 +23,8 @@ val moreItems = listOf(
     MoreItem(R.drawable.ic__book, "Atindi A Pue", COMMANDMENTS),
     MoreItem(R.drawable.ic__book, "Msen U Terwase", LORDS_PRAYER),
     MoreItem(R.drawable.ic_share, "Share Tiv Bible App With Friends", SHARE),
-    MoreItem(R.drawable.ic_info, "About Tiv Bible App", ABOUT),
+//    MoreItem(R.drawable.ic_info, "About Tiv Bible App", ABOUT),
     MoreItem(R.drawable.ic_rate, "Rate us on Playstore", RATING),
-    MoreItem(R.drawable.ic_help, "Help", HELP),
+//    MoreItem(R.drawable.ic_help, "Help", HELP),
     MoreItem(R.drawable.ic_settings, "Settings", SETTINGS)
 )

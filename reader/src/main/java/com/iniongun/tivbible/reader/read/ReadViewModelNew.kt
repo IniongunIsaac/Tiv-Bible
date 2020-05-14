@@ -21,6 +21,7 @@ import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.highlight.IHighlightRepo
 import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
 import com.iniongun.tivbible.repository.room.history.IHistoryRepo
+import com.iniongun.tivbible.repository.room.note.INoteRepo
 import com.iniongun.tivbible.repository.room.settings.ISettingsRepo
 import com.iniongun.tivbible.repository.room.theme.IThemeRepo
 import com.iniongun.tivbible.repository.room.verse.IVersesRepo
@@ -43,7 +44,8 @@ class ReadViewModelNew @Inject constructor(
     private val highlightColorRepo: IHighlightColorRepo,
     private val highlightRepo: IHighlightRepo,
     private val historyRepo: IHistoryRepo,
-    private val schedulerProvider: SchedulerProvider
+    private val schedulerProvider: SchedulerProvider,
+    private val noteRepo: INoteRepo
 ) : BaseViewModel() {
 
     private val _verses = MutableLiveData<List<Verse>>()
@@ -97,6 +99,9 @@ class ReadViewModelNew @Inject constructor(
     private var highlightsList = listOf<Highlight>()
     private val _highlights = MutableLiveData<List<Highlight>>()
     val highlights: LiveData<List<Highlight>> = _highlights
+
+    private val _shouldDismissNotesDialog = MutableLiveData<LiveDataEvent<Boolean>>()
+    val shouldDismissNotesDialog: LiveData<LiveDataEvent<Boolean>> = _shouldDismissNotesDialog
 
     init {
         getUserSettings()
@@ -440,5 +445,18 @@ class ReadViewModelNew @Inject constructor(
     override fun onCleared() {
         appPreferencesRepo.currentVerseString = ""
         super.onCleared()
+    }
+
+    fun saveNote(comment: String) {
+        postLoadingState()
+        compositeDisposable.add(
+            noteRepo.insertNotes(listOf(Note(OffsetDateTime.now(), selectedVerses, currentBook!!, currentChapter!!, comment)))
+                .subscribeOnIoObserveOnUi(schedulerProvider, {
+                    removeLoadingState()
+                    postSuccessMessage("Note saved successfully!")
+                    _shouldDismissNotesDialog.value = LiveDataEvent(true)
+                }) { removeLoadingState() }
+        )
+
     }
 }

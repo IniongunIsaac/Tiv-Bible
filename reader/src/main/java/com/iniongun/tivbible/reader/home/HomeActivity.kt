@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.navigation.findNavController
@@ -12,6 +13,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.iniongun.tivbible.common.base.BaseActivity
 import com.iniongun.tivbible.common.utils.capitalizeWords
 import com.iniongun.tivbible.common.utils.getDeviceScreenSize
@@ -73,6 +77,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
 
     val deviceScreenSize by lazy { getDeviceScreenSize(resources) }
 
+    lateinit var notesDialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -122,6 +128,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
             }
         }
 
+        takeNotesButton.setOnClickListener {
+            readViewModel?.let {
+                if (it.shareableSelectedVersesText.isEmpty()) {
+                    it.setMessage("No verse(s) selected to take notes for!", FAILED)
+                } else {
+                    createAndShowNotesDialog()
+                }
+            }
+        }
+
         fontSizeMinusButton.setOnClickListener {
             readViewModel?.let {
                 it.decreaseFontSize()
@@ -156,6 +172,38 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>() 
             toggleFontSettingsBottomSheetVisibility()
             showModule(MORE)
         }
+    }
+
+    private fun createAndShowNotesDialog() {
+        notesDialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Notes for:\n${selectedVersesTextView.text}")
+            .setView(R.layout.notes_dialog_layout)
+            .setNegativeButton(resources.getString(R.string.cancel_text), null)
+            .setPositiveButton(resources.getString(R.string.save_text), null)
+            .create()
+
+        notesDialog.setOnShowListener {
+            notesDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener { notesDialog.dismiss() }
+            notesDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val notesText = (notesDialog as? AlertDialog)?.findViewById<TextInputEditText>(R.id.notesTextInputEditText)?.text?.toString()
+                val notesTextInputLayout = (notesDialog as? AlertDialog)?.findViewById<TextInputLayout>(R.id.notesTextInputLayout)
+                notesText?.let {
+                    if (notesText.isNullOrEmpty()) {
+                        notesTextInputLayout?.isErrorEnabled = true
+                        notesTextInputLayout?.error = "Please enter note text"
+                    } else {
+                        notesTextInputLayout?.error = ""
+                        readViewModel?.let { it.saveNote(notesText) }
+                    }
+                }
+            }
+        }
+
+        notesDialog.show()
+    }
+
+    fun dismissNotesDialog() {
+        notesDialog.dismiss()
     }
 
     fun showVerseTapActionsBottomSheet(viewModel: ReadViewModelNew? = null) {

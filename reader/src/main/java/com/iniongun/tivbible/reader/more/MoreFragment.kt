@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
@@ -19,7 +20,7 @@ import com.iniongun.tivbible.reader.home.HomeActivity
 import com.iniongun.tivbible.reader.more.adapters.MoreItemsAdapter
 import com.iniongun.tivbible.reader.utils.MoreItemType.*
 import com.iniongun.tivbible.reader.utils.moreItems
-import com.iniongun.tivbible.reader.utils.shareData
+import com.iniongun.tivbible.reader.utils.shareDataHTML
 import kotlinx.android.synthetic.main.more_fragment.*
 
 
@@ -72,7 +73,7 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
                 HIGHLIGHTS -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToHighlightsFragment())) }
                 NOTES -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToNotesFragment())) }
                 CREED, COMMANDMENTS, ABOUT, LORDS_PRAYER -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToMiscContentFragment())) }
-                SHARE -> { activity?.shareData("Tiv Bible Mobile App", context!!.getString(R.string.share_tiv_bible_app_content)) }
+                SHARE -> { activity?.shareDataHTML("Tiv Bible Mobile App", Html.fromHtml(getString(R.string.share_tiv_bible_app_content))) }
                 RATING -> { handleRatingSelected() }
                 HELP -> { moreViewModel.postSuccessMessage("Coming Soon!") }
                 SETTINGS -> { navigate(AppFragmentNavCommands.To(MoreFragmentDirections.actionNavigationMoreToSettingsFragment())) }
@@ -82,9 +83,9 @@ class MoreFragment : BaseFragment<MoreFragmentBinding, MoreViewModel>() {
 
     private fun handleRatingSelected() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.iniongun.tivbible")))
         } catch (e: ActivityNotFoundException) {
-            startActivity( Intent( Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${activity!!.packageName}")))
+            startActivity( Intent( Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.iniongun.tivbible")))
         }
     }
 

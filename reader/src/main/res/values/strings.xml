@@ -44,21 +44,23 @@
         kua agee man icivir kpaa, gbem sha won, Amen.
     </string>
     <string name="share_tiv_bible_app_content">
-        The Tiv Bible Mobile App is a robust, user friendly, FREE and offline app that allows you to read the Holy Bible in Tiv language.
-        It has awesome, cool features such as:
+        <![CDATA[
+        The Tiv Bible Mobile App is a robust, user friendly, FREE and offline app that allows you to read the Holy Bible in Tiv language.<br><br>
+        It has awesome, cool features such as:<br><br>
 
-        1. Copy/Paste of multiple verses
-        2. Bookmarking multiple verses for later references.
-        3. Highlighting verses using different highlight colors for emphasis.
-        4. Changing font size and style dynamically while reading the bible.
-        5. Dynamic switching between Light, Dark, System Default and Battery Saver Modes respectively.
-        6. So much more to name a few!!!
+        1.&nbsp;Copy/Paste of multiple verses<br><br>
+        2.&nbsp;Bookmarking multiple verses for later references.<br><br>
+        3.&nbsp;Highlighting verses using different highlight colors for emphasis.<br><br>
+        4.&nbsp;Changing font size and style dynamically while reading the bible.<br><br>
+        5.&nbsp;Dynamic switching between Light, Dark, System Default and Battery Saver Modes respectively.<br><br>
+        6.&nbsp;So much more to name a few!!!<br><br>
 
-        Please download and enjoy the app using the link below:
+        Please download and enjoy the app using the link below:<br><br>
 
-        https://play.google.com/store/apps/details?id=com.iniongun.tivbible&amp;hl=en
+        https://play.google.com/store/apps/details?id=com.iniongun.tivbible&amp;hl=en <br><br>
 
         Oh! Don\'t forget to give the app a good rating on the Playstore!
+        ]]>
     </string>
     <string name="stay_awake_while_reading_text">Stay Awake while Reading:</string>
     <string name="no_text">No</string>
@@ -67,4 +69,8 @@
     <string name="medium_text">Medium</string>
     <string name="high_text">High</string>
     <string name="settings_text">Settings</string>
+    <string name="take_notes_text">Take Notes</string>
+    <string name="notes_text">Notes Text</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="save_text">Save</string>
 </resources>

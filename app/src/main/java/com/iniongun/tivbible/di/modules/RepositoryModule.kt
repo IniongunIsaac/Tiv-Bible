@@ -11,6 +11,7 @@ import com.iniongun.tivbible.repository.room.fontStyle.IFontStyleRepo
 import com.iniongun.tivbible.repository.room.highlight.IHighlightRepo
 import com.iniongun.tivbible.repository.room.highlightColor.IHighlightColorRepo
 import com.iniongun.tivbible.repository.room.history.IHistoryRepo
+import com.iniongun.tivbible.repository.room.note.INoteRepo
 import com.iniongun.tivbible.repository.room.other.IOtherRepo
 import com.iniongun.tivbible.repository.room.otherType.IOtherTypeRepo
 import com.iniongun.tivbible.repository.room.recentSearch.IRecentSearchRepo
@@ -27,6 +28,7 @@ import com.iniongun.tivbible.roomdb.repositoryImpl.fontStyle.FontStyleRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.highlight.HighlightRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.highlightColor.HighlightColorRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.history.HistoryRepoImpl
+import com.iniongun.tivbible.roomdb.repositoryImpl.note.NoteRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.other.OtherRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.otherType.OtherTypeRepoImpl
 import com.iniongun.tivbible.roomdb.repositoryImpl.recentSearch.RecentSearchRepoImpl
@@ -147,4 +149,10 @@ abstract class RepositoryModule {
     internal abstract fun bindVersionRepo(
         repo: VersionRepoImpl
     ): IVersionRepo
+
+    @Binds
+    @AppScope
+    internal abstract fun bindNoteRepo(
+        repo: NoteRepoImpl
+    ): INoteRepo
 }
