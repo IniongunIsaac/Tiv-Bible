@@ -6,6 +6,7 @@ import com.iniongun.tivbible.reader.more.bookmarks.BookmarksFragment
 import com.iniongun.tivbible.reader.more.help.HelpFragment
 import com.iniongun.tivbible.reader.more.highlights.HighlightsFragment
 import com.iniongun.tivbible.reader.more.miscContent.MiscContentFragment
+import com.iniongun.tivbible.reader.more.notes.NoteDetailsFragment
 import com.iniongun.tivbible.reader.more.notes.NotesFragment
 import com.iniongun.tivbible.reader.more.settings.SettingsFragment
 import com.iniongun.tivbible.reader.read.ReadFragment
@@ -77,6 +78,10 @@ abstract class AppFragmentBindingModule {
     @PerFragment
     @ContributesAndroidInjector
     internal abstract fun bindNotesFragment(): NotesFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun bindNoteDetailsFragment(): NoteDetailsFragment
 
     @PerFragment
     @ContributesAndroidInjector

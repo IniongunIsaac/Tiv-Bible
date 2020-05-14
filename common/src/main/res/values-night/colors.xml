@@ -2,6 +2,7 @@
 <resources>
 
     <color name="dark_day_light_night">#fff</color>
+    <color name="note_comment_background_color">#6B000000</color>
     <color name="faint_separator_color">#3E3D3D</color>
     <color name="selected_chapter_color">#fff</color>
     <color name="unselected_chapter_color">#fff</color>

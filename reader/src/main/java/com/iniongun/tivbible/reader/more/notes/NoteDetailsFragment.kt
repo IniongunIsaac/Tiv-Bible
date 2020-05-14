@@ -2,8 +2,7 @@ package com.iniongun.tivbible.reader.more.notes
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import androidx.lifecycle.Observer
 import com.iniongun.tivbible.common.base.BaseFragment
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
@@ -11,33 +10,33 @@ import com.iniongun.tivbible.common.utils.navigation.AppFragmentNavCommands
 import com.iniongun.tivbible.common.utils.state.AppState
 import com.iniongun.tivbible.reader.BR
 import com.iniongun.tivbible.reader.R
-import com.iniongun.tivbible.reader.databinding.NotesFragmentBinding
+import com.iniongun.tivbible.reader.databinding.NoteDetailsFragmentBinding
 import com.iniongun.tivbible.reader.home.HomeActivity
-import com.iniongun.tivbible.reader.more.adapters.NotesAdapter
+import com.iniongun.tivbible.reader.utils.ModuleType
 import com.iniongun.tivbible.reader.utils.TapAction
 import com.iniongun.tivbible.reader.utils.copyDataToClipboard
 import com.iniongun.tivbible.reader.utils.shareData
-import kotlinx.android.synthetic.main.notes_fragment.*
+import kotlinx.android.synthetic.main.note_details_fragment.*
 
 /**
- * Created by Isaac Iniongun on 10/05/2020.
+ * Created by Isaac Iniongun on 14/05/2020.
  * For Tiv Bible project.
  */
 
-class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
+class NoteDetailsFragment : BaseFragment<NoteDetailsFragmentBinding, NotesViewModel>() {
 
     private val notesViewModel by lazy { (requireActivity() as HomeActivity).notesViewModel }
 
-    private lateinit var notesFragmentBinding: NotesFragmentBinding
+    private lateinit var noteDetailsFragmentBinding: NoteDetailsFragmentBinding
 
     override fun getViewModel() = notesViewModel
 
-    override fun getLayoutId() = R.layout.notes_fragment
+    override fun getLayoutId() = R.layout.note_details_fragment
 
     override fun getBindingVariable() = BR.viewModel
 
-    override fun getLayoutBinding(binding: NotesFragmentBinding) {
-        notesFragmentBinding = binding
+    override fun getLayoutBinding(binding: NoteDetailsFragmentBinding) {
+        noteDetailsFragmentBinding = binding
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,36 +46,26 @@ class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
 
     private fun setOnClickListeners() {
         backButton.setOnClickListener { navigate(AppFragmentNavCommands.Back) }
+        readFullChapterButton.setOnClickListener { (requireActivity() as HomeActivity).showModule(ModuleType.READER) }
     }
 
     override fun setViewModelObservers() {
         super.setViewModelObservers()
         observeSettings()
-        observeNotes()
+        observeShowNotes()
         observeTapActionData()
-        observeShowReaderModule()
     }
 
     private fun observeSettings() {
         notesViewModel.settings.observe(this, Observer {
             val typeface = Typeface.createFromAsset(activity!!.assets, "font/${it.fontStyle.name}")
-            notesNotFoundTextView.typeface = typeface
             toolbarTitleTextView.typeface = typeface
         })
     }
 
-    private fun observeNotes() {
-        notesViewModel.notes.observe(this, Observer {
-            val notesAdapter = NotesAdapter(notesViewModel)
-            notesRecyclerView.adapter = notesAdapter
-            notesAdapter.submitList(it)
-            switchNotesEmptyState(it.isEmpty())
-        })
-    }
-
-    private fun observeShowReaderModule() {
-        notesViewModel.showNoteDetails.observe(this, LiveDataEventObserver {
-            if (it) navigate(AppFragmentNavCommands.To(NotesFragmentDirections.actionNotesFragmentToNoteDetailsFragment()))
+    private fun observeShowNotes() {
+        notesViewModel.showNotes.observe(this, LiveDataEventObserver {
+            if (it) navigate(AppFragmentNavCommands.Back)
         })
     }
 
@@ -90,11 +79,6 @@ class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
                 }
             }
         })
-    }
-
-    private fun switchNotesEmptyState(state: Boolean) {
-        showView(notesRecyclerView, !state)
-        showView(notesNotFoundTextView, state)
     }
 
     override fun setNotificationObserver() {
@@ -134,8 +118,7 @@ class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
         })
     }
 
-    override fun showLoadingDialog() { progressBar.visibility = VISIBLE }
+    override fun showLoadingDialog() { progressBar.visibility = View.VISIBLE }
 
-    override fun dismissLoadingDialog() { progressBar.visibility = GONE }
-
+    override fun dismissLoadingDialog() { progressBar.visibility = View.GONE }
 }

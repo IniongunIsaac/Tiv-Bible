@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.iniongun.tivbible.reader.utils.TapAction" />
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.more.notes.NotesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/noteDetailsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:elevation="2dp"
+            app:contentInsetStart="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                style="@style/AppButton.Text"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:paddingLeft="12dp"
+                app:icon="@drawable/ic_arrow_back"
+                app:iconTint="?android:attr/textColorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbarTitleTextView"
+                style="@style/AppText.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/notes_details" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            app:layout_constraintTop_toBottomOf="@id/noteDetailsToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/standard_content_margin">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateTint="?android:attr/textColorPrimary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="UnusedAttribute" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/bookChapterVerseTextView"
+                    style="@style/AppText.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_mid_margin"
+                    android:text="@{ viewModel.currentNote.bookNameAndChapterNumberAndVerseNumbersString }"
+                    android:textStyle="bold"
+                    app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+                    app:layout_constraintStart_toStartOf="@id/startGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/progressBar"
+                    tools:text="@string/book_chapter_verse_placeholder_text" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verseTextTextView"
+                    style="@style/AppText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{ viewModel.currentNote.formattedVersesText }"
+                    app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                    android:lineSpacingExtra="@dimen/standard_mid_margin"
+                    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+                    app:layout_constraintStart_toStartOf="@id/startGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/bookChapterVerseTextView"
+                    tools:text="@string/verse_placeholder_text" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/commentTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_content_margin"
+                    android:hint="@string/comment_text"
+                    app:boxBackgroundColor="@color/note_comment_background_color"
+                    app:boxCornerRadiusBottomEnd="@dimen/standard_mid_margin"
+                    app:boxCornerRadiusBottomStart="@dimen/standard_mid_margin"
+                    app:boxCornerRadiusTopEnd="@dimen/standard_mid_margin"
+                    app:boxCornerRadiusTopStart="@dimen/standard_mid_margin"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+                    app:layout_constraintStart_toStartOf="@id/startGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/verseTextTextView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/commentTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="textMultiLine"
+                        android:text="@{ viewModel.currentNote.comment }"
+                        android:textColor="@color/dark_day_light_night"
+                        app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                        tools:text="@string/verse_placeholder_text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/shareButton"
+                    style="@style/AppButton.Text"
+                    android:layout_width="@dimen/item_copy_share_delete_dimen"
+                    android:layout_height="@dimen/item_copy_share_delete_dimen"
+                    android:layout_marginTop="@dimen/standard_content_margin"
+                    android:onClick="@{ () -> viewModel.handleNoteActionButtonTapped(TapAction.SHARE, viewModel.currentNote, false) }"
+                    android:paddingStart="3dp"
+                    android:paddingLeft="3dp"
+                    app:icon="@drawable/ic_share"
+                    app:iconTint="?android:attr/textColorPrimary"
+                    app:layout_constraintStart_toStartOf="@id/startGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/commentTextInputLayout" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/copyButton"
+                    style="@style/AppButton.Text"
+                    android:layout_width="@dimen/item_copy_share_delete_dimen"
+                    android:layout_height="@dimen/item_copy_share_delete_dimen"
+                    android:layout_marginStart="@dimen/standard_mid_margin"
+                    android:layout_marginLeft="@dimen/standard_mid_margin"
+                    android:onClick="@{ () -> viewModel.handleNoteActionButtonTapped(TapAction.COPY, viewModel.currentNote, false) }"
+                    android:paddingStart="3dp"
+                    android:paddingLeft="3dp"
+                    app:icon="@drawable/ic_copy"
+                    app:iconTint="?android:attr/textColorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/shareButton"
+                    app:layout_constraintStart_toEndOf="@id/shareButton"
+                    app:layout_constraintTop_toTopOf="@+id/shareButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/deleteButton"
+                    style="@style/AppButton.Text"
+                    android:layout_width="@dimen/item_copy_share_delete_dimen"
+                    android:layout_height="@dimen/item_copy_share_delete_dimen"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:onClick="@{ () -> viewModel.handleNoteActionButtonTapped(TapAction.DELETE, viewModel.currentNote, true) }"
+                    android:paddingStart="3dp"
+                    android:paddingLeft="3dp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="?android:attr/textColorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/copyButton"
+                    app:layout_constraintStart_toEndOf="@id/copyButton"
+                    app:layout_constraintTop_toTopOf="@+id/copyButton" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/bookmarkDateTextView"
+                    style="@style/AppText.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{ viewModel.currentNote.dateString }"
+                    android:textColor="?android:attr/textColorTertiary"
+                    android:textStyle="bold"
+                    app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                    app:layout_constraintBottom_toBottomOf="@+id/deleteButton"
+                    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+                    app:layout_constraintTop_toTopOf="@+id/deleteButton"
+                    tools:text="10.10.2020" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/startGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/standard_content_margin" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/endGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/standard_content_margin" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/readFullChapterButton"
+                    style="@style/AppButton.Outlined"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:text="@string/read_full_chapter_text"
+                    app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@id/startGuideline"
+                    app:layout_constraintTop_toBottomOf="@+id/copyButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

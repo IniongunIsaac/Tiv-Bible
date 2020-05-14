@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 /**
@@ -22,6 +23,11 @@ fun setFontStyle(button: MaterialButton, fontName: String) {
 }
 
 @BindingAdapter("app:fontTypeface")
-fun setFontStyle(button: TextInputLayout, fontName: String) {
-    button.typeface = Typeface.createFromAsset(button.context.assets, "font/$fontName")
+fun setFontStyle(textInputLayout: TextInputLayout, fontName: String) {
+    textInputLayout.typeface = Typeface.createFromAsset(textInputLayout.context.assets, "font/$fontName")
+}
+
+@BindingAdapter("app:fontTypeface")
+fun setFontStyle(textInputEditText: TextInputEditText, fontName: String) {
+    textInputEditText.typeface = Typeface.createFromAsset(textInputEditText.context.assets, "font/$fontName")
 }

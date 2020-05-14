@@ -73,4 +73,7 @@
     <string name="notes_text">Notes Text</string>
     <string name="cancel_text">Cancel</string>
     <string name="save_text">Save</string>
+    <string name="comment_text">Comment</string>
+    <string name="notes_details">Note Details</string>
+    <string name="read_full_chapter_text">Read Full Chapter</string>
 </resources>

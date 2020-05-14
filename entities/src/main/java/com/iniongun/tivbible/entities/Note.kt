@@ -22,7 +22,7 @@ data class Note(
 ) {
     @Ignore
     val bookNameAndChapterNumberAndVerseNumbersString = "${book.name} ${chapter.chapterNumber}:${getFormattedVerseNumbers()}"
-    @Ignore val formattedVersesText = verses.joinToString("\n") { "${it.number}.\t${it.text}" }
+    @Ignore val formattedVersesText = ArrayList(verses).sortedBy { it.number }.joinToString("\n") { "${it.number}.\t${it.text}" }
     @Ignore val dateString = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(takenOn)
 
     private fun getFormattedVerseNumbers(): String {

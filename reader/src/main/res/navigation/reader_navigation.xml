@@ -115,12 +115,28 @@
         android:id="@+id/notesFragment"
         android:name="com.iniongun.tivbible.reader.more.notes.NotesFragment"
         android:label="NotesFragment"
-        tools:layout="@layout/notes_fragment"/>
+        tools:layout="@layout/notes_fragment">
+
+        <action
+            android:id="@+id/action_notesFragment_to_noteDetailsFragment"
+            app:destination="@id/noteDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.iniongun.tivbible.reader.more.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/settings_fragment"/>
+
+    <fragment
+        android:id="@+id/noteDetailsFragment"
+        android:name="com.iniongun.tivbible.reader.more.notes.NoteDetailsFragment"
+        android:label="NoteDetailsFragment"
+        tools:layout="@layout/note_details_fragment"/>
 
 </navigation>
