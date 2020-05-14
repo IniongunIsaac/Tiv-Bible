@@ -46,11 +46,7 @@ class NotesViewModel @Inject constructor(
     private val _showNotes = MutableLiveData<LiveDataEvent<Boolean>>()
     val showNotes: LiveData<LiveDataEvent<Boolean>> = _showNotes
 
-    init {
-        getNotesAndSettings()
-    }
-
-    private fun getNotesAndSettings() {
+    fun getNotesAndSettings() {
         postLoadingState()
         compositeDisposable.add(
             Observable.zip(

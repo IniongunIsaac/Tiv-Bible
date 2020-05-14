@@ -455,7 +455,10 @@ class ReadViewModelNew @Inject constructor(
                     removeLoadingState()
                     postSuccessMessage("Note saved successfully!")
                     _shouldDismissNotesDialog.value = LiveDataEvent(true)
-                }) { removeLoadingState() }
+                }) {
+                    postFailureNotification("Note not saved, please try again!")
+                    removeLoadingState()
+                }
         )
 
     }

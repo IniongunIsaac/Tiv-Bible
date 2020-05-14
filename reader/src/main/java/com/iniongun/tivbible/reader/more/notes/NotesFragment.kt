@@ -97,6 +97,11 @@ class NotesFragment : BaseFragment<NotesFragmentBinding, NotesViewModel>() {
         showView(notesNotFoundTextView, state)
     }
 
+    override fun onResume() {
+        super.onResume()
+        notesViewModel.getNotesAndSettings()
+    }
+
     override fun setNotificationObserver() {
         notesViewModel.notificationLiveData.observe(this, LiveDataEventObserver {
 
