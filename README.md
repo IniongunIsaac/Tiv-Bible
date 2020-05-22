@@ -10,9 +10,6 @@
 An Android Holy Bible application (in TIV language) developed using Kotlin, MVVM with repository pattern, LiveData, ViewModel, Rx, Dagger2, Room, Material Design, Navigation Components, Data Binding and some other libraries from Android Jetpack.
 The application uses Room extensively for offline storage which ensures that content is delivered to users fast and without delays. The following are the features of the app:
 
-##### Authentication:
-Users can sign in using their email and password or sign up for a free account with a formal name, email and password. Users are optionally required to verify their phone number using SMS verification.
-
 ##### Light and Dark Mode:
 The app deploys a really simple, intuitive yet sophisticated user interface to give you
 great experience. To this effect, the app allows you to dynamically switch between light and dark modes while going through its content.
@@ -57,40 +54,13 @@ The application is built using the following:
 * Room
 * Material Design
 * Navigation Component
-
+    
 ## Screenshots
-
-    [<img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_0.png)
-    [<img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_1.png)
-    [<img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_2.png)
-    [<img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_3.png)
-    [<img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_4.png)
-    [<img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_5.png)
-    [<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_6.png)
-    [<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="0">](/media/screenshot_7.png)
-
-
-## License
-
-<pre><code>MIT License
-
-Copyright (c) 2020 Isaac Iniongun
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</code></pre>
+[<img src="/media/screenshot_0.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_0.png)
+[<img src="/media/screenshot_1.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_1.png)
+[<img src="/media/screenshot_2.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_2.png)
+[<img src="/media/screenshot_3.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_3.png)
+[<img src="/media/screenshot_4.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_4.png)
+[<img src="/media/screenshot_5.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_5.png)
+[<img src="/media/screenshot_6.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_6.png)
+[<img src="/media/screenshot_7.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_7.png)
