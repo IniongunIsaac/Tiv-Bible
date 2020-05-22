@@ -69,7 +69,7 @@ The application is built using the following:
 [<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_6.png)
 [<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_7.png)
 
-<br><br>
+<p></p>
 
 ## License
 <pre><code>MIT License
