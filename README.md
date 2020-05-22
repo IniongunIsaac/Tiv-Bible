@@ -56,11 +56,11 @@ The application is built using the following:
 * Navigation Component
     
 ## Screenshots
-[<img src="/media/screenshot_0.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_0.png)
-[<img src="/media/screenshot_1.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_1.png)
-[<img src="/media/screenshot_2.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_2.png)
-[<img src="/media/screenshot_3.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_3.png)
-[<img src="/media/screenshot_4.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_4.png)
-[<img src="/media/screenshot_5.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_5.png)
-[<img src="/media/screenshot_6.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_6.png)
-[<img src="/media/screenshot_7.png" align="left" width="200" hspace="5" vspace="10">](/media/screenshot_7.png)
+[<img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_0.png)
+[<img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_1.png)
+[<img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_2.png)
+[<img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_3.png)
+[<img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_4.png)
+[<img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_5.png)
+[<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_6.png)
+[<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_7.png)
