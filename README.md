@@ -59,6 +59,7 @@ The application is built using the following:
 * Navigation Component
 
 ## Screenshots
+
 <p align="center">
     <img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="0">
     <img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="0">
@@ -67,8 +68,8 @@ The application is built using the following:
     <img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="0">
     <img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="0">
     <img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="0">
-    <img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</p>
+    <img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="0">
+</p><br><br>
 
 ## License
 
