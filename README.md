@@ -1,5 +1,5 @@
 
-&nbsp;&nbsp;&nbsp;[<img src="/media/feature_graphic.png" align="left" height="400" hspace="10" vspace="10">](/media/feature_graphic.png)
+&nbsp;&nbsp;&nbsp;[<img src="/media/feature%20graphic.png" align="center" width="700" hspace="10" vspace="10">](/media/feature%20graphic.png)
 
 ## Tiv-Bible
 
