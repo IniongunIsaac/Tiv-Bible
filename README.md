@@ -1,6 +1,6 @@
 
 <p align="center">
-    [<img src="/media/feature%20graphic.png" align="center" width="700" hspace="10" vspace="10">](/media/feature%20graphic.png)
+    <img src="/media/feature%20graphic.png" align="center" width="700" hspace="10" vspace="10">
 </p>
 
 ## Tiv-Bible
@@ -69,6 +69,7 @@ The application is built using the following:
 [<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_6.png)
 [<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_7.png)
 
+<br><br>
 
 ## License
 <pre><code>MIT License
