@@ -60,14 +60,14 @@ The application is built using the following:
 
 ## Screenshots
 <p align="center">
-    <img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">
-    <img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">
+    <img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="0">
+    <img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="0">
 </p>
 
 ## License
