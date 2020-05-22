@@ -59,20 +59,19 @@ The application is built using the following:
 * Navigation Component
 
 ## Screenshots
-
-[<img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_0.png)
-[<img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_1.png)
-[<img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_2.png)
-[<img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_3.png)
-[<img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_4.png)
-[<img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_5.png)
-[<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_6.png)
-[<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_7.png)
-
-<p></p>
+<p align="center">
+    [<img src="/media/screenshot_0.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_0.png)
+    [<img src="/media/screenshot_1.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_1.png)
+    [<img src="/media/screenshot_2.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_2.png)
+    [<img src="/media/screenshot_3.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_3.png)
+    [<img src="/media/screenshot_4.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_4.png)
+    [<img src="/media/screenshot_5.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_5.png)
+    [<img src="/media/screenshot_6.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_6.png)
+    [<img src="/media/screenshot_7.png" align="left" width="200" hspace="0" vspace="10">](/media/screenshot_7.png)
+</p>
 
 ## License
-<pre><code>MIT License
+<p><pre><code>MIT License
 
 Copyright (c) 2020 Isaac Iniongun
 
@@ -94,3 +93,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 </code></pre>
+</p>
