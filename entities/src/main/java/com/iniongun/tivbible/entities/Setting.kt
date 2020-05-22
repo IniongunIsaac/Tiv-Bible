@@ -13,11 +13,11 @@ import java.util.*
 
 @Entity
 data class Setting(
-    @ColumnInfo(name = "font_size") val fontSize: Int,
-    @ColumnInfo(name = "line_spacing")val lineSpacing: Int,
-    @Embedded(prefix = "font_style_") val fontStyle: FontStyle,
-    @Embedded(prefix = "theme_") val theme: Theme,
-    @ColumnInfo(name = "stay_awake")val stayAwake: Boolean,
-    @Embedded(prefix = "audio_speed_") val audioSpeed: AudioSpeed,
+    @ColumnInfo(name = "font_size") var fontSize: Int,
+    @ColumnInfo(name = "line_spacing")var lineSpacing: Int,
+    @Embedded(prefix = "font_style_") var fontStyle: FontStyle,
+    @Embedded(prefix = "theme_") var theme: Theme,
+    @ColumnInfo(name = "stay_awake") var stayAwake: Boolean,
+    @Embedded(prefix = "audio_speed_") var audioSpeed: AudioSpeed,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )

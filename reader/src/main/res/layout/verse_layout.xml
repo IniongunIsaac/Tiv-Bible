@@ -20,11 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{ () -> viewModel.toggleSelectedVerse(verse) }">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/titleTextView"
             style="@style/AppText.Small.Bold"
+            android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -51,6 +55,8 @@
             android:layout_marginRight="16dp"
             android:lineSpacingExtra="8dp"
             android:text="@{ VerseKt.getFormattedText(verse) }"
+            android:background="@{ verse.isSelected }"
+            android:layerType="software"
             tools:text="@string/verse_text_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

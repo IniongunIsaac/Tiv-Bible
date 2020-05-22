@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.more.highlights.HighlightsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/highlightsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:elevation="2dp"
+            app:contentInsetStart="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                style="@style/AppButton.Text"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:backgroundTint="@android:color/transparent"
+                app:icon="@drawable/ic_arrow_back"
+                app:iconTint="?android:attr/textColorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbarTitleTextView"
+                style="@style/AppText.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/my_highlights_text" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/highlightsToolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/highlightsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/standard_mid_margin"
+            android:layout_marginLeft="@dimen/standard_mid_margin"
+            android:layout_marginTop="@dimen/standard_mid_margin"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/highlightsToolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/highlight_item_layout" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/highlightsNotFoundTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            style="@style/AppText"
+            android:textColor="?android:attr/textColorTertiary"
+            android:text="@string/your_highlights_will_appear_here_text"
+            android:gravity="center"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/highlightsToolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -12,6 +12,6 @@ import java.util.*
 
 @Entity
 data class HighlightColor(
-    @ColumnInfo(name = "hex_code") val hexCode: String,
+    @ColumnInfo(name = "hex_code") val hexCode: Int,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
 )

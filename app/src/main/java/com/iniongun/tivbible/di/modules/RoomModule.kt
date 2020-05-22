@@ -89,4 +89,8 @@ class RoomModule {
     @Provides
     fun provideVersionDao(db: TivBibleDatabase) = db.versionDao()
 
+    @AppScope
+    @Provides
+    fun provideNoteDao(db: TivBibleDatabase) = db.noteDao()
+
 }

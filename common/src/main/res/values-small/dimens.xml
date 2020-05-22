@@ -7,5 +7,6 @@
     <dimen name="app_big_text_size">15sp</dimen>
     <dimen name="app_large_text_size">17sp</dimen>
     <dimen name="app_super_large_text_size">21sp</dimen>
+    <dimen name="chapter_verse_size">55dp</dimen>
 
 </resources>

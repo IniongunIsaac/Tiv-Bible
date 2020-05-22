@@ -1,15 +1,19 @@
 package com.iniongun.tivbible.common.base
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
@@ -19,6 +23,7 @@ import com.iniongun.tivbible.common.R
 import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongun.tivbible.common.utils.state.AppState
 import dagger.android.support.DaggerAppCompatActivity
+
 
 /**
  * Created by Isaac Iniongun on 2019-11-26
@@ -30,6 +35,8 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
 
     private lateinit var dialog: AlertDialog
 
+    private var mShortAnimationDuration: Int = 0
+
     @LayoutRes
     abstract fun getLayoutId(): Int
 
@@ -38,6 +45,27 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
     abstract fun getBindingVariable(): Int
 
     abstract fun getBinding(binding: D)
+
+    private val progressBar: ProgressBar by lazy {
+        val layout = this.findViewById<View>(android.R.id.content).rootView as ViewGroup
+//        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+//        params.topMargin = 50
+//        val rl = RelativeLayout(this)
+//        rl.gravity = Gravity.TOP
+        val mProgressBar = ProgressBar(this,null, android.R.attr.progressBarStyleHorizontal)
+        mProgressBar.isIndeterminate = true
+        val layoutParams = mProgressBar.layoutParams as CoordinatorLayout.LayoutParams
+        mProgressBar.setBackgroundColor(resources.getColor(R.color.colorAccent))
+        layoutParams.gravity = Gravity.TOP
+        layoutParams.topMargin = 100
+        layoutParams.width = MATCH_PARENT
+        mProgressBar.rootView.layoutParams = layoutParams
+
+        //rl.addView(mProgressBar)
+        layout.addView(mProgressBar, layoutParams)
+
+        return@lazy mProgressBar
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +76,7 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        createDialog()
+        //createDialog()
     }
 
     private fun hideKeyboardWhenUserTapsOutsideEditText() {
@@ -139,7 +167,7 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         isWarning: Boolean = false
     ) {
         val snackBar = Snackbar.make(rootView, text, duration)
-        val param = snackBar.view.layoutParams as FrameLayout.LayoutParams
+        val param = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         if (isWarning) snackBarLayout.setBackgroundColor(
@@ -152,19 +180,24 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         else snackBarLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
         snackBarLayout.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-            .setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
         param.gravity = Gravity.TOP
+        param.width = MATCH_PARENT
         snackBar.view.layoutParams = param
         snackBar.show()
     }
 
     open fun showLoadingDialog() {
         hideKeyboard(this)
-        dialog.show()
+        //dialog?.show()
+        //progressBar.visibility = VISIBLE
     }
 
     open fun dismissLoadingDialog() {
-        if (dialog.isShowing) dialog.dismiss()
+        //progressBar.visibility = GONE
+//        dialog?.let {
+//            if (it.isShowing) it.dismiss()
+//        }
     }
 
     open fun hideStatusAndNavigationBar() {
@@ -180,4 +213,35 @@ abstract class BaseActivity<in D : ViewDataBinding, out V : BaseViewModel> :
         // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
     }
+
+    fun showView(view: View, shouldShow: Boolean) {
+        if (shouldShow) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is visible
+                // (but fully transparent) during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+
+                // Animate the content view to 100% opacity, and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(mShortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        } else {
+            // Animate the loading view to 0% opacity. After the animation ends,
+            // set its visibility to GONE as an optimization step (it won't
+            // participate in layout passes, etc.)
+            view.animate()
+                .alpha(0f)
+                .setDuration(mShortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                    }
+                })
+        }
+    }
+
 }

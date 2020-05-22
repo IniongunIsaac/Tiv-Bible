@@ -14,10 +14,10 @@ import io.reactivex.Single
 @Dao
 interface BookmarkDao {
 
-    @Query("select * from Bookmark order by datetime(bookmarked_on) asc")
+    @Query("select * from Bookmark order by datetime(bookmarked_on) desc")
     fun getBookmarks(): Observable<List<Bookmark>>
 
-    @Query("select * from Bookmark where bookmarked_on = :bookmarkedOn order by datetime(bookmarked_on) asc")
+    @Query("select * from Bookmark where bookmarked_on = :bookmarkedOn order by datetime(bookmarked_on) desc")
     fun getBookmarkByDate(bookmarkedOn: String): Observable<List<Bookmark>>
 
     @Query("select * from Bookmark where verse_id = :verseId limit 1")

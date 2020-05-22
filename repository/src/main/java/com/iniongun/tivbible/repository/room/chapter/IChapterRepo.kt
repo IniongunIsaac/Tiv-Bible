@@ -1,5 +1,6 @@
 package com.iniongun.tivbible.repository.room.chapter
 
+import com.iniongun.tivbible.entities.BookNameAndChapterNumber
 import com.iniongun.tivbible.entities.Chapter
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -16,10 +17,12 @@ interface IChapterRepo {
 
     fun getChaptersByBook(bookId: String): Observable<List<Chapter>>
 
-    fun getChaptersByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
+    fun getChapterByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
 
     fun insertChapters(chapters: List<Chapter>): Completable
 
     fun deleteChapters(chapters: List<Chapter>): Completable
+
+    fun getBookNameAndChapterNumber(chapterId: String): Single<BookNameAndChapterNumber>
 
 }

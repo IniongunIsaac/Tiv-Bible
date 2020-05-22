@@ -7,4 +7,73 @@
     <string name="font_text">Aa</string>
     <string name="verse_title_placeholder">Kwagh u Igbetar</string>
     <string name="verse_text_placeholder">\t\t1. Sha hiihii la Aondo gba sha man tar, tar yo gba lun daang gbilin tso Sha hiihii la Aondo gba sha man tar, tar yo gba lun daang gbilin tso</string>
+    <string name="bookmark_text">Bookmark</string>
+    <string name="copy_text">Copy</string>
+    <string name="share_text">Share</string>
+    <string name="selected_verses_text">Genese 12 : 12 – 26</string>
+    <string name="highlight_with_text">Highlight with:</string>
+
+    <string name="font_size_text">Font Size:</string>
+    <string name="line_spacing_text">Line Spacing:</string>
+    <string name="font_style_text">Font Style:</string>
+    <string name="theme_text">Theme:</string>
+    <string name="aa_text">Aa</string>
+    <string name="automatic_text">Automatic</string>
+    <string name="light_mode_text">Light Mode</string>
+    <string name="dark_mode_text">Dark Mode</string>
+    <string name="go_to_settings_text">Go to Settings</string>
+    <string name="font_size_placeholder">%dpx</string>
+    <string name="recent_searches_text">Recent Searches</string>
+    <string name="recent_searches_not_found_tex">Your recent searches will appear here!</string>
+    <string name="history_not_found_text">Your history will appear here!</string>
+
+    <string name="search_results_text">Search Results</string>
+    <string name="showing_search_results_for_text">Showing search results for:</string>
+    <string name="bookmarks_text">Bookmarks</string>
+    <string name="my_bookmarks_text">My Bookmarks</string>
+    <string name="book_chapter_verse_placeholder_text">Aerenakaa A Mbaapostoli 27:100</string>
+    <string name="verse_placeholder_text">Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo Ter Aondo A lu a ven dedoo</string>
+    <string name="my_highlights_text">My Highlights</string>
+    <string name="your_highlights_will_appear_here_text">Your highlighted verses will appear here!</string>
+    <string name="your_saved_bookmarks_will_appear_here_text">Your saved bookmarks will appear here!</string>
+    <string name="my_notes_text">My Notes</string>
+    <string name="your_verses_notes_will_appear_here_text">Your verses notes will appear here!</string>
+    <string name="misc_content">
+        Ter wase u A lu sha, i tsegha iti You, tartor wou va, i er ishima you shin tar kpaa vough er i eren i sha nahan. Na se kwaghyan wase nyian u a lu sha ciu
+        ayange ayange la; man de se de anzo ase di er se kpaa se deen mba ve gbe anzo hen vese nahan; man shi de ze a vese ape imeen ilu ga, kpa yima se sha ifer.Gadia tartor ka u wou
+        kua agee man icivir kpaa, gbem sha won, Amen.
+    </string>
+    <string name="share_tiv_bible_app_content">
+        <![CDATA[
+        The Tiv Bible Mobile App is a robust, user friendly, FREE and offline app that allows you to read the Holy Bible in Tiv language.<br><br>
+        It has awesome, cool features such as:<br><br>
+
+        1.&nbsp;Copy/Paste of multiple verses<br><br>
+        2.&nbsp;Bookmarking multiple verses for later references.<br><br>
+        3.&nbsp;Highlighting verses using different highlight colors for emphasis.<br><br>
+        4.&nbsp;Changing font size and style dynamically while reading the bible.<br><br>
+        5.&nbsp;Dynamic switching between Light, Dark, System Default and Battery Saver Modes respectively.<br><br>
+        6.&nbsp;So much more to name a few!!!<br><br>
+
+        Please download and enjoy the app using the link below:<br><br>
+
+        https://play.google.com/store/apps/details?id=com.iniongun.tivbible&amp;hl=en <br><br>
+
+        Oh! Don\'t forget to give the app a good rating on the Playstore!
+        ]]>
+    </string>
+    <string name="stay_awake_while_reading_text">Stay Awake while Reading:</string>
+    <string name="no_text">No</string>
+    <string name="audio_speed_text">Audio Speed:</string>
+    <string name="low_text">Low</string>
+    <string name="medium_text">Medium</string>
+    <string name="high_text">High</string>
+    <string name="settings_text">Settings</string>
+    <string name="take_notes_text">Take Notes</string>
+    <string name="notes_text">Notes Text</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="save_text">Save</string>
+    <string name="comment_text">Comment</string>
+    <string name="notes_details">Note Details</string>
+    <string name="read_full_chapter_text">Read Full Chapter</string>
 </resources>

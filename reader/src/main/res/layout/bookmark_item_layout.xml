@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.iniongun.tivbible.reader.utils.TapAction"/>
+        <variable
+            name="bookmark"
+            type="com.iniongun.tivbible.entities.Bookmark" />
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.more.bookmarks.BookmarksViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/standard_mid_margin"
+        android:layout_margin="@dimen/standard_mid_margin"
+        app:cardCornerRadius="@dimen/standard_mid_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{ () -> viewModel.handleBookmarkSelected(bookmark) }">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookChapterVerseTextView"
+                style="@style/AppText.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                android:text="@{ bookmark.bookNameAndChapterNumberAndVerseNumberString }"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/book_chapter_verse_placeholder_text" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/verseTextTextView"
+                style="@style/AppText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{ bookmark.verse.text }"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bookChapterVerseTextView"
+                android:layout_marginTop="5dp"
+                tools:text="@string/verse_placeholder_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shareButton"
+                style="@style/AppButton.Text"
+                app:icon="@drawable/ic_share"
+                app:iconTint="?android:attr/textColorPrimary"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:paddingLeft="3dp"
+                android:paddingStart="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:layout_marginTop="5dp"
+                android:onClick="@{ () -> viewModel.handleBookmarkActionButtonTapped(TapAction.SHARE, bookmark) }"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copyButton"
+                style="@style/AppButton.Text"
+                app:icon="@drawable/ic_copy"
+                app:iconTint="?android:attr/textColorPrimary"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:paddingLeft="3dp"
+                android:paddingStart="3dp"
+                app:layout_constraintStart_toEndOf="@id/shareButton"
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="@{ () -> viewModel.handleBookmarkActionButtonTapped(TapAction.COPY, bookmark) }"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteButton"
+                style="@style/AppButton.Text"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="?android:attr/textColorPrimary"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:paddingLeft="3dp"
+                android:paddingStart="3dp"
+                app:layout_constraintStart_toEndOf="@id/copyButton"
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="@{ () -> viewModel.handleBookmarkActionButtonTapped(TapAction.DELETE, bookmark) }"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkDateTextView"
+                style="@style/AppText.Bold"
+                android:textColor="?android:attr/textColorTertiary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ bookmark.dateString }"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/deleteButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/deleteButton"
+                tools:text="10.10.2020" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

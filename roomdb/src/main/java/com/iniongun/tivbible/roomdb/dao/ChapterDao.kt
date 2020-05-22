@@ -1,6 +1,7 @@
 package com.iniongun.tivbible.roomdb.dao
 
 import androidx.room.*
+import com.iniongun.tivbible.entities.BookNameAndChapterNumber
 import com.iniongun.tivbible.entities.Chapter
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -25,7 +26,7 @@ interface ChapterDao {
     fun getChaptersByBook(bookId: String): Observable<List<Chapter>>
 
     @Query("select * from Chapter where book_id = :bookId and chapter_number = :chapterNumber")
-    fun getChaptersByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
+    fun getChapterByBookAndChapterNumber(bookId: String, chapterNumber: Int): Single<Chapter>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertChapters(vararg chapters: Chapter): Completable
@@ -38,5 +39,10 @@ interface ChapterDao {
 
     @Query("delete from Chapter")
     fun deleteAllChapters(): Completable
+
+    @Query("select book.name as bookName, chapter.chapter_number as chapterNumber, chapter.id as chapterId from book, chapter where book.id = chapter.book_id and chapter.id = :chapterId ")
+    fun getBookNameAndChapterNumber(chapterId: String): Single<BookNameAndChapterNumber>
+
+
 
 }

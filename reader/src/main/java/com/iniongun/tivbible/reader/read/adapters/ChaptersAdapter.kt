@@ -16,10 +16,12 @@ import com.iniongun.tivbible.reader.read.ReadViewModel
 
 class ChaptersAdapter(private val viewModel: ReadViewModel) :
     ListAdapter<Verse, ChaptersAdapter.ViewHolder>(ChaptersDiffCallback()) {
+    var versesAdapter: VersesAdapter? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val verse = getItem(position)
         holder.bind(viewModel, verse)
+        versesAdapter = holder.versesAdapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,11 +31,30 @@ class ChaptersAdapter(private val viewModel: ReadViewModel) :
     class ViewHolder private constructor(val binding: ChapterLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        var versesAdapter: VersesAdapter? = null
+
         fun bind(viewModel: ReadViewModel, verse: Verse) {
             viewModel.getCurrentVerses(verse.chapterId)
             binding.viewModel = viewModel
-            binding.versesRecyclerView.adapter = VersesAdapter(viewModel)
+            versesAdapter = VersesAdapter(viewModel)
+            binding.versesRecyclerView.adapter = versesAdapter
             binding.executePendingBindings()
+
+            binding.versesRecyclerView.post {
+                binding.versesRecyclerView.smoothScrollToPosition(viewModel.verseNum)
+            }
+
+            binding.versesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    when (newState) {
+                        RecyclerView.SCROLL_STATE_IDLE -> viewModel.setVersesRecyclerViewTouched(true)
+                        RecyclerView.SCROLL_STATE_DRAGGING -> {}
+                        RecyclerView.SCROLL_STATE_SETTLING -> {}
+                    }
+                }
+            })
+
         }
 
         companion object {

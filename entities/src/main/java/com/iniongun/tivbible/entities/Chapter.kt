@@ -1,9 +1,6 @@
 package com.iniongun.tivbible.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 /**
@@ -21,4 +18,7 @@ data class Chapter(
     @ColumnInfo(name = "chapter_number") val chapterNumber: Int,
     @ColumnInfo(name = "number_of_verses") val numberOfVerses: Int,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
-)
+) {
+    @Ignore
+    var isSelected: Boolean = false
+}

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5e22babcdef0aaba47620917101a9648",
+    "identityHash": "06af83acaec2d2f84b0c1579af172f2b",
     "entities": [
       {
         "tableName": "AudioSpeed",
@@ -111,17 +111,11 @@
       },
       {
         "tableName": "Bookmark",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bookmarked_on` TEXT NOT NULL, `id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bookmarked_on` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, `book_testament_id` TEXT NOT NULL, `book_version_id` TEXT NOT NULL, `book_order_no` INTEGER NOT NULL, `book_number_of_chapters` INTEGER NOT NULL, `book_number_of_verses` INTEGER NOT NULL, `book_id` TEXT NOT NULL, `book_name` TEXT NOT NULL, `chapter_book_id` TEXT NOT NULL, `chapter_chapter_number` INTEGER NOT NULL, `chapter_number_of_verses` INTEGER NOT NULL, `chapter_id` TEXT NOT NULL, PRIMARY KEY(`book_id`, `chapter_id`, `verse_number`))",
         "fields": [
           {
             "fieldPath": "bookmarkedOn",
             "columnName": "bookmarked_on",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -160,11 +154,79 @@
             "columnName": "verse_id",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "book.testamentId",
+            "columnName": "book_testament_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.versionId",
+            "columnName": "book_version_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.orderNo",
+            "columnName": "book_order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfChapters",
+            "columnName": "book_number_of_chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfVerses",
+            "columnName": "book_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.name",
+            "columnName": "book_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.bookId",
+            "columnName": "chapter_book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.chapterNumber",
+            "columnName": "chapter_chapter_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.numberOfVerses",
+            "columnName": "chapter_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.id",
+            "columnName": "chapter_id",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "book_id",
+            "chapter_id",
+            "verse_number"
           ],
           "autoGenerate": false
         },
@@ -249,12 +311,12 @@
       },
       {
         "tableName": "HighlightColor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hex_code` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hex_code` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "hexCode",
             "columnName": "hex_code",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -275,7 +337,7 @@
       },
       {
         "tableName": "Highlight",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`highlighted_on` TEXT NOT NULL, `id` TEXT NOT NULL, `highlight_color_hex_code` TEXT NOT NULL, `highlight_color_id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`highlighted_on` TEXT NOT NULL, `highlight_color_hex_code` INTEGER NOT NULL, `highlight_color_id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, `book_testament_id` TEXT NOT NULL, `book_version_id` TEXT NOT NULL, `book_order_no` INTEGER NOT NULL, `book_number_of_chapters` INTEGER NOT NULL, `book_number_of_verses` INTEGER NOT NULL, `book_id` TEXT NOT NULL, `book_name` TEXT NOT NULL, `chapter_book_id` TEXT NOT NULL, `chapter_chapter_number` INTEGER NOT NULL, `chapter_number_of_verses` INTEGER NOT NULL, `chapter_id` TEXT NOT NULL, PRIMARY KEY(`book_id`, `chapter_id`, `verse_number`))",
         "fields": [
           {
             "fieldPath": "highlightedOn",
@@ -284,15 +346,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "color.hexCode",
             "columnName": "highlight_color_hex_code",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -336,11 +392,79 @@
             "columnName": "verse_id",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "book.testamentId",
+            "columnName": "book_testament_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.versionId",
+            "columnName": "book_version_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.orderNo",
+            "columnName": "book_order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfChapters",
+            "columnName": "book_number_of_chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfVerses",
+            "columnName": "book_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.name",
+            "columnName": "book_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.bookId",
+            "columnName": "chapter_book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.chapterNumber",
+            "columnName": "chapter_chapter_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.numberOfVerses",
+            "columnName": "chapter_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.id",
+            "columnName": "chapter_id",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "book_id",
+            "chapter_id",
+            "verse_number"
           ],
           "autoGenerate": false
         },
@@ -349,54 +473,90 @@
       },
       {
         "tableName": "History",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `verse_chapter_id` TEXT NOT NULL, `verse_number` INTEGER NOT NULL, `verse_text` TEXT NOT NULL, `verse_has_title` INTEGER NOT NULL, `verse_title` TEXT NOT NULL, `verse_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`book_name_and_chapter_number` TEXT NOT NULL, `history_date` TEXT NOT NULL, `chapter_book_id` TEXT NOT NULL, `chapter_chapter_number` INTEGER NOT NULL, `chapter_number_of_verses` INTEGER NOT NULL, `chapter_id` TEXT NOT NULL, `book_testament_id` TEXT NOT NULL, `book_version_id` TEXT NOT NULL, `book_order_no` INTEGER NOT NULL, `book_number_of_chapters` INTEGER NOT NULL, `book_number_of_verses` INTEGER NOT NULL, `book_id` TEXT NOT NULL, `book_name` TEXT NOT NULL, PRIMARY KEY(`chapter_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "bookNameAndChapterNumber",
+            "columnName": "book_name_and_chapter_number",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "verse.chapterId",
-            "columnName": "verse_chapter_id",
+            "fieldPath": "historyDate",
+            "columnName": "history_date",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "verse.number",
-            "columnName": "verse_number",
+            "fieldPath": "chapter.bookId",
+            "columnName": "chapter_book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.chapterNumber",
+            "columnName": "chapter_chapter_number",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "verse.text",
-            "columnName": "verse_text",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "verse.hasTitle",
-            "columnName": "verse_has_title",
+            "fieldPath": "chapter.numberOfVerses",
+            "columnName": "chapter_number_of_verses",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "verse.title",
-            "columnName": "verse_title",
+            "fieldPath": "chapter.id",
+            "columnName": "chapter_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "verse.id",
-            "columnName": "verse_id",
+            "fieldPath": "book.testamentId",
+            "columnName": "book_testament_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.versionId",
+            "columnName": "book_version_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.orderNo",
+            "columnName": "book_order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfChapters",
+            "columnName": "book_number_of_chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfVerses",
+            "columnName": "book_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.name",
+            "columnName": "book_name",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "chapter_id"
           ],
           "autoGenerate": false
         },
@@ -405,8 +565,20 @@
       },
       {
         "tableName": "Other",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`text` TEXT NOT NULL, `id` TEXT NOT NULL, `other_type_id` TEXT NOT NULL, `other_type_name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `subTitle` TEXT NOT NULL, `text` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subTitle",
+            "columnName": "subTitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "text",
             "columnName": "text",
@@ -416,18 +588,6 @@
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "otherType.id",
-            "columnName": "other_type_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "otherType.name",
-            "columnName": "other_type_name",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -469,24 +629,18 @@
       },
       {
         "tableName": "RecentSearch",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`text` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`text` TEXT NOT NULL, PRIMARY KEY(`text`))",
         "fields": [
           {
             "fieldPath": "text",
             "columnName": "text",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "text"
           ],
           "autoGenerate": false
         },
@@ -706,12 +860,116 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`taken_on` TEXT NOT NULL, `verses` TEXT NOT NULL, `comment` TEXT NOT NULL, `id` TEXT NOT NULL, `book_testament_id` TEXT NOT NULL, `book_version_id` TEXT NOT NULL, `book_order_no` INTEGER NOT NULL, `book_number_of_chapters` INTEGER NOT NULL, `book_number_of_verses` INTEGER NOT NULL, `book_id` TEXT NOT NULL, `book_name` TEXT NOT NULL, `chapter_book_id` TEXT NOT NULL, `chapter_chapter_number` INTEGER NOT NULL, `chapter_number_of_verses` INTEGER NOT NULL, `chapter_id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "takenOn",
+            "columnName": "taken_on",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "verses",
+            "columnName": "verses",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.testamentId",
+            "columnName": "book_testament_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.versionId",
+            "columnName": "book_version_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.orderNo",
+            "columnName": "book_order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfChapters",
+            "columnName": "book_number_of_chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.numberOfVerses",
+            "columnName": "book_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book.name",
+            "columnName": "book_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.bookId",
+            "columnName": "chapter_book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.chapterNumber",
+            "columnName": "chapter_chapter_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.numberOfVerses",
+            "columnName": "chapter_number_of_verses",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapter.id",
+            "columnName": "chapter_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e22babcdef0aaba47620917101a9648')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06af83acaec2d2f84b0c1579af172f2b')"
     ]
   }
 }

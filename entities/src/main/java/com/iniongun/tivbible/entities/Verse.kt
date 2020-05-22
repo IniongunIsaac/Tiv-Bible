@@ -3,10 +3,7 @@ package com.iniongun.tivbible.entities
 import android.text.SpannedString
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 /**
@@ -26,7 +23,11 @@ data class Verse(
     @ColumnInfo(name = "has_title") val hasTitle: Boolean,
     val title: String,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
-)
+) {
+    @Ignore var isSelected: Boolean = false
+    @Ignore var isHighlighted: Boolean = false
+    @Ignore var highlight: Highlight? = null
+}
 
 val Verse.formattedText: SpannedString
     get() = buildSpannedString {

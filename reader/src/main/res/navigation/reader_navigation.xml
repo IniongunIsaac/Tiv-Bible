@@ -7,19 +7,136 @@
 
     <fragment
         android:id="@+id/navigation_read"
-        android:name="com.iniongun.tivbible.reader.read.ReadFragment"
+        android:name="com.iniongun.tivbible.reader.read.ReadFragmentNew"
         android:label="@string/title_read"
-        tools:layout="@layout/read_fragment" />
+        tools:layout="@layout/fragment_read_new" />
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.iniongun.tivbible.reader.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/search_fragment" />
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_navigation_search_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_more"
         android:name="com.iniongun.tivbible.reader.more.MoreFragment"
         android:label="@string/title_more"
-        tools:layout="@layout/more_fragment" />
+        tools:layout="@layout/more_fragment" >
+
+        <action
+            android:id="@+id/action_navigation_more_to_highlightsFragment"
+            app:destination="@id/highlightsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_navigation_more_to_bookmarksFragment"
+            app:destination="@id/bookmarksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_navigation_more_to_miscContentFragment"
+            app:destination="@id/miscContentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_navigation_more_to_notesFragment"
+            app:destination="@id/notesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_navigation_more_to_helpFragment"
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_navigation_more_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="com.iniongun.tivbible.reader.search.SearchResultsFragment"
+        android:label="fragment_search_results"
+        tools:layout="@layout/fragment_search_results" />
+
+    <fragment
+        android:id="@+id/bookmarksFragment"
+        android:name="com.iniongun.tivbible.reader.more.bookmarks.BookmarksFragment"
+        android:label="BookmarksFragment"
+        tools:layout="@layout/bookmarks_fragment"/>
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.iniongun.tivbible.reader.more.help.HelpFragment"
+        android:label="HelpFragment"
+        tools:layout="@layout/help_fragment"/>
+
+    <fragment
+        android:id="@+id/highlightsFragment"
+        android:name="com.iniongun.tivbible.reader.more.highlights.HighlightsFragment"
+        android:label="HighlightsFragment"
+        tools:layout="@layout/highlights_fragment"/>
+
+    <fragment
+        android:id="@+id/miscContentFragment"
+        android:name="com.iniongun.tivbible.reader.more.miscContent.MiscContentFragment"
+        android:label="MiscContentFragment"
+        tools:layout="@layout/misc_content_fragment"/>
+
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.iniongun.tivbible.reader.more.notes.NotesFragment"
+        android:label="NotesFragment"
+        tools:layout="@layout/notes_fragment">
+
+        <action
+            android:id="@+id/action_notesFragment_to_noteDetailsFragment"
+            app:destination="@id/noteDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.iniongun.tivbible.reader.more.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/settings_fragment"/>
+
+    <fragment
+        android:id="@+id/noteDetailsFragment"
+        android:name="com.iniongun.tivbible.reader.more.notes.NoteDetailsFragment"
+        android:label="NoteDetailsFragment"
+        tools:layout="@layout/note_details_fragment"/>
+
 </navigation>

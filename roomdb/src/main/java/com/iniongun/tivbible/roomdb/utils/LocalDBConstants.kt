@@ -8,6 +8,6 @@ package com.iniongun.tivbible.roomdb.utils
 object LocalDBConstants {
 
     const val DB_NAME = "TivBibleDatabase.db"
-    const val DB_VERSION = 1
+    const val DB_VERSION = 2
 
 }

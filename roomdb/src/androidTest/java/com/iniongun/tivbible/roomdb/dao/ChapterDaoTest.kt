@@ -145,7 +145,7 @@ class ChapterDaoTest {
     @Test
     internal fun getChaptersByBookAndChapterNumber_shouldReturnNull_whenNoChapterInserted() {
 
-        assertThrows<EmptyResultSetException> { chapterDao.getChaptersByBookAndChapterNumber(testBook.id, testChapter.chapterNumber).blockingGet() }
+        assertThrows<EmptyResultSetException> { chapterDao.getChapterByBookAndChapterNumber(testBook.id, testChapter.chapterNumber).blockingGet() }
 
     }
 
@@ -157,7 +157,7 @@ class ChapterDaoTest {
         bookDao.insertBooks(testBook).blockingAwait()
         chapterDao.insertChapters(testChapter).blockingAwait()
 
-        val chapter = chapterDao.getChaptersByBookAndChapterNumber(testBook.id, testChapter.chapterNumber).blockingGet()
+        val chapter = chapterDao.getChapterByBookAndChapterNumber(testBook.id, testChapter.chapterNumber).blockingGet()
 
         assertNotNull(chapter)
         assertEquals(chapter.bookId, testChapter.bookId)

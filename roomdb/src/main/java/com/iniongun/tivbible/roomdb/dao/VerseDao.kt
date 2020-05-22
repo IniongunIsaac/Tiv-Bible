@@ -1,6 +1,7 @@
 package com.iniongun.tivbible.roomdb.dao
 
 import androidx.room.*
+import com.iniongun.tivbible.entities.BookAndChapterAndVerse
 import com.iniongun.tivbible.entities.Verse
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -26,7 +27,10 @@ interface VerseDao {
     @Query("select * from Verse where chapter_id = :chapterId order by number asc")
     fun getVersesByChapter(chapterId: String): Observable<List<Verse>>
 
-    @Query("Select * from Verse inner join Chapter on Chapter.id = Verse.chapter_id inner join Book on Book.id = Chapter.book_id where Book.id = :bookId")
+    @Query("select * from Verse where text like '%' || :searchText || '%' and chapter_id = :chapterId order by number asc")
+    fun getVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<Verse>>
+
+    @Query("Select * from Verse inner join Chapter on Chapter.id = Verse.chapter_id inner join Book on Book.id = Chapter.book_id where Book.id = :bookId order by Verse.number")
     fun getVersesByBook(bookId: String): Observable<List<Verse>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -40,5 +44,23 @@ interface VerseDao {
 
     @Query("delete from Verse")
     fun deleteAllVerses(): Completable
+
+    @Query("select book.testament_id as testamentId, book.version_id as versionId, book.order_no as orderNo, book.number_of_chapters as numberOfChapters, book.number_of_verses as bookNumberOfVerses, book.id as bookId, book.name as bookName, " +
+            "chapter.chapter_number as chapterNumber, chapter.number_of_verses as chapterNumberOfVerses, chapter.id as chapterId, " +
+            "verse.number as verseNumber, verse.text as verseText, verse.has_title as verseHasTitle, verse.title as verseTitle, verse.id as verseId " +
+            "from book, chapter, verse where book.id = chapter.book_id and verse.chapter_id = chapter.id and text like '%' || :searchText || '%'")
+    fun getBooksAndChaptersAndVersesByText(searchText: String): Observable<List<BookAndChapterAndVerse>>
+
+    @Query("select book.testament_id as testamentId, book.version_id as versionId, book.order_no as orderNo, book.number_of_chapters as numberOfChapters, book.number_of_verses as bookNumberOfVerses, book.id as bookId, book.name as bookName, " +
+            "chapter.chapter_number as chapterNumber, chapter.number_of_verses as chapterNumberOfVerses, chapter.id as chapterId, " +
+            "verse.number as verseNumber, verse.text as verseText, verse.has_title as verseHasTitle, verse.title as verseTitle, verse.id as verseId " +
+            "from book, chapter, verse where book.id = chapter.book_id and verse.chapter_id = chapter.id and text like '%' || :searchText || '%' and chapter_id = :chapterId order by number asc")
+    fun getBooksAndChaptersAndVersesByTextAndChapter(searchText: String, chapterId: String): Observable<List<BookAndChapterAndVerse>>
+
+    @Query("select book.testament_id as testamentId, book.version_id as versionId, book.order_no as orderNo, book.number_of_chapters as numberOfChapters, book.number_of_verses as bookNumberOfVerses, book.id as bookId, book.name as bookName, " +
+            "chapter.chapter_number as chapterNumber, chapter.number_of_verses as chapterNumberOfVerses, chapter.id as chapterId, " +
+            "verse.number as verseNumber, verse.text as verseText, verse.has_title as verseHasTitle, verse.title as verseTitle, verse.id as verseId " +
+            "from book, chapter, verse where book.id = chapter.book_id and verse.chapter_id = chapter.id and book_id = :bookId and text like '%' || :searchText || '%' and chapter_id = :chapterId order by number asc")
+    fun getBooksAndChaptersAndVersesByTextAndChapterAndBook(searchText: String, chapterId: String, bookId: String): Observable<List<BookAndChapterAndVerse>>
 
 }

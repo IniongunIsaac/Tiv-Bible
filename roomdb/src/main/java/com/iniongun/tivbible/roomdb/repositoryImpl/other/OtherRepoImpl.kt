@@ -22,4 +22,6 @@ class OtherRepoImpl @Inject constructor(
 
     override fun deleteOthers(others: List<Other>) = otherDao.deleteOthers(others)
 
+    override fun getOtherByText(searchText: String) = otherDao.getOtherByText(searchText)
+
 }

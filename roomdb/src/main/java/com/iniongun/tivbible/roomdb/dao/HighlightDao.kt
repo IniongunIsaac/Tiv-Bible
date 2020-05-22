@@ -15,11 +15,11 @@ import org.threeten.bp.OffsetDateTime
 @Dao
 interface HighlightDao {
 
-    @Query("select * from Highlight")
+    @Query("select * from Highlight order by datetime(highlighted_on) desc")
     fun getAllHighlights(): Observable<List<Highlight>>
 
-    @Query("select * from Highlight where id = :highlightId limit 1")
-    fun getHighlightById(highlightId: String): Single<Highlight>
+    @Query("select * from Highlight where verse_id = :verseId limit 1")
+    fun getHighlightById(verseId: String): Single<Highlight>
 
     @Query("select * from Highlight where highlighted_on = :highlightDate limit 1")
     fun getHighlightByDate(highlightDate: OffsetDateTime): Single<Highlight>

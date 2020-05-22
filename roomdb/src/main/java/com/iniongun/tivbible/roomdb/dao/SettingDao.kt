@@ -32,4 +32,7 @@ interface SettingDao {
     @Query("delete from Setting")
     fun deleteSettings(): Completable
 
+    @Update
+    fun updateSetting(setting: Setting): Completable
+
 }

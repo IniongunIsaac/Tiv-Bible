@@ -1,7 +1,8 @@
 package com.iniongun.tivbible.entities
 
-import androidx.room.Embedded
+import androidx.core.text.HtmlCompat
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.*
 
@@ -11,8 +12,10 @@ import java.util.*
  */
 @Entity
 data class Other(
-    @Embedded(prefix = "other_type_")
-    val otherType: OtherType,
+    val title: String,
+    val subTitle: String,
     val text: String,
     @PrimaryKey val id: String = UUID.randomUUID().toString()
-)
+) {
+    @Ignore val formattedText = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+}

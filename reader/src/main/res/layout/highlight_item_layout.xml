@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.iniongun.tivbible.reader.utils.TapAction"/>
+        <variable
+            name="highlight"
+            type="com.iniongun.tivbible.entities.Highlight" />
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.more.highlights.HighlightsViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/standard_mid_margin"
+        android:layout_margin="@dimen/standard_mid_margin"
+        app:cardCornerRadius="@dimen/standard_mid_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{ () -> viewModel.handleHighlightSelected(highlight) }">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp">
+
+            <View
+                android:id="@+id/highlightColorView"
+                android:layout_width="8dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:highlightColor="@{ highlight.color.hexCode }"
+                android:background="@drawable/top_left_bottom_left_corner_radius"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookChapterVerseTextView"
+                style="@style/AppText.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                android:text="@{ highlight.bookNameAndChapterNumberAndVerseNumberString }"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/highlightColorView"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/book_chapter_verse_placeholder_text" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/verseTextTextView"
+                style="@style/AppText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{ highlight.verse.text }"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/highlightColorView"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@id/bookChapterVerseTextView"
+                android:layout_marginTop="5dp"
+                tools:text="@string/verse_placeholder_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shareButton"
+                style="@style/AppButton.Text"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="3dp"
+                android:paddingLeft="3dp"
+                app:icon="@drawable/ic_share"
+                app:iconTint="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/highlightColorView"
+                app:layout_constraintTop_toBottomOf="@id/verseTextTextView"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.SHARE, highlight) }"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copyButton"
+                style="@style/AppButton.Text"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:paddingStart="3dp"
+                android:paddingLeft="3dp"
+                app:icon="@drawable/ic_copy"
+                app:iconTint="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/shareButton"
+                app:layout_constraintStart_toEndOf="@id/shareButton"
+                app:layout_constraintTop_toTopOf="@+id/shareButton"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.COPY, highlight) }"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteButton"
+                style="@style/AppButton.Text"
+                android:layout_width="@dimen/item_copy_share_delete_dimen"
+                android:layout_height="@dimen/item_copy_share_delete_dimen"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:paddingStart="3dp"
+                android:paddingLeft="3dp"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/copyButton"
+                app:layout_constraintStart_toEndOf="@id/copyButton"
+                app:layout_constraintTop_toTopOf="@+id/copyButton"
+                android:onClick="@{ () -> viewModel.handleHighlightActionButtonTapped(TapAction.DELETE, highlight) }"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkDateTextView"
+                style="@style/AppText.Bold"
+                android:textColor="?android:attr/textColorTertiary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ highlight.dateString }"
+                app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/deleteButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/deleteButton"
+                tools:text="10.10.2020" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

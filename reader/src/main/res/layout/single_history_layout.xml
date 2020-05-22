@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="history"
+            type="com.iniongun.tivbible.entities.History" />
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{ () -> viewModel.handleSelectedHistory(history) }"
+        android:padding="5dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            style="@style/AppText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@{ history.bookNameAndChapterNumber }"
+            app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+            app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Genese 25 : 40" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dateTextView"
+            style="@style/AppText.Small"
+            android:textColor="?android:attr/textColorTertiary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{ history.dateString }"
+            app:fontTypeface="@{ viewModel.settings.fontStyle.name }"
+            tools:text="02.10.2020"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/appCompatTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

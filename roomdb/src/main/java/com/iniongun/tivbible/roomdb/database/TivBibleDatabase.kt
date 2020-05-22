@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 import com.iniongun.tivbible.entities.*
 import com.iniongun.tivbible.roomdb.converters.BooleanConverter
 import com.iniongun.tivbible.roomdb.converters.DateTimeTypeConverter
+import com.iniongun.tivbible.roomdb.converters.VerseConverter
 import com.iniongun.tivbible.roomdb.dao.*
 import com.iniongun.tivbible.roomdb.utils.LocalDBConstants
 
@@ -33,12 +34,13 @@ import com.iniongun.tivbible.roomdb.utils.LocalDBConstants
         Testament::class,
         Theme::class,
         Verse::class,
-        Version::class
+        Version::class,
+        Note::class
     ],
     version = LocalDBConstants.DB_VERSION
 )
 
-@TypeConverters(BooleanConverter::class, DateTimeTypeConverter::class)
+@TypeConverters(BooleanConverter::class, DateTimeTypeConverter::class, VerseConverter::class)
 
 abstract class TivBibleDatabase : RoomDatabase() {
 
@@ -74,6 +76,7 @@ abstract class TivBibleDatabase : RoomDatabase() {
 
     abstract fun versionDao(): VersionDao
 
+    abstract fun noteDao(): NoteDao
 
     companion object {
         @Volatile

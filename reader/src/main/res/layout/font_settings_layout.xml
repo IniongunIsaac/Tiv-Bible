@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.iniongun.tivbible.reader.read.ReadViewModelNew" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fontSettingsBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.29" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeFontSettingsButton"
+            style="@style/AppButton.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:icon="@drawable/ic_expand_down"
+            app:iconPadding="0dp"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fontSizeLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            android:text="@string/font_size_text"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/closeFontSettingsButton" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lineSpacingLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            android:text="@string/line_spacing_text"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fontSizeMinusButton" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fontStyleLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            android:text="@string/font_style_text"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineSpacingTwoButton" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/themeLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_content_margin"
+            android:layout_marginLeft="@dimen/standard_content_margin"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="@dimen/standard_mid_margin"
+            android:layout_marginRight="@dimen/standard_mid_margin"
+            android:text="@string/theme_text"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fontStyleChipsHorizontalScrollView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fontSizeMinusButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/font_setting_button_dimen"
+            android:minHeight="@dimen/font_setting_button_dimen"
+            android:text="@string/aa_text"
+            app:icon="@drawable/ic_remove"
+            app:iconGravity="textEnd"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/fontSizeLabelTextView"
+            app:layout_constraintEnd_toStartOf="@+id/fontSizePlusButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/fontSizeLabelTextView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fontSizePlusButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:minWidth="@dimen/font_setting_button_dimen"
+            android:minHeight="@dimen/font_setting_button_dimen"
+            android:text="@string/aa_text"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textEnd"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/fontSizeMinusButton"
+            app:layout_constraintEnd_toStartOf="@+id/fontSizeTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontSizeMinusButton"
+            app:layout_constraintTop_toTopOf="@+id/fontSizeMinusButton" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fontSizeTextView"
+            style="@style/AppText.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            android:text="16px"
+            app:layout_constraintBottom_toBottomOf="@+id/fontSizePlusButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontSizePlusButton"
+            app:layout_constraintTop_toTopOf="@+id/fontSizePlusButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lineSpacingTwoButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="@dimen/font_setting_button_dimen"
+            android:minHeight="@dimen/font_setting_button_dimen"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:icon="@drawable/ic_line_spacing_two"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/lineSpacingLabelTextView"
+            app:layout_constraintEnd_toStartOf="@+id/lineSpacingThreeButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/lineSpacingLabelTextView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lineSpacingThreeButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="@dimen/font_setting_button_dimen"
+            android:minHeight="@dimen/font_setting_button_dimen"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:icon="@drawable/ic_line_spacing_three"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/lineSpacingTwoButton"
+            app:layout_constraintEnd_toStartOf="@+id/lineSpacingFourButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lineSpacingTwoButton"
+            app:layout_constraintTop_toTopOf="@+id/lineSpacingTwoButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lineSpacingFourButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="@dimen/font_setting_button_dimen"
+            android:minHeight="@dimen/font_setting_button_dimen"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:icon="@drawable/ic_line_spacing_four"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/lineSpacingThreeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lineSpacingThreeButton"
+            app:layout_constraintTop_toTopOf="@+id/lineSpacingThreeButton" />
+
+        <HorizontalScrollView
+            android:id="@+id/fontStyleChipsHorizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/fontStyleLabelTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/fontStyleLabelTextView">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/fontStyleChipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sans Serif"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance"
+                    app:checkedIcon="@drawable/ic_check"
+                    app:checkedIconEnabled="true"
+                    app:chipIconTint="?android:attr/textColorPrimary" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comfortaa"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Montserrat"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monospace"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/themeChipsHorizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/themeLabelTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/themeLabelTextView">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/themeChipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/automaticThemeChip"
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/automatic_text"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance"
+                    app:checkedIcon="@drawable/ic_check"
+                    app:checkedIconEnabled="true"
+                    app:chipIconTint="?android:attr/textColorPrimary" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/lightModeThemeChip"
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/light_mode_text"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/darkModeThemeChip"
+                    style="@style/AppChoiceChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dark_mode_text"
+                    android:textAppearance="@style/AppChoiceChipTextAppearance" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/goToSettingsButton"
+            style="@style/AppButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_content_margin"
+            android:layout_marginEnd="@dimen/standard_content_margin"
+            android:layout_marginRight="@dimen/standard_content_margin"
+            android:layout_marginBottom="@dimen/standard_content_margin"
+            android:text="@string/go_to_settings_text"
+            app:icon="@drawable/ic_settings"
+            app:iconGravity="textEnd"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/themeChipsHorizontalScrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

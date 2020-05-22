@@ -20,4 +20,6 @@ interface IOtherRepo {
 
     fun deleteOthers(others: List<Other>): Completable
 
+    fun getOtherByText(searchText: String): Single<Other>
+
 }

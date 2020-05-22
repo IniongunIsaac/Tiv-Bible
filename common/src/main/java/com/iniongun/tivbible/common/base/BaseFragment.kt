@@ -10,10 +10,11 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.iniongun.tivbible.common.utils.liveDataEvent.LiveDataEventObserver
 import com.iniongun.tivbible.common.utils.navigation.AppFragmentNavCommands
+import com.iniongun.tivbible.common.utils.state.AppState
 import dagger.android.support.DaggerFragment
 
 /**
@@ -21,7 +22,7 @@ import dagger.android.support.DaggerFragment
  * For Tiv Bible project
  */
 
-abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerFragment() {
+abstract class BaseFragment<in D : ViewDataBinding, out V : BaseViewModel> : DaggerFragment() {
 
     abstract fun getViewModel(): V
 
@@ -33,6 +34,10 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
     abstract fun getLayoutBinding(binding: D)
 
     open fun setViewModelObservers() {}
+
+    private val baseActivity by lazy {
+        activity as BaseActivity<*, *>
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +66,43 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
     }
 
     open fun setNotificationObserver() {
-        (activity as BaseActivity<*, *>).setNotificationObserver()
+        //baseActivity.setNotificationObserver()
+
+        getViewModel().notificationLiveData.observe(this, LiveDataEventObserver {
+
+            when (it.state) {
+
+                AppState.FAILED -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(view!!, message, isError = true)
+                    }
+                }
+
+                AppState.WARNING -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(view!!, message, isWarning = true)
+                    }
+
+                }
+
+                AppState.LOADING -> {
+                    showLoadingDialog()
+                }
+
+                AppState.SUCCESS -> {
+                    dismissLoadingDialog()
+                    it.message?.let { message ->
+                        showMessage(view!!, message)
+                    }
+
+                }
+
+            }
+
+        })
+
     }
 
     protected fun navigate(fragmentNavCommand: AppFragmentNavCommands) {
@@ -97,5 +138,7 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : ViewModel> : DaggerF
     open fun showLoadingDialog() = (activity as BaseActivity<*, *>).showLoadingDialog()
 
     open fun dismissLoadingDialog() = (activity as BaseActivity<*, *>).dismissLoadingDialog()
+
+    fun showView(view: View, shouldShow: Boolean) = (activity as BaseActivity<*, *>).showView(view, shouldShow)
 
 }

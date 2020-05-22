@@ -32,4 +32,7 @@ interface ThemeDao {
     @Query("delete from Theme")
     fun deleteThemes(): Completable
 
+    @Query("select * from Theme where name like '%' || :name || '%' limit 1")
+    fun getThemeByName(name: String): Single<Theme>
+
 }

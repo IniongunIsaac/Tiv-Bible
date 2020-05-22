@@ -67,7 +67,8 @@ dependencies {
             Dependencies.androidXCoreKts,
 
             Dependencies.javax,
-            Dependencies.javaxAnnotation
+            Dependencies.javaxAnnotation,
+            Dependencies.timber
     )
 
     if (project.name != "entities") {
@@ -114,7 +115,7 @@ dependencies {
 //    runtimeOnly(
 //            Dependencies.jaxb
 //    )
-//
+
 //    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
 //    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 

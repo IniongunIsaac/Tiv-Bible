@@ -68,14 +68,14 @@ internal class ChapterRepoImplTest {
     fun getChaptersByBookAndChapterNumber_shouldReturnCorrectValues_whenValuesAdded() {
 
         every {
-            chapterDaoMock.getChaptersByBookAndChapterNumber(
+            chapterDaoMock.getChapterByBookAndChapterNumber(
                 any(),
                 any()
             )
         } returns Single.just(testChapters.first { it.bookId == testBook1.id && it.chapterNumber == 2 })
 
-        chapterRepoImpl.getChaptersByBookAndChapterNumber(testBook1.id, 2).test().assertValue(testChapters.last())
-        chapterRepoImpl.getChaptersByBookAndChapterNumber(testBook1.id, 2).test().assertValue { it.numberOfVerses == testChapters.last().numberOfVerses }
+        chapterRepoImpl.getChapterByBookAndChapterNumber(testBook1.id, 2).test().assertValue(testChapters.last())
+        chapterRepoImpl.getChapterByBookAndChapterNumber(testBook1.id, 2).test().assertValue { it.numberOfVerses == testChapters.last().numberOfVerses }
 
     }
 

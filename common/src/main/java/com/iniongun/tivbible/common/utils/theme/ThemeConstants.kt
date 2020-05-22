@@ -6,10 +6,8 @@ package com.iniongun.tivbible.common.utils.theme
  */
 
 enum class ThemeConstants {
-
     LIGHT,
     DARK,
     BATTERY_SAVER,
     SYSTEM_DEFAULT
-
 }
