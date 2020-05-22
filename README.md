@@ -1,5 +1,5 @@
 
-&nbsp;&nbsp;&nbsp;<img src="https://github.com/IniongunIsaac/Tiv-Bible/blob/develop/media/feature_graphic.png" width="800" height="400" alt="Feature Graphic">
+&nbsp;&nbsp;&nbsp;[<img src="/media/feature_graphic.png" align="left" height="400" hspace="10" vspace="10">](/media/feature_graphic.png)
 
 ## Tiv-Bible
 
@@ -56,7 +56,7 @@ The application is built using the following:
 * Material Design
 * Navigation Component
 
-##Screenshots
+## Screenshots
 
 [<img src="/media/screenshot_0.png" align="left" width="200" hspace="10" vspace="10">](/media/screenshot_0.png)
 [<img src="/media/screenshot_1.png" align="left" width="200" hspace="10" vspace="10">](/media/screenshot_1.png)
