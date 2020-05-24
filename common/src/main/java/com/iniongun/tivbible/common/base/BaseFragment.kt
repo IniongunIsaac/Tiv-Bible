@@ -139,6 +139,10 @@ abstract class BaseFragment<in D : ViewDataBinding, out V : BaseViewModel> : Dag
 
     open fun dismissLoadingDialog() = (activity as BaseActivity<*, *>).dismissLoadingDialog()
 
-    fun showView(view: View, shouldShow: Boolean) = (activity as BaseActivity<*, *>).showView(view, shouldShow)
+    fun showView(view: View, shouldShow: Boolean) {
+        activity?.let {
+            (it as BaseActivity<*, *>).showView(view, shouldShow)
+        }
+    }
 
 }

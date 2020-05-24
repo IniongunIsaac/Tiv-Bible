@@ -223,8 +223,6 @@ class SearchViewModel @Inject constructor(
         _searchResultSelected.value = LiveDataEvent(true)
     }
 
-    val xxx = "xxxxxxx"
-
     override fun handleCoroutineException(throwable: Throwable) {
         postFailureNotification(throwable.message)
     }

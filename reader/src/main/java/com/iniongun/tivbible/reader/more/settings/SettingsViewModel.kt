@@ -48,6 +48,7 @@ class SettingsViewModel @Inject constructor(
     val audioSpeeds: LiveData<List<AudioSpeed>> = _audioSpeeds
 
     lateinit var currentSettings: Setting
+    fun isCurrentSettingsInitialized() = ::currentSettings.isInitialized
 
     private val deviceScreenSize by lazy { getDeviceScreenSize(context.resources) }
 
@@ -97,7 +98,7 @@ class SettingsViewModel @Inject constructor(
                     }
                     ThemeHelper.changeTheme(currentTheme)
                 }
-            })
+            }) { removeLoadingState() }
         )
     }
 
@@ -110,7 +111,7 @@ class SettingsViewModel @Inject constructor(
                     removeLoadingState()
                     _shouldEnableFontSettingsUIControls.value = true
                     getUserSettings()
-                })
+                }) { removeLoadingState() }
         )
     }
 

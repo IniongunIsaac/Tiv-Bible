@@ -69,7 +69,9 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding, SettingsViewModel
             settingsViewModel.updateLineSpacing(FOUR)
         }
 
-        stayAwakeCheckBox.setOnCheckedChangeListener { _, isChecked -> settingsViewModel.changeStayAwakeSetting(isChecked) }
+        stayAwakeCheckBox.setOnClickListener {
+            settingsViewModel.changeStayAwakeSetting(stayAwakeCheckBox.isChecked)
+        }
     }
 
     override fun setViewModelObservers() {
