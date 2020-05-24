@@ -12,8 +12,8 @@ object DepVersions {
     const val minSdkVersion = 16
     const val buildToolsVersion = "29.0.2"
 
-    const val versionCode = 2
-    const val versionName = "2.0"
+    const val versionCode = 3
+    const val versionName = "2.1"
 
     const val java = 1.8
     const val jaxb = "2.3.1"
